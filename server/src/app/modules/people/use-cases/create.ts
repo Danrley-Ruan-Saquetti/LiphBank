@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { ZodValidatorAdapter } from '../../../../adapters/validator'
 import { validateCnpj, validateItin } from '../../../../helpers/itin-cnpj'
 import { People, PeopleGender, PeopleType } from '../model'
+import { extractDigits } from '../../../../util'
 
 const userCreateSchema = z.object({
   name: z
@@ -11,15 +12,17 @@ const userCreateSchema = z.object({
   itinCnpj: z
     .string()
     .trim()
-    .default('PE'),
+    .transform(extractDigits),
   gender: z
     .nativeEnum(PeopleGender)
     .optional(),
   type: z
-    .nativeEnum(PeopleType),
+    .nativeEnum(PeopleType)
+    .default(PeopleType.NATURAL_PERSON),
   dateOfBirth: z
     .coerce
-    .date(),
+    .date()
+    .nullish(),
 })
   .refine(({ type, itinCnpj }) => {
     if (type == 'NP') {

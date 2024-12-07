@@ -5,7 +5,80 @@ import { People } from '../model'
 
 describe('Create People', () => {
 
-  test('Simple create people', async () => {
+  test('Simple create people - ITIN with dots', async () => {
+    const arrange = {
+      name: 'Dan Ruan',
+      itinCnpj: '102.547.109-13',
+    }
+
+    const createPeople = new PeopleCreateUseCase()
+
+    const response = await createPeople.perform(arrange)
+
+    expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+  })
+
+  test('Simple create people - ITIN without dots', async () => {
+    const arrange = {
+      name: 'Dan Ruan',
+      itinCnpj: '10254710913',
+    }
+
+    const createPeople = new PeopleCreateUseCase()
+
+    const response = await createPeople.perform(arrange)
+
+    expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+  })
+
+  test('Create people - Natural Person', async () => {
+    const arrange = {
+      name: 'Dan Ruan',
+      itinCnpj: '102.547.109-13',
+      type: People.Type.NATURAL_PERSON,
+    }
+
+    const createPeople = new PeopleCreateUseCase()
+
+    const response = await createPeople.perform(arrange)
+
+    expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+  })
+
+  test('Create people - Legal Entity with dots', async () => {
+    const arrange = {
+      name: 'Dan Ruan',
+      itinCnpj: '48.626.911/0001-55',
+      type: People.Type.LEGAL_ENTITY,
+    }
+
+    const createPeople = new PeopleCreateUseCase()
+
+    const response = await createPeople.perform(arrange)
+
+    expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+  })
+
+  test('Create people - Legal Entity without dots', async () => {
+    const arrange = {
+      name: 'Dan Ruan',
+      itinCnpj: '48626911000155',
+      type: People.Type.LEGAL_ENTITY,
+    }
+
+    const createPeople = new PeopleCreateUseCase()
+
+    const response = await createPeople.perform(arrange)
+
+    expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+  })
+
+  test('Create people with all fields', async () => {
     const arrange = {
       name: 'Dan Ruan',
       itinCnpj: '102.547.109-13',

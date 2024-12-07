@@ -18,12 +18,16 @@ export class ZodValidatorAdapter {
   }
 
   private throwValidateError(err: any, options: ZodValidatorOptions = {}) {
-    if (options.debugLogError) {
-      console.log({ ...err })
+    if (!(err instanceof z.ZodError)) {
+      if (options.debugLogError) {
+        console.log(err)
+      }
+
+      throw new CriticalException(err.message)
     }
 
-    if (!(err instanceof z.ZodError)) {
-      throw new CriticalException(err.message)
+    if (options.debugLogError) {
+      console.log(err.issues ?? [])
     }
 
     const causes = err.flatten(issue => ({
