@@ -28,7 +28,7 @@ export class ZodValidatorAdapter {
 
     const causes = err.issues.map(issue => ({
       message: issue.message,
-      path: issue.path.join('.'),
+      path: issue.path,
     }))
 
     if (options.debugLogError) {

@@ -1,6 +1,6 @@
 export interface CauseException {
   message: string
-  path?: string
+  path: (string | number)[]
 }
 
 export class Exception extends Error {
@@ -12,7 +12,7 @@ export class Exception extends Error {
     super(message)
   }
 
-  getCausesByPath(path: string) {
-    return this.causes.filter(cause => cause.path.split('.').includes(path))
+  getCausesByPath(...paths: (string | number)[]) {
+    return this.causes.filter(cause => paths.every(path => cause.path.includes(path)))
   }
 }
