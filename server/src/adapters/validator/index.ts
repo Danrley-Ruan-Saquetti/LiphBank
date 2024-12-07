@@ -26,15 +26,15 @@ export class ZodValidatorAdapter {
       throw new CriticalException(err.message)
     }
 
-    if (options.debugLogError) {
-      console.log(err.issues ?? [])
-    }
-
-    const causes = err.flatten(issue => ({
+    const causes = err.issues.map(issue => ({
       message: issue.message,
       path: issue.path.join('.'),
     }))
 
-    throw new ValidationException('Invalid data', causes.formErrors)
+    if (options.debugLogError) {
+      console.log({ causes })
+    }
+
+    throw new ValidationException('Invalid data', causes)
   }
 }

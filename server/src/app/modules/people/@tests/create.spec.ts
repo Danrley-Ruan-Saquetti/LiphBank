@@ -119,6 +119,7 @@ describe('Create People', () => {
       } catch (error: any) {
         if (error instanceof ValidationException) {
           expect(error.message).equal('Invalid data')
+          expect(error.getCausesByPath('name').length).toBe(1)
         }
 
         throw error
@@ -145,7 +146,8 @@ describe('Create People', () => {
         await createPeople.perform(arrange)
       } catch (error: any) {
         if (error instanceof ValidationException) {
-          expect(error.message).equal('Invalid data')
+          expect(error.message).toEqual('Invalid data')
+          expect(error.getCausesByPath('dateOfBirth').length).toBe(1)
         }
 
         throw error
