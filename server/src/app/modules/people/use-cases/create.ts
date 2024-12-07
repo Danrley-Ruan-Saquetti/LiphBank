@@ -15,14 +15,16 @@ const userCreateSchema = z.object({
     .transform(extractDigits),
   gender: z
     .nativeEnum(PeopleGender)
-    .optional(),
+    .optional()
+    .nullish(),
   type: z
     .nativeEnum(PeopleType)
     .default(PeopleType.NATURAL_PERSON),
   dateOfBirth: z
     .coerce
     .date()
-    .nullish(),
+    .nullish()
+    .refine(value => !value || value.getTime() < new Date(Date.now()).getTime()),
 })
   .refine(({ type, cpfCnpj }) => {
     if (type == 'NP') {

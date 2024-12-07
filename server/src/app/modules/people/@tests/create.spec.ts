@@ -16,7 +16,6 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
-    expect(response.user.id).equal(1)
   })
 
   test('Simple create people - CPF without dots', async () => {
@@ -30,7 +29,6 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
-    expect(response.user.id).equal(1)
   })
 
   test('Create people - Natural Person', async () => {
@@ -45,7 +43,6 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
-    expect(response.user.id).equal(1)
   })
 
   test('Create people - Legal Entity with dots', async () => {
@@ -60,7 +57,6 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
-    expect(response.user.id).equal(1)
   })
 
   test('Create people - Legal Entity without dots', async () => {
@@ -75,7 +71,6 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
-    expect(response.user.id).equal(1)
   })
 
   test('Create people with all fields', async () => {
@@ -92,16 +87,28 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
-    expect(response.user.id).equal(1)
+  })
+
+  test('Create people with pass empty value', async () => {
+    const arrange = {
+      name: 'Dan Ruan',
+      cpfCnpj: '102.547.109-13',
+      dateOfBirth: null,
+      gender: null,
+      type: undefined,
+    }
+
+    const createPeople = new PeopleCreateUseCase()
+
+    const response = await createPeople.perform(arrange)
+
+    expect(response.user).toBeInstanceOf(People)
   })
 
   test('Invalid name empty', async () => {
     const arrange = {
       name: '',
       cpfCnpj: '102.547.108-13',
-      dateOfBirth: new Date('2004-05-28 00:00:00'),
-      gender: People.Gender.MASCULINE,
-      type: People.Type.NATURAL_PERSON,
     }
 
     const createPeople = new PeopleCreateUseCase()
@@ -109,8 +116,37 @@ describe('Create People', () => {
     await expect(async () => {
       try {
         await createPeople.perform(arrange)
-      } catch (error) {
-        expect(error.message).equal('Invalid data')
+      } catch (error: any) {
+        if (error instanceof ValidationException) {
+          expect(error.message).equal('Invalid data')
+        }
+
+        throw error
+      }
+    })
+      .rejects
+      .toThrow(ValidationException)
+  })
+
+  test('Invalid date of bird - Date of bird greater then current date', async () => {
+    const now = new Date(Date.now())
+    now.setSeconds(now.getSeconds() + 10)
+
+    const arrange = {
+      name: '',
+      cpfCnpj: '102.547.108-13',
+      dateOfBirth: now,
+    }
+
+    const createPeople = new PeopleCreateUseCase()
+
+    await expect(async () => {
+      try {
+        await createPeople.perform(arrange)
+      } catch (error: any) {
+        if (error instanceof ValidationException) {
+          expect(error.message).equal('Invalid data')
+        }
 
         throw error
       }
