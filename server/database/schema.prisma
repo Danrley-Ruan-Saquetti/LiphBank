@@ -27,7 +27,6 @@ model People {
   type        PeopleType    @default(NP)
   name        String        @db.VarChar(128)
   cpfCnpj     String        @unique @map("cpf_cnpj") @db.VarChar(14)
-  active      Boolean       @default(true)
   gender      PeopleGender?
   dateOfBirth DateTime?     @map("date_of_birth") @db.Timestamptz(3)
   createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)

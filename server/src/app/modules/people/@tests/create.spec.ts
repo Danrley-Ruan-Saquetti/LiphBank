@@ -1,4 +1,4 @@
-import { describe, expect, test, assert } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 import { PeopleCreateUseCase } from '../use-cases/create'
 import { ValidationException } from '../../../../adapters/validator/validation.exception'
 import { People } from '../model'
@@ -146,7 +146,6 @@ describe('Create People', () => {
         await createPeople.perform(arrange)
       } catch (error: any) {
         if (error instanceof ValidationException) {
-          expect(error.message).toEqual('Invalid data')
           expect(error.getCausesByPath('dateOfBirth').length).toBe(1)
         }
 

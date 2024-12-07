@@ -3,22 +3,23 @@ import { ZodValidatorAdapter } from '../../../../adapters/validator'
 import { validateCNPJ, validateCPF } from '../../../../helpers/cpf-cnpj'
 import { People, PeopleGender, PeopleType } from '../model'
 import { extractDigits } from '../../../../util'
+import { PeopleRule } from '../rule'
 
 const userCreateSchema = z.object({
   name: z
-    .string({ 'required_error': 'Name is required' })
+    .string({ 'required_error': PeopleRule.validation.name.required })
     .trim()
-    .min(1),
+    .min(PeopleRule.rule.name.min, { message: PeopleRule.validation.name.rangeCharacters })
+    .max(PeopleRule.rule.name.max, { message: PeopleRule.validation.name.rangeCharacters }),
   cpfCnpj: z
-    .string()
+    .string({ message: PeopleRule.validation.name.required })
     .trim()
     .transform(extractDigits),
   gender: z
-    .nativeEnum(PeopleGender)
-    .optional()
+    .nativeEnum(PeopleGender, { errorMap: () => ({ message: PeopleRule.validation.gender.valueInvalid }) })
     .nullish(),
   type: z
-    .nativeEnum(PeopleType)
+    .nativeEnum(PeopleType, { errorMap: () => ({ message: PeopleRule.validation.type.valueInvalid }) })
     .default(PeopleType.NATURAL_PERSON),
   dateOfBirth: z
     .coerce
@@ -27,12 +28,12 @@ const userCreateSchema = z.object({
     .refine(value => !value || value.getTime() < new Date(Date.now()).getTime()),
 })
   .refine(({ type, cpfCnpj }) => {
-    if (type == 'NP') {
+    if (type == PeopleType.NATURAL_PERSON) {
       return validateCPF(cpfCnpj)
     }
 
-    return type == 'LE' && validateCNPJ(cpfCnpj)
-  }, ({ type }) => ({ message: `${type == 'LE' ? 'CNPJ' : 'CPF'} invalid`, path: ['cpfCnpj'] }))
+    return type == PeopleType.LEGAL_ENTITY && validateCNPJ(cpfCnpj)
+  }, ({ type }) => ({ message: type == PeopleType.LEGAL_ENTITY ? `${PeopleRule.validation.cnpj}` : `${PeopleRule.validation.cpf}`, path: ['cpfCnpj'] }))
 
 export type PeopleCreateUseCaseProps = z.input<typeof userCreateSchema>
 
