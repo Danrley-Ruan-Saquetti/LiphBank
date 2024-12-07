@@ -19,7 +19,8 @@
   ],
   "root": true,
   "ignorePatterns": [
-    ".eslintrc.js"
+    "dist",
+    "/*.js"
   ],
   "rules": {
     "indent": [
