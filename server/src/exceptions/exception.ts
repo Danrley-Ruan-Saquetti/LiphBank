@@ -11,4 +11,8 @@ export class Exception extends Error {
   ) {
     super(message)
   }
+
+  getCausesByPath(path: string) {
+    return this.causes.filter(cause => cause.path.split('.').includes(path))
+  }
 }
