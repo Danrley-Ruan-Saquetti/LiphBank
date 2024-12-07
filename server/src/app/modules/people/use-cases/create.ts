@@ -1,15 +1,7 @@
 import { z } from 'zod'
 import { ZodValidatorAdapter } from '../../../../adapters/validator'
 import { validateCnpj, validateItin } from '../../../../helpers/itin-cnpj'
-
-export class People {
-  id: number
-  name: string
-  itinCnpj: string
-  genre: string
-  type: string
-  dateOfBirth: Date
-}
+import { People, PeopleGender, PeopleType } from '../model'
 
 const userCreateSchema = z.object({
   name: z
@@ -20,12 +12,11 @@ const userCreateSchema = z.object({
     .string()
     .trim()
     .default('PE'),
-  genre: z
-    .string()
-    .trim(),
+  gender: z
+    .nativeEnum(PeopleGender)
+    .optional(),
   type: z
-    .string()
-    .trim(),
+    .nativeEnum(PeopleType),
   dateOfBirth: z
     .coerce
     .date(),
@@ -52,7 +43,7 @@ export class PeopleCreateUseCase {
     people.id = 1
     people.name = dto.name
     people.itinCnpj = dto.itinCnpj
-    people.genre = dto.genre
+    people.gender = dto.gender as PeopleGender
     people.dateOfBirth = dto.dateOfBirth
     people.type = dto.type
 
