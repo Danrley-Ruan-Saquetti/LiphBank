@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { ZodValidatorAdapter } from '../../../../adapters/validator'
-import { validateCnpj, validateItin } from '../../../../helpers/itin-cnpj'
+import { validateCNPJ, validateCPF } from '../../../../helpers/cpf-cnpj'
 import { People, PeopleGender, PeopleType } from '../model'
 import { extractDigits } from '../../../../util'
 
@@ -9,7 +9,7 @@ const userCreateSchema = z.object({
     .string({ 'required_error': 'Name is required' })
     .trim()
     .min(1),
-  itinCnpj: z
+  cpfCnpj: z
     .string()
     .trim()
     .transform(extractDigits),
@@ -24,13 +24,13 @@ const userCreateSchema = z.object({
     .date()
     .nullish(),
 })
-  .refine(({ type, itinCnpj }) => {
+  .refine(({ type, cpfCnpj }) => {
     if (type == 'NP') {
-      return validateItin(itinCnpj)
+      return validateCPF(cpfCnpj)
     }
 
-    return type == 'LE' && validateCnpj(itinCnpj)
-  }, ({ type }) => ({ message: `${type == 'LE' ? 'CNPJ' : 'ITIN'} invalid`, path: ['itinCnpj'] }))
+    return type == 'LE' && validateCNPJ(cpfCnpj)
+  }, ({ type }) => ({ message: `${type == 'LE' ? 'CNPJ' : 'CPF'} invalid`, path: ['cpfCnpj'] }))
 
 export type PeopleCreateUseCaseProps = z.input<typeof userCreateSchema>
 
@@ -45,7 +45,7 @@ export class PeopleCreateUseCase {
 
     people.id = 1
     people.name = dto.name
-    people.itinCnpj = dto.itinCnpj
+    people.cpfCnpj = dto.cpfCnpj
     people.gender = dto.gender as PeopleGender
     people.dateOfBirth = dto.dateOfBirth
     people.type = dto.type

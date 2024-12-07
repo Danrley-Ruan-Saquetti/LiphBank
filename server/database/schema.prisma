@@ -26,7 +26,7 @@ model People {
   id          Int           @id @default(autoincrement())
   type        PeopleType    @default(NP)
   name        String        @db.VarChar(128)
-  itinCnpj    String        @unique @map("itin_cnpj") @db.VarChar(14)
+  cpfCnpj     String        @unique @map("cpf_cnpj") @db.VarChar(14)
   active      Boolean       @default(true)
   gender      PeopleGender?
   dateOfBirth DateTime?     @map("date_of_birth") @db.Timestamptz(3)

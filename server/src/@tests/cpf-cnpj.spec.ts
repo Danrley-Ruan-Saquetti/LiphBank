@@ -1,8 +1,8 @@
 import { describe } from 'vitest'
-import { validateCnpj, validateItin } from '../helpers/itin-cnpj'
+import { validateCNPJ, validateCPF } from '../helpers/cpf-cnpj'
 
-describe('Validate ITIN', () => {
-  test('ITIN Valid with dots', () => {
+describe('Validate CPF', () => {
+  test('CPF Valid with dots', () => {
     const arrange = [
       '102.547.109-13',
       '435.869.570-17',
@@ -13,12 +13,12 @@ describe('Validate ITIN', () => {
       '699.199.890-70',
     ]
 
-    arrange.map(itin => {
-      expect(validateItin(itin)).toEqual(true)
+    arrange.map(cpf => {
+      expect(validateCPF(cpf)).toEqual(true)
     })
   })
 
-  test('ITIN Valid without dots', () => {
+  test('CPF Valid without dots', () => {
     const arrange = [
       '10254710913',
       '43586957017',
@@ -29,12 +29,12 @@ describe('Validate ITIN', () => {
       '69919989070',
     ]
 
-    arrange.map(itin => {
-      expect(validateItin(itin)).toEqual(true)
+    arrange.map(cpf => {
+      expect(validateCPF(cpf)).toEqual(true)
     })
   })
 
-  test('ITIN Invalid in format', () => {
+  test('CPF Invalid in format', () => {
     const arrange = [
       '023.542.787-13',
       '31.23245.3213',
@@ -50,8 +50,8 @@ describe('Validate ITIN', () => {
       '0.450.4403-030',
     ]
 
-    arrange.map(itin => {
-      expect(validateItin(itin)).toEqual(false)
+    arrange.map(cpf => {
+      expect(validateCPF(cpf)).toEqual(false)
     })
   })
 })
@@ -68,8 +68,8 @@ describe('Validate CNPJ', () => {
       '02.346.671/0001-34',
     ]
 
-    arrange.map(itin => {
-      expect(validateCnpj(itin)).toEqual(true)
+    arrange.map(cpf => {
+      expect(validateCNPJ(cpf)).toEqual(true)
     })
   })
 
@@ -84,8 +84,8 @@ describe('Validate CNPJ', () => {
       '02346671000134',
     ]
 
-    arrange.map(itin => {
-      expect(validateCnpj(itin)).toEqual(true)
+    arrange.map(cpf => {
+      expect(validateCNPJ(cpf)).toEqual(true)
     })
   })
 
@@ -101,8 +101,8 @@ describe('Validate CNPJ', () => {
       '00.000.000/0000-00',
     ]
 
-    arrange.map(itin => {
-      expect(validateCnpj(itin)).toEqual(false)
+    arrange.map(cpf => {
+      expect(validateCNPJ(cpf)).toEqual(false)
     })
   })
 })

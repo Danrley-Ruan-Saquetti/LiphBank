@@ -1,27 +1,27 @@
 import { extractDigits } from '../util'
 
-export function formatItin(value: string) {
+export function formatCPF(value: string) {
   return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4')
 }
 
-export function formatCnpj(value: string) {
+export function formatCNPJ(value: string) {
   return value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5')
 }
 
-export function validateFormatItin(value: string) {
+export function validateFormatCPF(value: string) {
   return /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(value)
 }
 
-export function validateFormatCnpj(value: string) {
+export function validateFormatCNPJ(value: string) {
   return /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/.test(value)
 }
 
-export function validateItin(value: string) {
+export function validateCPF(value: string) {
   if (!value) {
     return false
   }
 
-  if (isNaN(Number(value)) && !validateFormatItin(value)) {
+  if (isNaN(Number(value)) && !validateFormatCPF(value)) {
     return false
   }
 
@@ -43,10 +43,10 @@ export function validateItin(value: string) {
   return digit1 === parseInt(value[9]) && digit2 === parseInt(value[10])
 }
 
-export function validateCnpj(value: string = '') {
+export function validateCNPJ(value: string = '') {
   if (!value) return false
 
-  if (isNaN(Number(value)) && !validateFormatCnpj(value)) {
+  if (isNaN(Number(value)) && !validateFormatCNPJ(value)) {
     return false
   }
 

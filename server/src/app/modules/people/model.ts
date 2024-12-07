@@ -19,7 +19,7 @@ export class People implements PeopleProps {
   private _id: number
   private _name: string
   private _type: PeopleType
-  private _itinCnpj: string
+  private _cpfCnpj: string
   private _active: boolean
   private _gender: PeopleGender | null = null
   private _dateOfBirth: Date | null = null
@@ -29,7 +29,7 @@ export class People implements PeopleProps {
   get id() { return this._id }
   get name() { return this._name }
   get type() { return this._type }
-  get itinCnpj() { return this._itinCnpj }
+  get cpfCnpj() { return this._cpfCnpj }
   get active() { return this._active }
   get gender() { return this._gender }
   get dateOfBirth() { return this._dateOfBirth }
@@ -39,7 +39,7 @@ export class People implements PeopleProps {
   set id(value) { this._id = value }
   set name(value) { this._name = value }
   set type(value) { this._type = value }
-  set itinCnpj(value) { this._itinCnpj = value }
+  set cpfCnpj(value) { this._cpfCnpj = value }
   set active(value) { this._active = value }
   set gender(value) { this._gender = value }
   set dateOfBirth(value) { this._dateOfBirth = value }
