@@ -1,3 +1,5 @@
+import { extractDigits } from '../util'
+
 export function formatItin(value: string) {
   return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4')
 }
@@ -19,7 +21,11 @@ export function validateItin(value: string) {
     return false
   }
 
-  value = value.replace(/[^\d]+/g, '')
+  if (isNaN(Number(value)) && !validateFormatItin(value)) {
+    return false
+  }
+
+  value = extractDigits(value)
 
   if (value.length !== 11 || /^(\d)\1+$/.test(value)) {
     return false
@@ -40,7 +46,11 @@ export function validateItin(value: string) {
 export function validateCnpj(value: string = '') {
   if (!value) return false
 
-  value = value.replace(/[^\d]+/g, '')
+  if (isNaN(Number(value)) && !validateFormatCnpj(value)) {
+    return false
+  }
+
+  value = extractDigits(value)
 
   const numbers = matchNumbers(value)
   if (numbers.length !== 14) return false

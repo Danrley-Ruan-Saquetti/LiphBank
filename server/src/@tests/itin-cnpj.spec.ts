@@ -46,6 +46,8 @@ describe('Validate ITIN', () => {
       'sfdghh.bngbf',
       '00000000000',
       '000.000.000-00',
+      '43.58.695701-7',
+      '0.450.4403-030',
     ]
 
     arrange.map(itin => {
