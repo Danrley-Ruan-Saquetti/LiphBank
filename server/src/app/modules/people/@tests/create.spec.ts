@@ -17,6 +17,10 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+    expect(response.user.name).equal('Dan Ruan')
+    expect(response.user.cpfCnpj).equal('10254710913')
+    expect(response.user.type).equal(People.Type.NATURAL_PERSON)
   })
 
   test('Simple create people - CPF without dots', async () => {
@@ -30,6 +34,10 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+    expect(response.user.name).equal('Dan Ruan')
+    expect(response.user.cpfCnpj).equal('10254710913')
+    expect(response.user.type).equal(People.Type.NATURAL_PERSON)
   })
 
   test('Create people - Natural Person', async () => {
@@ -44,6 +52,10 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+    expect(response.user.name).equal('Dan Ruan')
+    expect(response.user.cpfCnpj).equal('10254710913')
+    expect(response.user.type).equal(People.Type.NATURAL_PERSON)
   })
 
   test('Create people - Legal Entity with dots', async () => {
@@ -58,6 +70,10 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+    expect(response.user.name).equal('Dan Ruan')
+    expect(response.user.cpfCnpj).equal('48626911000155')
+    expect(response.user.type).equal(People.Type.LEGAL_ENTITY)
   })
 
   test('Create people - Legal Entity without dots', async () => {
@@ -72,6 +88,10 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+    expect(response.user.name).equal('Dan Ruan')
+    expect(response.user.cpfCnpj).equal('48626911000155')
+    expect(response.user.type).equal(People.Type.LEGAL_ENTITY)
   })
 
   test('Create people with all fields', async () => {
@@ -88,6 +108,12 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+    expect(response.user.name).equal('Dan Ruan')
+    expect(response.user.cpfCnpj).equal('10254710913')
+    expect(response.user.type).equal(People.Type.NATURAL_PERSON)
+    expect(response.user.gender).equal(People.Gender.MASCULINE)
+    expect(response.user.dateOfBirth.getTime()).equal(new Date('2004-05-28 00:00:00').getTime())
   })
 
   test('Create people with pass empty value', async () => {
@@ -104,12 +130,18 @@ describe('Create People', () => {
     const response = await createPeople.perform(arrange)
 
     expect(response.user).toBeInstanceOf(People)
+    expect(response.user.id).equal(1)
+    expect(response.user.name).equal('Dan Ruan')
+    expect(response.user.cpfCnpj).equal('10254710913')
+    expect(response.user.type).equal(People.Type.NATURAL_PERSON)
+    expect(response.user.gender).equal(null)
+    expect(response.user.dateOfBirth).equal(null)
   })
 
   test('Not enable to create - Invalid name empty', async () => {
     const arrange = {
       name: '',
-      cpfCnpj: '102.547.108-13',
+      cpfCnpj: '102.547.109-13',
     }
 
     const createPeople = new PeopleCreateUseCase(createMockPeopleRepository())
@@ -135,8 +167,8 @@ describe('Create People', () => {
     now.setSeconds(now.getSeconds() + 10)
 
     const arrange = {
-      name: '',
-      cpfCnpj: '102.547.108-13',
+      name: 'Dan Ruan',
+      cpfCnpj: '102.547.109-13',
       dateOfBirth: now,
     }
 
@@ -174,7 +206,7 @@ describe('Create People', () => {
         await createPeople.perform(arrange)
       } catch (error: any) {
         if (error instanceof ValidationException) {
-          expect(error.getCausesByPath('cpfCnpj', 'already_exists').length).toBe(1)
+          expect(error.getCausesByPath('cpfCnpj', 'alreadyExists').length).toBe(1)
         }
 
         throw error
