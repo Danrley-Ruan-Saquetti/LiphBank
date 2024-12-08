@@ -1,5 +1,5 @@
 import { z, ZodSchema } from 'zod'
-import { CriticalException } from '../../exceptions/critical.exception'
+import { CriticalException } from '../../core/exceptions/critical.exception'
 import { ValidationException } from './validation.exception'
 
 export type ZodValidatorOptions = {

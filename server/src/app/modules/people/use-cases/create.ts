@@ -1,11 +1,11 @@
 import { z } from 'zod'
-import { ZodValidatorAdapter } from '../../../../adapters/validator'
-import { validateCNPJ, validateCPF } from '../../../../helpers/cpf-cnpj'
 import { People, PeopleGender, PeopleType } from '../model'
-import { extractDigits } from '../../../../util'
 import { PeopleRule } from '../rule'
 import { ValidationException } from '../../../../adapters/validator/validation.exception'
 import { PeopleRepository } from '../repository'
+import { UseCase } from '../../../../common/use-case'
+import { validateCNPJ, validateCPF } from '../../../../util/validators/cpf-cnpj'
+import { extractDigits } from '../../../../util/string'
 
 const userCreateSchema = z.object({
   name: z
@@ -39,13 +39,13 @@ const userCreateSchema = z.object({
 
 export type PeopleCreateUseCaseProps = z.input<typeof userCreateSchema>
 
-export class PeopleCreateUseCase {
-
-  private readonly validator = new ZodValidatorAdapter()
+export class PeopleCreateUseCase extends UseCase {
 
   constructor(
     private readonly peopleRepository: PeopleRepository
-  ) { }
+  ) {
+    super()
+  }
 
   async perform(args: PeopleCreateUseCaseProps) {
     const dto = this.validator.validate(userCreateSchema, args)
