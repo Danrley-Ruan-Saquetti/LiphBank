@@ -52,17 +52,18 @@ export class PeopleCreateUseCase {
 
     await this.validatePeopleWithCpfCnpjAlreadyExists(dto.cpfCnpj)
 
-    const people = new People()
+    const people = People.load({
+      name: dto.name,
+      cpfCnpj: dto.cpfCnpj,
+      gender: dto.gender as PeopleGender,
+      dateOfBirth: dto.dateOfBirth,
+      type: dto.type,
+    })
 
-    people.id = 1
-    people.name = dto.name
-    people.cpfCnpj = dto.cpfCnpj
-    people.gender = dto.gender as PeopleGender
-    people.dateOfBirth = dto.dateOfBirth
-    people.type = dto.type
+    const peopleCreated = await this.peopleRepository.create(people)
 
     return {
-      user: people
+      user: peopleCreated
     }
   }
 
@@ -70,7 +71,7 @@ export class PeopleCreateUseCase {
     const people = await this.peopleRepository.findByCpfCnpj(cpfCnpj)
 
     if (people) {
-      throw new ValidationException('Create People', [{ message: 'CPF/CNPJ already exists', path: ['cpfCnpj', 'already_exists'] }])
+      throw new ValidationException('Create People', [{ message: 'CPF/CNPJ already exists', path: ['cpfCnpj', 'alreadyExists'] }])
     }
   }
 }
