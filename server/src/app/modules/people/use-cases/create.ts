@@ -5,6 +5,7 @@ import { People, PeopleGender, PeopleType } from '../model'
 import { extractDigits } from '../../../../util'
 import { PeopleRule } from '../rule'
 import { ValidationException } from '../../../../adapters/validator/validation.exception'
+import { PeopleRepository } from '../repository'
 
 const userCreateSchema = z.object({
   name: z
@@ -37,11 +38,6 @@ const userCreateSchema = z.object({
   }, ({ type }) => ({ message: type == PeopleType.LEGAL_ENTITY ? `${PeopleRule.validation.cnpj}` : `${PeopleRule.validation.cpf}`, path: ['cpfCnpj'] }))
 
 export type PeopleCreateUseCaseProps = z.input<typeof userCreateSchema>
-
-export abstract class PeopleRepository {
-
-  abstract findByCpfCnpj(cpfCnpj: string): Promise<People | null>;
-}
 
 export class PeopleCreateUseCase {
 

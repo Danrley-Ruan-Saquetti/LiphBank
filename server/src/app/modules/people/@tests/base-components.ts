@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { PeopleRepository } from '../use-cases/create'
+import { PeopleRepository } from '../repository'
 
 export const createMockPeopleRepository = () => {
   const peopleRepositoryMock: PeopleRepository = {
