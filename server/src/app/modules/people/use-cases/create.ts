@@ -4,6 +4,7 @@ import { validateCNPJ, validateCPF } from '../../../../helpers/cpf-cnpj'
 import { People, PeopleGender, PeopleType } from '../model'
 import { extractDigits } from '../../../../util'
 import { PeopleRule } from '../rule'
+import { ValidationException } from '../../../../adapters/validator/validation.exception'
 
 const userCreateSchema = z.object({
   name: z
@@ -37,12 +38,23 @@ const userCreateSchema = z.object({
 
 export type PeopleCreateUseCaseProps = z.input<typeof userCreateSchema>
 
+export abstract class PeopleRepository {
+
+  abstract findByCpfCnpj(cpfCnpj: string): Promise<People | null>;
+}
+
 export class PeopleCreateUseCase {
 
-  private validator = new ZodValidatorAdapter()
+  private readonly validator = new ZodValidatorAdapter()
+
+  constructor(
+    private readonly peopleRepository: PeopleRepository
+  ) { }
 
   async perform(args: PeopleCreateUseCaseProps) {
     const dto = this.validator.validate(userCreateSchema, args)
+
+    await this.validatePeopleWithCpfCnpjAlreadyExists(dto.cpfCnpj)
 
     const people = new People()
 
@@ -55,6 +67,14 @@ export class PeopleCreateUseCase {
 
     return {
       user: people
+    }
+  }
+
+  private async validatePeopleWithCpfCnpjAlreadyExists(cpfCnpj: string) {
+    const people = await this.peopleRepository.findByCpfCnpj(cpfCnpj)
+
+    if (people) {
+      throw new ValidationException('Create People', [{ message: 'CPF/CNPJ already exists', path: ['cpfCnpj', 'already_exists'] }])
     }
   }
 }
