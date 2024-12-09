@@ -1,11 +1,11 @@
-import { vi } from 'vitest'
+import { Mock, vi } from 'vitest'
 import { PeopleRepository } from '../../../../../app/modules/people/repository'
 import { People } from '../../../../../app/modules/people/model'
 
 export const createMockPeopleRepository = () => {
   let countId = 0
 
-  const peopleRepositoryMock: PeopleRepository = {
+  const peopleRepositoryMock: PeopleRepository & Record<string, Mock> = {
     create: vi.fn().mockImplementation((people: People) => {
       people.id = ++countId
       people.createdAt = new Date(Date.now())
@@ -23,6 +23,7 @@ export const createMockPeopleRepository = () => {
       return people
     }),
     findById: vi.fn().mockResolvedValue(null),
+    delete: vi.fn().mockResolvedValue(undefined),
     findByCpfCnpj: vi.fn().mockResolvedValue(null),
   }
 

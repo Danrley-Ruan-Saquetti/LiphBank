@@ -72,7 +72,7 @@ describe('Update People', () => {
         await updatePeople.perform(arrange)
       } catch (error) {
         if (error instanceof ValidationException) {
-          expect(error.getCausesByPath('id', 'notFound').length).equal(1)
+          expect(error.getCausesByPath('id', 'not_found').length).equal(1)
         }
 
         throw error

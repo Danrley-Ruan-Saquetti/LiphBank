@@ -11,7 +11,7 @@ export enum PeopleGender {
 }
 
 export interface PeopleProps extends PeoplePrisma {
-  type: PeopleType | null
+  type: PeopleType
   gender: PeopleGender | null
 }
 

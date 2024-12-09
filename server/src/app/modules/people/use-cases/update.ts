@@ -48,7 +48,7 @@ export class PeopleUpdateUseCase extends UseCase {
     const people = await this.peopleRepository.findById(dto.id)
 
     if (!people) {
-      throw new ValidationException('Update people', [{ message: 'People not found', path: ['id', 'notFound'] }])
+      throw new ValidationException('Update people', [{ message: 'People not found', path: ['id', 'not_found'] }])
     }
 
     if (typeof dto.name != 'undefined') people.name = dto.name
