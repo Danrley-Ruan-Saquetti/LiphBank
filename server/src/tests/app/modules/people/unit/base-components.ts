@@ -8,13 +8,21 @@ export const createMockPeopleRepository = () => {
   const peopleRepositoryMock: PeopleRepository = {
     create: vi.fn().mockImplementation((people: People) => {
       people.id = ++countId
+      people.createdAt = new Date(Date.now())
+      people.updatedAt = new Date(Date.now())
 
       if (!people.type) people.type = People.Type.NATURAL_PERSON
-      if (!people.createdAt) people.createdAt = new Date(Date.now())
-      if (!people.updatedAt) people.updatedAt = new Date(Date.now())
 
       return people
     }),
+    update: vi.fn().mockImplementation((id: number, people: People) => {
+      people.id = id
+
+      people.updatedAt = new Date(Date.now())
+
+      return people
+    }),
+    findById: vi.fn().mockResolvedValue(null),
     findByCpfCnpj: vi.fn().mockResolvedValue(null),
   }
 

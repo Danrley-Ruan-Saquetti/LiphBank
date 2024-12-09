@@ -21,6 +21,9 @@ export const PeopleRule = {
     cnpj: {
       valueInvalid: 'CNPJ invalid'
     },
+    dateGreaterCurrent: {
+      dateGreaterThanCurrent: 'Date of birth cannot be later than the current date',
+    },
   },
   rule: {
     name: {
