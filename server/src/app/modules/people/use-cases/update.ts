@@ -4,6 +4,7 @@ import { PeopleRule } from '../rule'
 import { ValidationException } from '../../../../adapters/validator/validation.exception'
 import { PeopleRepository } from '../repository'
 import { UseCase } from '../../../../common/use-case'
+import { PeopleFindUseCase } from './find'
 
 const peopleUpdateSchema = z.object({
   id: z
@@ -37,7 +38,8 @@ export type PeopleUpdateUseCaseProps = z.input<typeof peopleUpdateSchema>
 export class PeopleUpdateUseCase extends UseCase {
 
   constructor(
-    private readonly peopleRepository: PeopleRepository
+    private readonly peopleRepository: PeopleRepository,
+    private readonly peopleFindUseCase: PeopleFindUseCase
   ) {
     super()
   }
@@ -45,11 +47,7 @@ export class PeopleUpdateUseCase extends UseCase {
   async perform(args: PeopleUpdateUseCaseProps) {
     const dto = this.validator.validate(peopleUpdateSchema, args)
 
-    const people = await this.peopleRepository.findById(dto.id)
-
-    if (!people) {
-      throw new ValidationException('Update people', [{ message: 'People not found', path: ['id', 'not_found'] }])
-    }
+    const { people } = await this.peopleFindUseCase.perform({ id: dto.id })
 
     if (typeof dto.name != 'undefined') people.name = dto.name
     if (typeof dto.dateOfBirth != 'undefined') people.dateOfBirth = dto.dateOfBirth

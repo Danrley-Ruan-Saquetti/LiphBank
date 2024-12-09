@@ -3,6 +3,7 @@ import { createMockPeopleRepository } from './base-components'
 import { People } from '../../../../../app/modules/people/model'
 import { PeopleUpdateUseCase } from '../../../../../app/modules/people/use-cases/update'
 import { ValidationException } from '../../../../../adapters/validator/validation.exception'
+import { PeopleFindUseCase } from '../../../../../app/modules/people/use-cases/find'
 
 describe('Update People', () => {
   const peopleRepositoryMock = createMockPeopleRepository()
@@ -26,7 +27,12 @@ describe('Update People', () => {
       dateOfBirth: new Date('2001-01-01 01:01:01'),
     }
 
-    const updatePeopleUseCase = new PeopleUpdateUseCase(peopleRepositoryMock)
+    const updatePeopleUseCase = new PeopleUpdateUseCase(
+      peopleRepositoryMock,
+      new PeopleFindUseCase(
+        peopleRepositoryMock
+      )
+    )
 
     const response = await updatePeopleUseCase.perform(arrange)
 
@@ -45,7 +51,12 @@ describe('Update People', () => {
       gender: null,
     }
 
-    const updatePeopleUseCase = new PeopleUpdateUseCase(peopleRepositoryMock)
+    const updatePeopleUseCase = new PeopleUpdateUseCase(
+      peopleRepositoryMock,
+      new PeopleFindUseCase(
+        peopleRepositoryMock
+      )
+    )
 
     const response = await updatePeopleUseCase.perform(arrange)
 
@@ -65,7 +76,12 @@ describe('Update People', () => {
 
     peopleRepositoryMock.findById = vi.fn().mockResolvedValue(null)
 
-    const updatePeopleUseCase = new PeopleUpdateUseCase(peopleRepositoryMock)
+    const updatePeopleUseCase = new PeopleUpdateUseCase(
+      peopleRepositoryMock,
+      new PeopleFindUseCase(
+        peopleRepositoryMock
+      )
+    )
 
     await expect(async () => {
       try {
@@ -93,7 +109,12 @@ describe('Update People', () => {
 
     peopleRepositoryMock.findById = vi.fn().mockResolvedValue(null)
 
-    const updatePeopleUseCase = new PeopleUpdateUseCase(peopleRepositoryMock)
+    const updatePeopleUseCase = new PeopleUpdateUseCase(
+      peopleRepositoryMock,
+      new PeopleFindUseCase(
+        peopleRepositoryMock
+      )
+    )
 
     await expect(async () => {
       try {

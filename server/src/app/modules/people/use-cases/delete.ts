@@ -1,34 +1,21 @@
-import { z } from 'zod'
-import { ValidationException } from '../../../../adapters/validator/validation.exception'
 import { PeopleRepository } from '../repository'
 import { UseCase } from '../../../../common/use-case'
+import { PeopleFindUseCase, PeopleFindUseCaseProps } from './find'
 
-const peopleDeleteSchema = z.object({
-  id: z
-    .coerce
-    .number()
-    .int(),
-})
-
-export type PeopleDeleteUseCaseProps = z.input<typeof peopleDeleteSchema>
+export type PeopleDeleteUseCaseProps = PeopleFindUseCaseProps
 
 export class PeopleDeleteUseCase extends UseCase {
 
   constructor(
-    private readonly peopleRepository: PeopleRepository
+    private readonly peopleRepository: PeopleRepository,
+    private readonly peopleFindUseCase: PeopleFindUseCase
   ) {
     super()
   }
 
   async perform(args: PeopleDeleteUseCaseProps) {
-    const dto = this.validator.validate(peopleDeleteSchema, args)
+    const { people } = await this.peopleFindUseCase.perform(args)
 
-    const people = await this.peopleRepository.findById(dto.id)
-
-    if (!people) {
-      throw new ValidationException('Delete people', [{ message: 'People not found', path: ['id', 'not_found'] }])
-    }
-
-    await this.peopleRepository.update(dto.id, people)
+    await this.peopleRepository.delete(people.id)
   }
 }

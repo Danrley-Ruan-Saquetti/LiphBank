@@ -3,6 +3,7 @@ import { createMockPeopleRepository } from './base-components'
 import { PeopleDeleteUseCase } from '../../../../../app/modules/people/use-cases/delete'
 import { People } from '../../../../../app/modules/people/model'
 import { ValidationException } from '../../../../../adapters/validator/validation.exception'
+import { PeopleFindUseCase } from '../../../../../app/modules/people/use-cases/find'
 
 describe('Delete People', () => {
 
@@ -17,7 +18,12 @@ describe('Delete People', () => {
       id: 1,
     }))
 
-    const deletePeopleUseCase = new PeopleDeleteUseCase(peopleRepositoryMock)
+    const deletePeopleUseCase = new PeopleDeleteUseCase(
+      peopleRepositoryMock,
+      new PeopleFindUseCase(
+        peopleRepositoryMock
+      )
+    )
 
     await deletePeopleUseCase.perform(arrange)
 
@@ -35,7 +41,12 @@ describe('Delete People', () => {
 
     peopleRepositoryMock.findById = vi.fn().mockResolvedValue(null)
 
-    const deletePeopleUseCase = new PeopleDeleteUseCase(peopleRepositoryMock)
+    const deletePeopleUseCase = new PeopleDeleteUseCase(
+      peopleRepositoryMock,
+      new PeopleFindUseCase(
+        peopleRepositoryMock
+      )
+    )
 
     await expect(async () => {
       try {
