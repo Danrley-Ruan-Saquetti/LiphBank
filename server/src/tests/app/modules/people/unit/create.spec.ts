@@ -12,9 +12,9 @@ describe('Create People', () => {
       cpfCnpj: '102.547.109-13',
     }
 
-    const createPeople = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
 
-    const response = await createPeople.perform(arrange)
+    const response = await createPeopleUseCase.perform(arrange)
 
     expect(response.people).toBeInstanceOf(People)
     expect(response.people.id).equal(1)
@@ -29,9 +29,9 @@ describe('Create People', () => {
       cpfCnpj: '10254710913',
     }
 
-    const createPeople = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
 
-    const response = await createPeople.perform(arrange)
+    const response = await createPeopleUseCase.perform(arrange)
 
     expect(response.people).toBeInstanceOf(People)
     expect(response.people.id).equal(1)
@@ -47,9 +47,9 @@ describe('Create People', () => {
       type: People.Type.NATURAL_PERSON,
     }
 
-    const createPeople = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
 
-    const response = await createPeople.perform(arrange)
+    const response = await createPeopleUseCase.perform(arrange)
 
     expect(response.people).toBeInstanceOf(People)
     expect(response.people.id).equal(1)
@@ -65,9 +65,9 @@ describe('Create People', () => {
       type: People.Type.LEGAL_ENTITY,
     }
 
-    const createPeople = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
 
-    const response = await createPeople.perform(arrange)
+    const response = await createPeopleUseCase.perform(arrange)
 
     expect(response.people).toBeInstanceOf(People)
     expect(response.people.id).equal(1)
@@ -83,9 +83,9 @@ describe('Create People', () => {
       type: People.Type.LEGAL_ENTITY,
     }
 
-    const createPeople = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
 
-    const response = await createPeople.perform(arrange)
+    const response = await createPeopleUseCase.perform(arrange)
 
     expect(response.people).toBeInstanceOf(People)
     expect(response.people.id).equal(1)
@@ -103,9 +103,9 @@ describe('Create People', () => {
       type: People.Type.NATURAL_PERSON,
     }
 
-    const createPeople = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
 
-    const response = await createPeople.perform(arrange)
+    const response = await createPeopleUseCase.perform(arrange)
 
     expect(response.people).toBeInstanceOf(People)
     expect(response.people.id).equal(1)
@@ -125,9 +125,9 @@ describe('Create People', () => {
       type: undefined,
     }
 
-    const createPeople = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
 
-    const response = await createPeople.perform(arrange)
+    const response = await createPeopleUseCase.perform(arrange)
 
     expect(response.people).toBeInstanceOf(People)
     expect(response.people.id).equal(1)
@@ -144,11 +144,11 @@ describe('Create People', () => {
       cpfCnpj: '102.547.109-13',
     }
 
-    const createPeople = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
 
     await expect(async () => {
       try {
-        await createPeople.perform(arrange)
+        await createPeopleUseCase.perform(arrange)
       } catch (error: any) {
         if (error instanceof ValidationException) {
           expect(error.message).equal('Invalid data')
@@ -172,11 +172,11 @@ describe('Create People', () => {
       dateOfBirth: now,
     }
 
-    const createPeople = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
 
     await expect(async () => {
       try {
-        await createPeople.perform(arrange)
+        await createPeopleUseCase.perform(arrange)
       } catch (error: any) {
         if (error instanceof ValidationException) {
           expect(error.getCausesByPath('dateOfBirth', 'date_greater_current_date').length).toBe(1)
@@ -199,11 +199,11 @@ describe('Create People', () => {
 
     peopleRepositoryMock.findByCpfCnpj = vi.fn().mockImplementation(cpfCnpj => People.load({ id: 1, cpfCnpj: cpfCnpj }))
 
-    const createPeople = new PeopleCreateUseCase(peopleRepositoryMock)
+    const createPeopleUseCase = new PeopleCreateUseCase(peopleRepositoryMock)
 
     await expect(async () => {
       try {
-        await createPeople.perform(arrange)
+        await createPeopleUseCase.perform(arrange)
       } catch (error: any) {
         if (error instanceof ValidationException) {
           expect(error.getCausesByPath('cpfCnpj', 'already_exists').length).toBe(1)

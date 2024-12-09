@@ -17,9 +17,9 @@ describe('Delete People', () => {
       id: 1,
     }))
 
-    const deletePeople = new PeopleDeleteUseCase(peopleRepositoryMock)
+    const deletePeopleUseCase = new PeopleDeleteUseCase(peopleRepositoryMock)
 
-    await deletePeople.perform(arrange)
+    await deletePeopleUseCase.perform(arrange)
 
     const results = (peopleRepositoryMock.findById as any) as Mock
 
@@ -35,11 +35,11 @@ describe('Delete People', () => {
 
     peopleRepositoryMock.findById = vi.fn().mockResolvedValue(null)
 
-    const deletePeople = new PeopleDeleteUseCase(peopleRepositoryMock)
+    const deletePeopleUseCase = new PeopleDeleteUseCase(peopleRepositoryMock)
 
     await expect(async () => {
       try {
-        await deletePeople.perform(arrange)
+        await deletePeopleUseCase.perform(arrange)
       } catch (error: any) {
         if (error instanceof ValidationException) {
           expect(error.getCausesByPath('id', 'not_found').length).equal(1)

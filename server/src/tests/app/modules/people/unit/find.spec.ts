@@ -23,9 +23,9 @@ describe('Find People', () => {
       updatedAt: new Date('2024-12-05 10:00:00'),
     }))
 
-    const peopleFind = new PeopleFindUseCase(peopleRepositoryMock)
+    const peopleFindUseCase = new PeopleFindUseCase(peopleRepositoryMock)
 
-    const response = await peopleFind.perform(arrange)
+    const response = await peopleFindUseCase.perform(arrange)
 
     expect(response.people).toBeInstanceOf(People)
     expect(response.people.id).equal(1)
@@ -45,11 +45,11 @@ describe('Find People', () => {
 
     const peopleRepositoryMock = createMockPeopleRepository()
 
-    const peopleFind = new PeopleFindUseCase(peopleRepositoryMock)
+    const peopleFindUseCase = new PeopleFindUseCase(peopleRepositoryMock)
 
     await expect(async () => {
       try {
-        await peopleFind.perform(arrange)
+        await peopleFindUseCase.perform(arrange)
       } catch (error: any) {
         if (error instanceof ValidationException) {
           expect(error.getCausesByPath('id', 'not_found').length).equal(1)

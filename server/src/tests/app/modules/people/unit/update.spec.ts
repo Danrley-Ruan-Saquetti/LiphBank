@@ -26,9 +26,9 @@ describe('Update People', () => {
       dateOfBirth: new Date('2001-01-01 01:01:01'),
     }
 
-    const updatePeople = new PeopleUpdateUseCase(peopleRepositoryMock)
+    const updatePeopleUseCase = new PeopleUpdateUseCase(peopleRepositoryMock)
 
-    const response = await updatePeople.perform(arrange)
+    const response = await updatePeopleUseCase.perform(arrange)
 
     expect(response.people.id).equal(1)
     expect(response.people.name).equal('Jon Joe')
@@ -45,9 +45,9 @@ describe('Update People', () => {
       gender: null,
     }
 
-    const updatePeople = new PeopleUpdateUseCase(peopleRepositoryMock)
+    const updatePeopleUseCase = new PeopleUpdateUseCase(peopleRepositoryMock)
 
-    const response = await updatePeople.perform(arrange)
+    const response = await updatePeopleUseCase.perform(arrange)
 
     expect(response.people.id).equal(1)
     expect(response.people.name).equal('Dan Ruan')
@@ -65,11 +65,11 @@ describe('Update People', () => {
 
     peopleRepositoryMock.findById = vi.fn().mockResolvedValue(null)
 
-    const updatePeople = new PeopleUpdateUseCase(peopleRepositoryMock)
+    const updatePeopleUseCase = new PeopleUpdateUseCase(peopleRepositoryMock)
 
     await expect(async () => {
       try {
-        await updatePeople.perform(arrange)
+        await updatePeopleUseCase.perform(arrange)
       } catch (error) {
         if (error instanceof ValidationException) {
           expect(error.getCausesByPath('id', 'not_found').length).equal(1)
@@ -93,11 +93,11 @@ describe('Update People', () => {
 
     peopleRepositoryMock.findById = vi.fn().mockResolvedValue(null)
 
-    const updatePeople = new PeopleUpdateUseCase(peopleRepositoryMock)
+    const updatePeopleUseCase = new PeopleUpdateUseCase(peopleRepositoryMock)
 
     await expect(async () => {
       try {
-        await updatePeople.perform(arrange)
+        await updatePeopleUseCase.perform(arrange)
       } catch (error) {
         if (error instanceof ValidationException) {
           expect(error.getCausesByPath('name', 'too_small').length).equal(1)
