@@ -12,8 +12,8 @@ describe('Find People', () => {
 
     const peopleRepositoryMock = createMockPeopleRepository()
 
-    peopleRepositoryMock.findById = vi.fn().mockResolvedValue(People.load({
-      id: arrange.id,
+    peopleRepositoryMock.findById = vi.fn().mockImplementation(id => People.load({
+      id,
       name: 'Dan Ruan',
       cpfCnpj: '10254710913',
       dateOfBirth: new Date('2004-05-28 00:00:00'),
