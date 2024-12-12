@@ -23,6 +23,7 @@ export const createMockPeopleRepository = () => {
       return people
     }),
     findById: vi.fn().mockResolvedValue(null),
+    findMany: vi.fn().mockResolvedValue([]),
     delete: vi.fn().mockResolvedValue(undefined),
     findByCpfCnpj: vi.fn().mockResolvedValue(null),
   }
