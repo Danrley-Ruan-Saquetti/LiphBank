@@ -11,8 +11,8 @@ const peopleCreateSchema = z.object({
   name: z
     .string({ 'required_error': PeopleRule.validation.name.required })
     .trim()
-    .min(PeopleRule.rule.name.min, { message: PeopleRule.validation.name.rangeCharacters })
-    .max(PeopleRule.rule.name.max, { message: PeopleRule.validation.name.rangeCharacters }),
+    .min(PeopleRule.rule.name.minCharacters, { message: PeopleRule.validation.name.rangeCharacters })
+    .max(PeopleRule.rule.name.maxCharacters, { message: PeopleRule.validation.name.rangeCharacters }),
   type: z
     .nativeEnum(PeopleType, { errorMap: () => ({ message: PeopleRule.validation.type.valueInvalid }) })
     .default(PeopleType.NATURAL_PERSON),

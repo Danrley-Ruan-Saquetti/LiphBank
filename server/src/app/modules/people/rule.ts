@@ -27,8 +27,8 @@ export const PeopleRule = {
   },
   rule: {
     name: {
-      min: 3,
-      max: 45,
+      minCharacters: 3,
+      maxCharacters: 45,
     }
   },
 } as const

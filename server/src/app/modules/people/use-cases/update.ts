@@ -14,8 +14,8 @@ const peopleUpdateSchema = z.object({
   name: z
     .string()
     .trim()
-    .min(PeopleRule.rule.name.min, { message: PeopleRule.validation.name.rangeCharacters })
-    .max(PeopleRule.rule.name.max, { message: PeopleRule.validation.name.rangeCharacters })
+    .min(PeopleRule.rule.name.minCharacters, { message: PeopleRule.validation.name.rangeCharacters })
+    .max(PeopleRule.rule.name.maxCharacters, { message: PeopleRule.validation.name.rangeCharacters })
     .optional(),
   gender: z
     .nativeEnum(PeopleGender, { 'invalid_type_error': PeopleRule.validation.gender.valueInvalid })
