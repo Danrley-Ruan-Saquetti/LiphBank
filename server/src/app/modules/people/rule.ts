@@ -1,5 +1,8 @@
 export const PeopleRule = {
   validation: {
+    id: {
+      required: 'ID People is required',
+    },
     name: {
       required: 'Name is required',
       rangeCharacters: 'The Name must be between 3 and 45 characters',

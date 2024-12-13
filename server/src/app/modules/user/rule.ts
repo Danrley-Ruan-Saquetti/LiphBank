@@ -1,5 +1,8 @@
 export const UserRule = {
   validation: {
+    id: {
+      required: 'ID User is required',
+    },
     peopleId: {
       required: 'Id People is required',
     },

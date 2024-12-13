@@ -1,7 +1,6 @@
 import { z } from 'zod'
-import { People, PeopleGender } from '../model'
+import { PeopleGender } from '../model'
 import { PeopleRule } from '../rule'
-import { ValidationException } from '../../../../adapters/validator/validation.exception'
 import { PeopleRepository } from '../repository'
 import { UseCase } from '../../../../common/use-case'
 import { PeopleFindUseCase } from './find'
@@ -9,7 +8,7 @@ import { PeopleFindUseCase } from './find'
 const peopleUpdateSchema = z.object({
   id: z
     .coerce
-    .number()
+    .number({ 'required_error': PeopleRule.validation.id.required })
     .int(),
   name: z
     .string()
