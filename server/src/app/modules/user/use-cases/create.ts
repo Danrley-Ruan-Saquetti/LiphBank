@@ -3,6 +3,8 @@ import { User, UserType } from '../model'
 import { UseCase } from '../../../../common/use-case'
 import { PeopleFindUseCase } from '../../people/use-cases/find'
 import { UserRule } from '../rule'
+import { UserRepository } from '../repository'
+import { ValidationException } from '../../../../adapters/validator/validation.exception'
 
 export const userCreateSchema = z.object({
   peopleId: z
@@ -26,6 +28,7 @@ export type UserCreateUseCaseArgs = z.input<typeof userCreateSchema>
 export class UserCreateUseCase extends UseCase {
 
   constructor(
+    private readonly userRepository: UserRepository,
     private readonly peopleFindUseCase: PeopleFindUseCase
   ) {
     super()
@@ -36,16 +39,40 @@ export class UserCreateUseCase extends UseCase {
 
     const { people } = await this.peopleFindUseCase.perform({ id: peopleId })
 
+    const isHasUserForPeopleIdAndType = !!(await this.userRepository.findByPeopleIdAndType(people.id, type))
+
+    if (isHasUserForPeopleIdAndType) {
+      throw new ValidationException('Create User', [
+        {
+          message: `There is already a user registration for this person's type "${type == UserType.CUSTOMER ? 'Customer' : 'Administrador'}"`,
+          path: ['peopleId', 'type', '_already_exists']
+        }
+      ])
+    }
+
+    const isHasUserForLoginAndType = !!(await this.userRepository.findByLoginAndType(login, type))
+
+    if (isHasUserForLoginAndType) {
+      throw new ValidationException('Create User', [
+        {
+          message: `There is already a user registration for this person's type "${type == UserType.CUSTOMER ? 'Customer' : 'Administrador'}"`,
+          path: ['login', 'type', '_already_exists']
+        }
+      ])
+    }
+
     const user = User.load({
-      id: 1,
       peopleId,
       login,
       password,
-      type
+      type,
+      active: true,
     })
 
+    const userCreated = await this.userRepository.create(user)
+
     return {
-      user: user,
+      user: userCreated,
       people: people,
     }
   }

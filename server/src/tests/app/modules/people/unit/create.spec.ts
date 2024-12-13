@@ -206,7 +206,7 @@ describe('Create People', () => {
         await createPeopleUseCase.perform(arrange)
       } catch (error: any) {
         if (error instanceof ValidationException) {
-          expect(error.getCausesByPath('cpfCnpj', 'already_exists').length).toBe(1)
+          expect(error.getCausesByPath('cpfCnpj', '_already_exists').length).toBe(1)
         }
 
         throw error

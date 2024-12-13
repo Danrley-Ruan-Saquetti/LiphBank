@@ -77,7 +77,7 @@ export class PeopleCreateUseCase extends UseCase {
     const people = await this.peopleRepository.findByCpfCnpj(cpfCnpj)
 
     if (people) {
-      throw new ValidationException('Create People', [{ message: 'CPF/CNPJ already exists', path: ['cpfCnpj', 'already_exists'] }])
+      throw new ValidationException('Create People', [{ message: 'CPF/CNPJ already exists', path: ['cpfCnpj', '_already_exists'] }])
     }
   }
 }

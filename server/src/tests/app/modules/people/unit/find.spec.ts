@@ -52,7 +52,7 @@ describe('Find People', () => {
         await peopleFindUseCase.perform(arrange)
       } catch (error: any) {
         if (error instanceof ValidationException) {
-          expect(error.getCausesByPath('id', 'not_found').length).equal(1)
+          expect(error.getCausesByPath('id', '_not_found').length).equal(1)
         }
 
         throw error

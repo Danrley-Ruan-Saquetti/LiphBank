@@ -26,7 +26,7 @@ export class PeopleFindUseCase extends UseCase {
     const people = await this.peopleRepository.findById(dto.id)
 
     if (!people) {
-      throw new ValidationException('Find people', [{ message: 'People not found', path: ['id', 'not_found'] }])
+      throw new ValidationException('Find people', [{ message: 'People not found', path: ['id', '_not_found'] }])
     }
 
     return { people }
