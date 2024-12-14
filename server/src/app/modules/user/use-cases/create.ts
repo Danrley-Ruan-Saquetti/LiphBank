@@ -5,6 +5,7 @@ import { PeopleFindUseCase } from '../../people/use-cases/find'
 import { UserRule } from '../rule'
 import { UserRepository } from '../repository'
 import { ValidationException } from '../../../../adapters/validator/validation.exception'
+import { UserGenerateCodeUseCase } from './generate-code'
 
 const userCreateSchema = z.object({
   peopleId: z
@@ -29,7 +30,8 @@ export class UserCreateUseCase extends UseCase {
 
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly peopleFindUseCase: PeopleFindUseCase
+    private readonly peopleFindUseCase: PeopleFindUseCase,
+    private readonly userGenerateCodeUseCase: UserGenerateCodeUseCase
   ) {
     super()
   }
@@ -61,11 +63,14 @@ export class UserCreateUseCase extends UseCase {
       ])
     }
 
+    const { code } = await this.userGenerateCodeUseCase.perform({ timeRepeatOnConflict: 3 })
+
     const user = User.load({
       peopleId,
       login,
       password,
       type,
+      code,
       active: true,
     })
 

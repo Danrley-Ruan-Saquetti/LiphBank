@@ -6,6 +6,7 @@ import { createMockPeopleRepository } from '../../people/unit/base-components'
 import { PeopleFindUseCase } from '../../../../../app/modules/people/use-cases/find'
 import { createMockUserRepository } from './base-components'
 import { ValidationException } from '../../../../../adapters/validator/validation.exception'
+import { UserGenerateCodeUseCase } from '../../../../../app/modules/user/use-cases/generate-code'
 
 describe('Create User', function () {
 
@@ -18,6 +19,7 @@ describe('Create User', function () {
     }
 
     const peopleRepositoryMock = createMockPeopleRepository()
+    const userRepositoryMock = createMockUserRepository()
 
     peopleRepositoryMock.findById = vi.fn().mockImplementation(id => People.load({
       id,
@@ -31,9 +33,12 @@ describe('Create User', function () {
     }))
 
     const userCreateUseCase = new UserCreateUseCase(
-      createMockUserRepository(),
+      userRepositoryMock,
       new PeopleFindUseCase(
         peopleRepositoryMock
+      ),
+      new UserGenerateCodeUseCase(
+        userRepositoryMock
       )
     )
 
@@ -44,6 +49,7 @@ describe('Create User', function () {
     expect(response.user.login).equal('dan@gmail.com')
     expect(response.user.type).equal('C')
     expect(response.user.active).equal(true)
+    expect(response.user.code.startsWith('USR#')).equal(true)
     expect(response.people).toBeInstanceOf(People)
     expect(response.people.name).equal('Dan Ruan')
     expect(response.people.cpfCnpj).equal('10254710913')
@@ -85,6 +91,9 @@ describe('Create User', function () {
       userRepositoryMock,
       new PeopleFindUseCase(
         peopleRepositoryMock
+      ),
+      new UserGenerateCodeUseCase(
+        userRepositoryMock
       )
     )
 
@@ -132,10 +141,14 @@ describe('Create User', function () {
       password: 'Dan!@#123',
     }))
 
+
     const userCreateUseCase = new UserCreateUseCase(
       userRepositoryMock,
       new PeopleFindUseCase(
         peopleRepositoryMock
+      ),
+      new UserGenerateCodeUseCase(
+        userRepositoryMock
       )
     )
 
