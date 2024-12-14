@@ -26,6 +26,7 @@ export const createMockUserRepository = () => {
     findById: vi.fn().mockResolvedValue(null),
     findByPeopleIdAndType: vi.fn().mockResolvedValue(null),
     findByLoginAndType: vi.fn().mockResolvedValue(null),
+    findByCode: vi.fn().mockResolvedValue(null),
     findMany: vi.fn().mockResolvedValue([]),
     delete: vi.fn().mockResolvedValue(undefined),
   }

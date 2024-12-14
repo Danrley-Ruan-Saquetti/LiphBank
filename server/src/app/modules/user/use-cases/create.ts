@@ -6,7 +6,7 @@ import { UserRule } from '../rule'
 import { UserRepository } from '../repository'
 import { ValidationException } from '../../../../adapters/validator/validation.exception'
 
-export const userCreateSchema = z.object({
+const userCreateSchema = z.object({
   peopleId: z
     .coerce
     .number({ 'required_error': UserRule.validation.peopleId.required })

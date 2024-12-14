@@ -19,6 +19,7 @@ export const UserRule = {
       required: 'Type is required',
       valueInvalid: 'The user\'s type must be Customer or Admin',
     },
+    code: {},
   },
   rule: {
     login: {
