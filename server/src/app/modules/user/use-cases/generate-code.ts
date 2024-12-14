@@ -3,6 +3,7 @@ import { UseCase } from '../../../../common/use-case'
 import { UserRepository } from '../repository'
 import { User } from '../model'
 import { CodeGenerator } from '../../../../util/generators/code'
+import { ValidationException } from '../../../../adapters/validator/validation.exception'
 
 const userGenerateCodeSchema = z.object({
   timeRepeatOnConflict: z
@@ -24,8 +25,7 @@ export class UserGenerateCodeUseCase extends UseCase {
   })
 
   constructor(
-    private readonly userRepository: UserRepository,
-    private listenerConflict: ListenerHandlerConflict | null = null
+    private readonly userRepository: UserRepository
   ) {
     super()
   }
@@ -42,11 +42,14 @@ export class UserGenerateCodeUseCase extends UseCase {
 
       if (!userWithCode) break
 
-      if (!this.listenerConflict) continue
+      if (i != timeRepeatOnConflict - 1) continue
 
-      const response = await this.listenerConflict(userWithCode)
-
-      if (response?.skip) break
+      throw new ValidationException('Unable to generate user code', [
+        {
+          message: 'User code generation attempts exceeded. Try again later',
+          path: ['code', '_time_repeat_exceeded']
+        }
+      ])
     }
 
     return { code }
