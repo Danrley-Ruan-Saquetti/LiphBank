@@ -1,11 +1,13 @@
 import { z } from 'zod'
 import { CriticalException } from '../../core/exceptions/critical.exception'
 import { ValidationException } from './validation.exception'
+import { Injectable } from '@nestjs/common'
 
 export type ZodValidatorOptions = {
   debugLogError?: boolean
 }
 
+@Injectable()
 export class ZodValidatorAdapter {
   validate<T>(schema: z.ZodSchema<T>, args: unknown, options: ZodValidatorOptions = {}): T {
     const { success, data, error } = schema.safeParse(args)

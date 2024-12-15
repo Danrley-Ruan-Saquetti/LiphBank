@@ -1,5 +1,7 @@
+import { Injectable } from '@nestjs/common'
 import { GeneratorCodeException } from './exception'
 
+@Injectable()
 export class CodeGenerator {
   private prefix: string
   private suffix: string
