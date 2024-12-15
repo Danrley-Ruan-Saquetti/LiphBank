@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
 import { ValidationException } from '../../../../adapters/validator/validation.exception'
 import { PeopleRepository } from '../repository'
@@ -12,6 +13,7 @@ const peopleFindSchema = z.object({
 
 export type PeopleFindUseCaseProps = z.input<typeof peopleFindSchema>
 
+@Injectable()
 export class PeopleFindUseCase extends UseCase {
 
   constructor(

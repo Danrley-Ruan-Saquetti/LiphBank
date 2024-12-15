@@ -1,9 +1,11 @@
+import { Injectable } from '@nestjs/common'
 import { PeopleRepository } from '../repository'
 import { UseCase } from '../../../../common/use-case'
 import { PeopleFindUseCase, PeopleFindUseCaseProps } from './find'
 
 export type PeopleDeleteUseCaseProps = PeopleFindUseCaseProps
 
+@Injectable()
 export class PeopleDeleteUseCase extends UseCase {
 
   constructor(

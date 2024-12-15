@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
 import { PeopleGender } from '../model'
 import { PeopleRule } from '../rule'
@@ -34,6 +35,7 @@ const peopleUpdateSchema = z.object({
 
 export type PeopleUpdateUseCaseProps = z.input<typeof peopleUpdateSchema>
 
+@Injectable()
 export class PeopleUpdateUseCase extends UseCase {
 
   constructor(

@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
 import { User, UserType } from '../model'
 import { UseCase } from '../../../../common/use-case'
@@ -26,6 +27,7 @@ const userCreateSchema = z.object({
 
 export type UserCreateUseCaseArgs = z.input<typeof userCreateSchema>
 
+@Injectable()
 export class UserCreateUseCase extends UseCase {
 
   constructor(

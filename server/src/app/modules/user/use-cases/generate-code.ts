@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
 import { UseCase } from '../../../../common/use-case'
 import { UserRepository } from '../repository'
@@ -17,6 +18,7 @@ export type UserGenerateCodeUseCaseArgs = z.input<typeof userGenerateCodeSchema>
 
 export type ListenerHandlerConflict = (user: User) => Promise<{ skip?: boolean } | void>
 
+@Injectable()
 export class UserGenerateCodeUseCase extends UseCase {
 
   private codeGenerator = new CodeGenerator({

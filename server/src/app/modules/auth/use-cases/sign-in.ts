@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
 import { UseCase } from '../../../../common/use-case'
 import { UserRepository } from '../../user/repository'
@@ -15,6 +16,7 @@ const authSignInSchema = z.object({
 
 export type AuthSignInUseCaseArgs = z.input<typeof authSignInSchema>
 
+@Injectable()
 export class AuthSignInUseCase extends UseCase {
 
   constructor(
