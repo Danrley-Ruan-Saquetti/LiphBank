@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from 'vitest'
-import { AuthSignInUseCase } from '../../../../../../app/modules/auth/use-cases/sign-in'
-import { createMockUserRepository } from '../../../user/unit/base-components'
-import { User } from '../../../../../../app/modules/user/model'
+import { User } from '@app/modules/user/model'
+import { AuthSignInUseCase } from '@app/modules/auth/use-cases/sign-in'
+import { createMockUserRepository } from '@tests/app/modules/user/unit/base-components'
 
 describe('Auth Sign In', () => {
 

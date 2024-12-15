@@ -1,12 +1,12 @@
 import { describe, expect, test, vi } from 'vitest'
-import { UserCreateUseCase } from '../../../../../app/modules/user/use-cases/create'
-import { People } from '../../../../../app/modules/people/model'
-import { User } from '../../../../../app/modules/user/model'
-import { createMockPeopleRepository } from '../../people/unit/base-components'
-import { PeopleFindUseCase } from '../../../../../app/modules/people/use-cases/find'
-import { createMockUserRepository } from './base-components'
-import { ValidationException } from '../../../../../adapters/validator/validation.exception'
-import { UserGenerateCodeUseCase } from '../../../../../app/modules/user/use-cases/generate-code'
+import { UserCreateUseCase } from '@app/modules/user/use-cases/create'
+import { People } from '@app/modules/people/model'
+import { User } from '@app/modules/user/model'
+import { createMockPeopleRepository } from '@tests/app/modules/people/unit/base-components'
+import { PeopleFindUseCase } from '@app/modules/people/use-cases/find'
+import { createMockUserRepository } from '@tests/app/modules/user/unit/base-components'
+import { ValidationException } from '@adapters/validator/validation.exception'
+import { UserGenerateCodeUseCase } from '@app/modules/user/use-cases/generate-code'
 
 describe('Create User', function () {
 

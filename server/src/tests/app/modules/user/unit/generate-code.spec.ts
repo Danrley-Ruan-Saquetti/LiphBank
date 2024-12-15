@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
-import { UserGenerateCodeUseCase } from '../../../../../app/modules/user/use-cases/generate-code'
-import { createMockUserRepository } from './base-components'
+import { UserGenerateCodeUseCase } from '@app/modules/user/use-cases/generate-code'
+import { createMockUserRepository } from '@tests/app/modules/user/unit/base-components'
 
 describe('Generate User Code', function () {
 

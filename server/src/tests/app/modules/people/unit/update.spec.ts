@@ -1,9 +1,9 @@
 import { describe, expect, test, vi } from 'vitest'
-import { createMockPeopleRepository } from './base-components'
-import { People } from '../../../../../app/modules/people/model'
-import { PeopleUpdateUseCase } from '../../../../../app/modules/people/use-cases/update'
-import { ValidationException } from '../../../../../adapters/validator/validation.exception'
-import { PeopleFindUseCase } from '../../../../../app/modules/people/use-cases/find'
+import { createMockPeopleRepository } from '@tests/app/modules/people/unit/base-components'
+import { People } from '@app/modules/people/model'
+import { PeopleUpdateUseCase } from '@app/modules/people/use-cases/update'
+import { ValidationException } from '@adapters/validator/validation.exception'
+import { PeopleFindUseCase } from '@app/modules/people/use-cases/find'
 
 describe('Update People', () => {
   const peopleRepositoryMock = createMockPeopleRepository()

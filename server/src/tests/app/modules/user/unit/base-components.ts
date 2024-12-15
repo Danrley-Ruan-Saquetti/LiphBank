@@ -1,6 +1,6 @@
 import { Mock, vi } from 'vitest'
-import { UserRepository } from '../../../../../app/modules/user/repository'
-import { User } from '../../../../../app/modules/user/model'
+import { UserRepository } from '@app/modules/user/repository'
+import { User } from '@app/modules/user/model'
 
 export const createMockUserRepository = () => {
   let countId = 0

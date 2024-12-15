@@ -1,8 +1,8 @@
 import { describe, expect, test, vi } from 'vitest'
-import { createMockPeopleRepository } from './base-components'
-import { PeopleCreateUseCase } from '../../../../../app/modules/people/use-cases/create'
-import { People } from '../../../../../app/modules/people/model'
-import { ValidationException } from '../../../../../adapters/validator/validation.exception'
+import { createMockPeopleRepository } from '@tests/app/modules/people/unit/base-components'
+import { PeopleCreateUseCase } from '@app/modules/people/use-cases/create'
+import { People } from '@app/modules/people/model'
+import { ValidationException } from '@adapters/validator/validation.exception'
 
 describe('Create People', () => {
 

@@ -1,9 +1,9 @@
 import { describe, expect, Mock, test, vi } from 'vitest'
-import { createMockPeopleRepository } from './base-components'
-import { PeopleDeleteUseCase } from '../../../../../app/modules/people/use-cases/delete'
-import { People } from '../../../../../app/modules/people/model'
-import { ValidationException } from '../../../../../adapters/validator/validation.exception'
-import { PeopleFindUseCase } from '../../../../../app/modules/people/use-cases/find'
+import { createMockPeopleRepository } from '@tests/app/modules/people/unit/base-components'
+import { PeopleDeleteUseCase } from '@app/modules/people/use-cases/delete'
+import { People } from '@app/modules/people/model'
+import { ValidationException } from '@adapters/validator/validation.exception'
+import { PeopleFindUseCase } from '@app/modules/people/use-cases/find'
 
 describe('Delete People', () => {
 

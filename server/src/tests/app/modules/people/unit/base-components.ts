@@ -1,6 +1,6 @@
 import { Mock, vi } from 'vitest'
-import { PeopleRepository } from '../../../../../app/modules/people/repository'
-import { People } from '../../../../../app/modules/people/model'
+import { PeopleRepository } from '@app/modules/people/repository'
+import { People } from '@app/modules/people/model'
 
 export const createMockPeopleRepository = () => {
   let countId = 0

@@ -1,5 +1,5 @@
 import { describe } from 'vitest'
-import { validateCNPJ, validateCPF } from '../../../util/validators/cpf-cnpj'
+import { validateCNPJ, validateCPF } from '@util/validators/cpf-cnpj'
 
 describe('Validate CPF', () => {
   test('CPF Valid with dots', () => {
