@@ -4,7 +4,7 @@ import { PeopleCreateUseCase, PeopleCreateUseCaseProps } from '../../people/use-
 import { UserCreateUseCase, UserCreateUseCaseArgs } from '../../user/use-cases/create'
 
 export type CreatePeopleAndUserArgs = {
-  user: UserCreateUseCaseArgs
+  user: Omit<UserCreateUseCaseArgs, 'peopleId'>
   people: PeopleCreateUseCaseProps
 }
 
