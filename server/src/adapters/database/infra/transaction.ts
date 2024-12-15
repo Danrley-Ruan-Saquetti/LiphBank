@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { DatabaseTransaction } from '../transaction'
+import { DatabaseTransaction } from '@adapters/database/transaction'
 
 @Injectable()
 export class DatabaseTransactionPrisma extends DatabaseTransaction {

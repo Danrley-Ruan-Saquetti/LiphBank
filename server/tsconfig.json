@@ -19,10 +19,15 @@
     "noFallthroughCasesInSwitch": false,
     "strict": true,
     "strictNullChecks": true,
-    "paths": {}
+    "paths": {
+      "@*": [
+        "./src/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules",
-    "update.js"
+    "update.js",
+    "dist",
   ]
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
-import { User, UserType } from '../model'
-import { UseCase } from '../../../../common/use-case'
-import { PeopleFindUseCase } from '../../people/use-cases/find'
-import { UserRule } from '../rule'
-import { UserRepository } from '../repository'
-import { ValidationException } from '../../../../adapters/validator/validation.exception'
-import { UserGenerateCodeUseCase } from './generate-code'
+import { UseCase } from '@common/use-case'
+import { UserRule } from '@app/modules/user/rule'
+import { User, UserType } from '@app/modules/user/model'
+import { UserRepository } from '@app/modules/user/repository'
+import { PeopleFindUseCase } from '@app/modules/people/use-cases/find'
+import { ValidationException } from '@adapters/validator/validation.exception'
+import { UserGenerateCodeUseCase } from '@app/modules/user/use-cases/generate-code'
 
 const userCreateSchema = z.object({
   peopleId: z

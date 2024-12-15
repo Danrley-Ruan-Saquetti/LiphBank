@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common'
-import { UserCreateUseCase } from './use-cases/create'
-import { UserGenerateCodeUseCase } from './use-cases/generate-code'
-import { UserRepository } from './repository'
-import { UserPrismaRepository } from './infra/repository'
-import { PeopleModule } from '../people/module'
+import { PeopleModule } from '@app/modules/people/module'
+import { UserRepository } from '@app/modules/user/repository'
+import { UserCreateUseCase } from '@app/modules/user/use-cases/create'
+import { UserPrismaRepository } from '@app/modules/user/infra/repository'
+import { UserGenerateCodeUseCase } from '@app/modules/user/use-cases/generate-code'
 
 @Module({
   imports: [

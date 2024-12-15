@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common'
-import { PeopleCreateUseCase } from './use-cases/create'
-import { PeopleDeleteUseCase } from './use-cases/delete'
-import { PeopleFindUseCase } from './use-cases/find'
-import { PeopleUpdateUseCase } from './use-cases/update'
-import { PeoplePrismaRepository } from './infra/repository'
-import { PeopleRepository } from './repository'
+import { PeopleCreateUseCase } from '@app/modules/people/use-cases/create'
+import { PeopleDeleteUseCase } from '@app/modules/people/use-cases/delete'
+import { PeopleFindUseCase } from '@app/modules/people/use-cases/find'
+import { PeopleUpdateUseCase } from '@app/modules/people/use-cases/update'
+import { PeoplePrismaRepository } from '@app/modules/people/infra/repository'
+import { PeopleRepository } from '@app/modules/people/repository'
 
 @Module({
   providers: [

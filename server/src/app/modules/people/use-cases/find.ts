@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
-import { ValidationException } from '../../../../adapters/validator/validation.exception'
-import { PeopleRepository } from '../repository'
-import { UseCase } from '../../../../common/use-case'
+import { ValidationException } from '@adapters/validator/validation.exception'
+import { PeopleRepository } from '@app/modules/people/repository'
+import { UseCase } from '@common/use-case'
 
 const peopleFindSchema = z.object({
   id: z

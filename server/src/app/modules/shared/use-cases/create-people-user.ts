@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { DatabaseTransaction } from '../../../../adapters/database/transaction'
-import { UseCase } from '../../../../common/use-case'
-import { PeopleCreateUseCase, PeopleCreateUseCaseProps } from '../../people/use-cases/create'
-import { UserCreateUseCase, UserCreateUseCaseArgs } from '../../user/use-cases/create'
+import { DatabaseTransaction } from '@adapters/database/transaction'
+import { UseCase } from '@common/use-case'
+import { PeopleCreateUseCase, PeopleCreateUseCaseProps } from '@app/modules/people/use-cases/create'
+import { UserCreateUseCase, UserCreateUseCaseArgs } from '@app/modules/user/use-cases/create'
 
 export type CreatePeopleAndUserArgs = {
   user: Omit<UserCreateUseCaseArgs, 'peopleId'>

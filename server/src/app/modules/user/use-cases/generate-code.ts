@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
-import { UseCase } from '../../../../common/use-case'
-import { UserRepository } from '../repository'
-import { User } from '../model'
-import { CodeGenerator } from '../../../../util/generators/code'
-import { ValidationException } from '../../../../adapters/validator/validation.exception'
+import { UseCase } from '@common/use-case'
+import { CodeGenerator } from '@util/generators/code'
+import { ValidationException } from '@adapters/validator/validation.exception'
+import { User } from '@app/modules/user/model'
+import { UserRepository } from '@app/modules/user/repository'
 
 const userGenerateCodeSchema = z.object({
   timeRepeatOnConflict: z

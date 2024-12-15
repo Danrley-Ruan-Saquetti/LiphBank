@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
-import { People, PeopleGender, PeopleType } from '../model'
-import { PeopleRule } from '../rule'
-import { ValidationException } from '../../../../adapters/validator/validation.exception'
-import { PeopleRepository } from '../repository'
-import { UseCase } from '../../../../common/use-case'
-import { validateCNPJ, validateCPF } from '../../../../util/validators/cpf-cnpj'
-import { extractDigits } from '../../../../util/string'
+import { UseCase } from '@common/use-case'
+import { ValidationException } from '@adapters/validator/validation.exception'
+import { extractDigits } from '@util/string'
+import { validateCNPJ, validateCPF } from '@util/validators/cpf-cnpj'
+import { PeopleRule } from '@app/modules/people/rule'
+import { PeopleRepository } from '@app/modules/people/repository'
+import { People, PeopleGender, PeopleType } from '@app/modules/people/model'
 
 const peopleCreateSchema = z.object({
   name: z

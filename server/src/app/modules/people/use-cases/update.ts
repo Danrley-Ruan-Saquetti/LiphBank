@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
-import { PeopleGender } from '../model'
-import { PeopleRule } from '../rule'
-import { PeopleRepository } from '../repository'
-import { UseCase } from '../../../../common/use-case'
-import { PeopleFindUseCase } from './find'
+import { UseCase } from '@common/use-case'
+import { PeopleRule } from '@app/modules/people/rule'
+import { PeopleGender } from '@app/modules/people/model'
+import { PeopleRepository } from '@app/modules/people/repository'
+import { PeopleFindUseCase } from '@app/modules/people/use-cases/find'
 
 const peopleUpdateSchema = z.object({
   id: z

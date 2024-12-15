@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
-import { DatabaseTransaction } from './transaction'
-import { DatabaseTransactionPrisma } from './infra/transaction'
+import { DatabaseTransaction } from '@adapters/database/transaction'
+import { DatabaseTransactionPrisma } from '@adapters/database/infra/transaction'
 
 @Module({
   providers: [

@@ -1,5 +1,5 @@
-import { validateFormatCNPJ, validateFormatCPF } from '../formatters/cpf-cnpj'
-import { extractDigits } from '../string'
+import { extractDigits } from '@util/string'
+import { validateFormatCNPJ, validateFormatCPF } from '@util/formatters/cpf-cnpj'
 
 export function validateCPF(value: string) {
   if (!value) {

@@ -1,4 +1,4 @@
-import { ZodValidatorAdapter } from '../adapters/validator'
+import { ZodValidatorAdapter } from '@adapters/validator'
 
 export class UseCase {
 

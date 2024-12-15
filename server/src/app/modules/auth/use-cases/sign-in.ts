@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
-import { UseCase } from '../../../../common/use-case'
-import { UserRepository } from '../../user/repository'
-import { User } from '../../user/model'
+import { UseCase } from '@common/use-case'
+import { UserRepository } from '@app/modules/user/repository'
+import { User } from '@app/modules/user/model'
 
 const authSignInSchema = z.object({
   login: z

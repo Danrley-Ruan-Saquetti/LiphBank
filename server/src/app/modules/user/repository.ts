@@ -1,4 +1,4 @@
-import { User, UserType } from './model'
+import { User, UserType } from '@app/modules/user/model'
 
 export abstract class UserRepository {
 

@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { CriticalException } from '../../core/exceptions/critical.exception'
-import { ValidationException } from './validation.exception'
+import { CriticalException } from '@core/exceptions/critical.exception'
+import { ValidationException } from '@adapters/validator/validation.exception'
 import { Injectable } from '@nestjs/common'
 
 export type ZodValidatorOptions = {

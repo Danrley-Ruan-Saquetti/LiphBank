@@ -1,4 +1,4 @@
-import { People } from './model'
+import { People } from '@app/modules/people/model'
 
 export abstract class PeopleRepository {
 

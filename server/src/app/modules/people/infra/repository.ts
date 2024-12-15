@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { PeopleRepository } from '../repository'
-import { People } from '../model'
+import { PeopleRepository } from '@app/modules/people/repository'
+import { People } from '@app/modules/people/model'
 
 @Injectable()
 export class PeoplePrismaRepository extends PeopleRepository {
