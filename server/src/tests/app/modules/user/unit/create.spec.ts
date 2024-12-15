@@ -138,7 +138,6 @@ describe('Create User', function () {
       login,
       type,
       active: true,
-      password: 'Dan!@#123',
     }))
 
 
