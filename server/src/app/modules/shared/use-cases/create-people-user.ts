@@ -10,7 +10,7 @@ export type CreatePeopleAndUserArgs = {
 }
 
 @Injectable()
-export class CreatePeopleAndUser extends UseCase {
+export class CreatePeopleAndUserUseCase extends UseCase {
 
   constructor(
     private peopleCreateUseCase: PeopleCreateUseCase,

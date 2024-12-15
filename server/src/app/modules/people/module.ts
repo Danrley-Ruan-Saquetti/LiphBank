@@ -8,7 +8,6 @@ import { PeopleRepository } from './repository'
 
 @Module({
   providers: [
-    PeoplePrismaRepository,
     PeopleCreateUseCase,
     PeopleDeleteUseCase,
     PeopleFindUseCase,
@@ -17,6 +16,10 @@ import { PeopleRepository } from './repository'
       provide: PeopleRepository,
       useClass: PeoplePrismaRepository,
     }
+  ],
+  exports: [
+    PeopleFindUseCase,
+    PeopleCreateUseCase,
   ]
 })
 export class PeopleModule { }

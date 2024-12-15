@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest'
-import { CreatePeopleAndUser } from '../../../../../app/modules/shared/use-cases/create-people-user'
+import { CreatePeopleAndUserUseCase } from '../../../../../app/modules/shared/use-cases/create-people-user'
 import { PeopleCreateUseCase } from '../../../../../app/modules/people/use-cases/create'
 import { createMockPeopleRepository } from '../../people/unit/base-components'
 import { UserCreateUseCase } from '../../../../../app/modules/user/use-cases/create'
@@ -44,7 +44,7 @@ describe('Create User and People', () => {
       type: People.Type.NATURAL_PERSON,
     }))
 
-    const createPeopleAndUserUseCase = new CreatePeopleAndUser(
+    const createPeopleAndUserUseCase = new CreatePeopleAndUserUseCase(
       new PeopleCreateUseCase(
         peopleRepositoryMock
       ),
