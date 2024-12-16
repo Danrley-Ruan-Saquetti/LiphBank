@@ -1,8 +1,8 @@
 import { describe, expect, test, vi } from 'vitest'
 import { createMockPeopleRepository } from '@tests/app/modules/people/unit/base-components'
-import { PeopleCreateUseCase } from '@app/modules/people/use-cases/create'
 import { People } from '@app/modules/people/model'
 import { ValidationException } from '@adapters/validator/validation.exception'
+import { PeopleFactory } from '@tests/app/modules/people/factory'
 
 describe('Create People', () => {
 
@@ -12,7 +12,7 @@ describe('Create People', () => {
       cpfCnpj: '102.547.109-13',
     }
 
-    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = PeopleFactory.createFactory()
 
     const response = await createPeopleUseCase.perform(arrange)
 
@@ -29,7 +29,7 @@ describe('Create People', () => {
       cpfCnpj: '10254710913',
     }
 
-    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = PeopleFactory.createFactory()
 
     const response = await createPeopleUseCase.perform(arrange)
 
@@ -47,7 +47,7 @@ describe('Create People', () => {
       type: People.Type.NATURAL_PERSON,
     }
 
-    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = PeopleFactory.createFactory()
 
     const response = await createPeopleUseCase.perform(arrange)
 
@@ -65,7 +65,7 @@ describe('Create People', () => {
       type: People.Type.LEGAL_ENTITY,
     }
 
-    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = PeopleFactory.createFactory()
 
     const response = await createPeopleUseCase.perform(arrange)
 
@@ -83,7 +83,7 @@ describe('Create People', () => {
       type: People.Type.LEGAL_ENTITY,
     }
 
-    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = PeopleFactory.createFactory()
 
     const response = await createPeopleUseCase.perform(arrange)
 
@@ -103,7 +103,7 @@ describe('Create People', () => {
       type: People.Type.NATURAL_PERSON,
     }
 
-    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = PeopleFactory.createFactory()
 
     const response = await createPeopleUseCase.perform(arrange)
 
@@ -125,7 +125,7 @@ describe('Create People', () => {
       type: undefined,
     }
 
-    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = PeopleFactory.createFactory()
 
     const response = await createPeopleUseCase.perform(arrange)
 
@@ -144,7 +144,7 @@ describe('Create People', () => {
       cpfCnpj: '102.547.109-13',
     }
 
-    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = PeopleFactory.createFactory()
 
     await expect(async () => {
       try {
@@ -172,7 +172,7 @@ describe('Create People', () => {
       dateOfBirth: now,
     }
 
-    const createPeopleUseCase = new PeopleCreateUseCase(createMockPeopleRepository())
+    const createPeopleUseCase = PeopleFactory.createFactory()
 
     await expect(async () => {
       try {
@@ -199,7 +199,7 @@ describe('Create People', () => {
 
     peopleRepositoryMock.findByCpfCnpj = vi.fn().mockImplementation(cpfCnpj => People.load({ id: 1, cpfCnpj: cpfCnpj }))
 
-    const createPeopleUseCase = new PeopleCreateUseCase(peopleRepositoryMock)
+    const createPeopleUseCase = PeopleFactory.createFactory({ peopleRepository: peopleRepositoryMock })
 
     await expect(async () => {
       try {

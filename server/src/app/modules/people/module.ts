@@ -22,4 +22,4 @@ import { PeopleRepository } from '@app/modules/people/repository'
     PeopleCreateUseCase,
   ]
 })
-export class PeopleModule { }
+export class AppPeopleModule { }

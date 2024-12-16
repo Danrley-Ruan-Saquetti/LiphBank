@@ -1,12 +1,10 @@
+import { UserFactory } from './../factory'
 import { describe, expect, test, vi } from 'vitest'
-import { UserCreateUseCase } from '@app/modules/user/use-cases/create'
 import { People } from '@app/modules/people/model'
 import { User } from '@app/modules/user/model'
 import { createMockPeopleRepository } from '@tests/app/modules/people/unit/base-components'
-import { PeopleFindUseCase } from '@app/modules/people/use-cases/find'
 import { createMockUserRepository } from '@tests/app/modules/user/unit/base-components'
 import { ValidationException } from '@adapters/validator/validation.exception'
-import { UserGenerateCodeUseCase } from '@app/modules/user/use-cases/generate-code'
 
 describe('Create User', function () {
 
@@ -19,7 +17,6 @@ describe('Create User', function () {
     }
 
     const peopleRepositoryMock = createMockPeopleRepository()
-    const userRepositoryMock = createMockUserRepository()
 
     peopleRepositoryMock.findById = vi.fn().mockImplementation(id => People.load({
       id,
@@ -32,15 +29,9 @@ describe('Create User', function () {
       updatedAt: new Date('2024-12-05 10:00:00'),
     }))
 
-    const userCreateUseCase = new UserCreateUseCase(
-      userRepositoryMock,
-      new PeopleFindUseCase(
-        peopleRepositoryMock
-      ),
-      new UserGenerateCodeUseCase(
-        userRepositoryMock
-      )
-    )
+    const userCreateUseCase = UserFactory.createFactory({
+      peopleRepository: peopleRepositoryMock
+    })
 
     const response = await userCreateUseCase.perform(arrange)
 
@@ -87,15 +78,10 @@ describe('Create User', function () {
       password: 'Dan!@#123',
     }))
 
-    const userCreateUseCase = new UserCreateUseCase(
-      userRepositoryMock,
-      new PeopleFindUseCase(
-        peopleRepositoryMock
-      ),
-      new UserGenerateCodeUseCase(
-        userRepositoryMock
-      )
-    )
+    const userCreateUseCase = UserFactory.createFactory({
+      userRepository: userRepositoryMock,
+      peopleRepository: peopleRepositoryMock
+    })
 
     await expect(async () => {
       try {
@@ -141,15 +127,10 @@ describe('Create User', function () {
     }))
 
 
-    const userCreateUseCase = new UserCreateUseCase(
-      userRepositoryMock,
-      new PeopleFindUseCase(
-        peopleRepositoryMock
-      ),
-      new UserGenerateCodeUseCase(
-        userRepositoryMock
-      )
-    )
+    const userCreateUseCase = UserFactory.createFactory({
+      userRepository: userRepositoryMock,
+      peopleRepository: peopleRepositoryMock
+    })
 
     await expect(async () => {
       try {

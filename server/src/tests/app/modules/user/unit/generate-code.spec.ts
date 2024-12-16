@@ -1,6 +1,5 @@
+import { UserFactory } from './../factory'
 import { describe, expect, test } from 'vitest'
-import { UserGenerateCodeUseCase } from '@app/modules/user/use-cases/generate-code'
-import { createMockUserRepository } from '@tests/app/modules/user/unit/base-components'
 
 describe('Generate User Code', function () {
 
@@ -9,9 +8,7 @@ describe('Generate User Code', function () {
       timeRepeatOnConflict: 1
     }
 
-    const userGenerateCode = new UserGenerateCodeUseCase(
-      createMockUserRepository()
-    )
+    const userGenerateCode = UserFactory.generateCodeFactory()
 
     const response = await userGenerateCode.perform(arrange)
 
