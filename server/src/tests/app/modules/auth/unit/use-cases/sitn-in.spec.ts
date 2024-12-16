@@ -1,7 +1,6 @@
+import { AuthFactory } from '@tests/app/modules/auth/factory'
 import { describe, expect, test, vi } from 'vitest'
 import { User } from '@app/modules/user/model'
-import { AuthSignInUseCase } from '@app/modules/auth/use-cases/sign-in'
-import { createMockUserRepository } from '@tests/app/modules/user/unit/base-components'
 
 describe('Auth Sign In', () => {
 
@@ -12,9 +11,7 @@ describe('Auth Sign In', () => {
       type: User.Type.CUSTOMER
     }
 
-    const authSignInUseCase = new AuthSignInUseCase(
-      createMockUserRepository()
-    )
+    const authSignInUseCase = AuthFactory.signInFactory()
 
     const response = await authSignInUseCase.perform(arrange)
 
