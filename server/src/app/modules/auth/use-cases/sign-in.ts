@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import bcrypt from 'bcrypt'
 import { z } from 'zod'
 import { UseCase } from '@common/use-case'
-import { UserRepository } from '@app/modules/user/repository'
 import { User } from '@app/modules/user/model'
+import { UserRepository } from '@app/modules/user/repository'
+import { ValidationException } from '@adapters/validator/validation.exception'
 
 const authSignInSchema = z.object({
   login: z
@@ -20,7 +23,8 @@ export type AuthSignInUseCaseArgs = z.input<typeof authSignInSchema>
 export class AuthSignInUseCase extends UseCase {
 
   constructor(
-    private readonly userRepository: UserRepository
+    private readonly userRepository: UserRepository,
+    private readonly jwtService: JwtService
   ) {
     super()
   }
@@ -30,8 +34,25 @@ export class AuthSignInUseCase extends UseCase {
 
     const user = await this.userRepository.findByLoginAndType(login, type)
 
+    if (!user || !bcrypt.compare(user?.password, password)) {
+      throw new ValidationException('Unable to sign in', [
+        {
+          message: 'Login or password invalid',
+          path: ['login', 'password', '_not_found']
+        }
+      ])
+    }
+
+    const payload = {
+      sub: user.id,
+      code: user.code,
+    }
+
+    const token = await this.jwtService.signAsync(payload, { secret: 'adasda' })
+
     return {
-      token: ''
+      token,
+      payload,
     }
   }
 }
