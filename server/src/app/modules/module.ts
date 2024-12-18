@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
-import { AppPeopleModule } from '@app/modules/people/module'
+import { AppAuthModule } from '@app/modules/auth/module'
 import { AppUserModule } from '@app/modules/user/module'
+import { AppPeopleModule } from '@app/modules/people/module'
 import { AppSharedModule } from '@app/modules/shared/module'
-import { AppAuthModule } from './auth/module'
 
 @Module({
   imports: [

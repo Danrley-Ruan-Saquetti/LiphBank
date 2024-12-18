@@ -1,8 +1,8 @@
-import { UseCase } from '@common/use-case'
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { z } from 'zod'
-import { ValidationException } from '../../../../adapters/validator/validation.exception'
+import { UseCase } from '@common/use-case'
+import { ValidationException } from '@adapters/validator/validation.exception'
 
 const authorizationSchema = z.object({
   token: z

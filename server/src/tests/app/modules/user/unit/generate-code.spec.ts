@@ -1,4 +1,4 @@
-import { UserFactory } from './../factory'
+import { UserFactory } from '@tests/app/modules/user/factory'
 import { describe, expect, test } from 'vitest'
 
 describe('Generate User Code', function () {

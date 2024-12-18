@@ -1,11 +1,11 @@
 import { Test } from '@nestjs/testing'
+import { JwtModule } from '@nestjs/jwt'
 import { describe, expect, test, vi } from 'vitest'
+import { ValidationException } from '@adapters/validator/validation.exception'
+import { getToken } from '@tests/app/modules/auth/unit/base-components'
 import { createMockUserRepository } from '@tests/app/modules/user/unit/base-components'
 import { UserRepository } from '@app/modules/user/repository'
 import { AuthAuthorizationUseCase } from '@app/modules/auth/use-cases/authorization'
-import { JwtModule } from '@nestjs/jwt'
-import { getToken } from '../base-components'
-import { ValidationException } from '../../../../../../adapters/validator/validation.exception'
 
 describe('Auth Sign In', () => {
   let authAuthorizationUseCase: AuthAuthorizationUseCase

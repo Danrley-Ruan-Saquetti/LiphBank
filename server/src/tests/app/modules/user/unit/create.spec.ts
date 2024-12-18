@@ -1,10 +1,10 @@
-import { UserFactory } from './../factory'
 import { describe, expect, test, vi } from 'vitest'
-import { People } from '@app/modules/people/model'
-import { User } from '@app/modules/user/model'
-import { createMockPeopleRepository } from '@tests/app/modules/people/unit/base-components'
-import { createMockUserRepository } from '@tests/app/modules/user/unit/base-components'
+import { UserFactory } from '@tests/app/modules/user/factory'
 import { ValidationException } from '@adapters/validator/validation.exception'
+import { createMockUserRepository } from '@tests/app/modules/user/unit/base-components'
+import { createMockPeopleRepository } from '@tests/app/modules/people/unit/base-components'
+import { User } from '@app/modules/user/model'
+import { People } from '@app/modules/people/model'
 
 describe('Create User', function () {
 
