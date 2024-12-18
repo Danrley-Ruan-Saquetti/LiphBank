@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common'
-import { env } from '@env'
-import { AuthSignInUseCase } from '@app/modules/auth/use-cases/sign-in'
-import { AppUserModule } from '../user/module'
 import { JwtModule } from '@nestjs/jwt'
+import { env } from '@env'
+import { AppUserModule } from '@app/modules/user/module'
+import { AuthSignInUseCase } from '@app/modules/auth/use-cases/sign-in'
+import { AuthAuthorizationUseCase } from '@app/modules/auth/use-cases/authorization'
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { JwtModule } from '@nestjs/jwt'
   ],
   providers: [
     AuthSignInUseCase,
+    AuthAuthorizationUseCase,
   ]
 })
 export class AppAuthModule { }
