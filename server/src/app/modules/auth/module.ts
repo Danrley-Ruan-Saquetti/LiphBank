@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common'
-import { AuthSignInUseCase } from './use-cases/sign-in'
+import { env } from '@env'
+import { AuthSignInUseCase } from '@app/modules/auth/use-cases/sign-in'
 import { AppUserModule } from '../user/module'
 import { JwtModule } from '@nestjs/jwt'
 
 @Module({
   imports: [
     JwtModule.register({
-      secret: '21313fdvd'
+      secret: env('JWT_SECRET')
     }),
     AppUserModule,
   ],

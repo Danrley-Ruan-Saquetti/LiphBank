@@ -34,7 +34,9 @@ export class AuthSignInUseCase extends UseCase {
 
     const user = await this.userRepository.findByLoginAndType(login, type)
 
-    if (!user || !bcrypt.compare(user?.password, password)) {
+    const isValidPassword = user && await this.validatePasswordUser(user, password)
+
+    if (!isValidPassword) {
       throw new ValidationException('Unable to sign in', [
         {
           message: 'Login or password invalid',
@@ -48,11 +50,15 @@ export class AuthSignInUseCase extends UseCase {
       code: user.code,
     }
 
-    const token = await this.jwtService.signAsync(payload, { secret: 'adasda' })
+    const token = await this.jwtService.signAsync(payload)
 
     return {
       token,
       payload,
     }
+  }
+
+  private async validatePasswordUser(user: User, password: string) {
+    return await bcrypt.compare(password, user.password)
   }
 }
