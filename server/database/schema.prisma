@@ -1,0 +1,62 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = []
+}
+
+enum PeopleType {
+  NP // NATURAL_PERSON
+  LE // LEGAL_ENTITY
+
+  @@map("people_type")
+}
+
+enum PeopleGender {
+  M // MASCULINE
+  F // FEMININE
+
+  @@map("people_gender")
+}
+
+model People {
+  id          Int           @id @default(autoincrement())
+  type        PeopleType    @default(NP)
+  name        String        @db.VarChar(128)
+  cpfCnpj     String        @unique @map("cpf_cnpj") @db.VarChar(14)
+  gender      PeopleGender?
+  dateOfBirth DateTime?     @map("date_of_birth") @db.Timestamptz(3)
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  User        User[]
+
+  @@map("peoples")
+}
+
+enum UserType {
+  C // CUSTOMER
+  A // ADMIN
+
+  @@map("user_type")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  peopleId   Int      @map("people_id")
+  type       UserType
+  active     Boolean  @default(true)
+  code       String   @unique @db.VarChar(12)
+  login      String   @db.VarChar(254)
+  password   String   @db.VarChar(120)
+  lastAccess DateTime @default(now()) @map("last_access") @db.Timestamptz(3)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  people     People   @relation(fields: [peopleId], references: [id], onDelete: Restrict)
+
+  @@unique(name: "user_people_type", fields: [peopleId, type], map: "user_people_type")
+  @@unique(name: "user_login_type", fields: [login, type], map: "user_login_type")
+  @@map("users")
+}
