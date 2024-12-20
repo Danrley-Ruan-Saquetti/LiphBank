@@ -23,8 +23,8 @@ export class People implements PeopleProps {
   private _name: string
   private _type: PeopleType
   private _cpfCnpj: string
-  private _gender: PeopleGender | null = null
-  private _dateOfBirth: Date | null = null
+  private _gender: PeopleGender
+  private _dateOfBirth: Date
   private _createdAt: Date
   private _updatedAt: Date
 
