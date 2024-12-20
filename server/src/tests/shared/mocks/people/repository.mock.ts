@@ -1,24 +1,31 @@
+import { vi } from 'vitest'
 import { People } from '@domain/entities/people.entity'
-import { PeopleQueryArgs, PeopleRepository } from '@domain/repositories/people.repository'
+import { PeopleRepository } from '@domain/repositories/people.repository'
 
 export class PeopleRepositoryMock extends PeopleRepository {
 
-  create(people: People): Promise<People> {
-    throw new Error('Method not implemented.')
-  }
-  update(id: number, people: People): Promise<People> {
-    throw new Error('Method not implemented.')
-  }
-  delete(id: number): Promise<void> {
-    throw new Error('Method not implemented.')
-  }
-  findById(id: number): Promise<People | null> {
-    throw new Error('Method not implemented.')
-  }
-  findMany(args?: PeopleQueryArgs): Promise<People[]> {
-    throw new Error('Method not implemented.')
-  }
-  findByCpfCnpj(cpfCnpj: string): Promise<People | null> {
-    throw new Error('Method not implemented.')
-  }
+  private lastId = 0
+
+  create = vi.fn().mockImplementation((people: People) => {
+    people.id = ++this.lastId
+
+    people.createdAt = new Date(Date.now())
+    people.updatedAt = new Date(Date.now())
+
+    return people
+  })
+
+  update = vi.fn().mockImplementation((people: People) => {
+    people.updatedAt = new Date(Date.now())
+
+    return people
+  })
+
+  delete = vi.fn().mockImplementation(() => { })
+
+  findById = vi.fn().mockImplementation(() => null)
+
+  findMany = vi.fn().mockImplementation(() => [])
+
+  findByCpfCnpj = vi.fn().mockImplementation(() => null)
 }
