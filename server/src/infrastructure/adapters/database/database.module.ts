@@ -4,6 +4,7 @@ import { PrismaDatabaseService } from '@infrastructure/adapters/database/prisma.
 
 @Module({
   providers: [
+    PrismaDatabaseService,
     {
       provide: PrismaClient,
       useClass: PrismaDatabaseService
@@ -13,6 +14,6 @@ import { PrismaDatabaseService } from '@infrastructure/adapters/database/prisma.
     PrismaDatabaseService
   ]
 })
-export class DatabaseModule {
+export class InfrastructureDatabaseModule {
 
 }
