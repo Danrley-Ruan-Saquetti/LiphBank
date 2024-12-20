@@ -21,7 +21,8 @@
   "ignorePatterns": [
     "dist",
     "config",
-    "/*.js"
+    "/*.js",
+    "package.json"
   ],
   "rules": {
     "indent": [
