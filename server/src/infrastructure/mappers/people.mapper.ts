@@ -1,4 +1,4 @@
-import { PeopleModel } from '@domain/models/people.model'
+import { PeopleModel } from '@infrastructure/models/people.model'
 import { People, PeopleGender, PeopleType } from '@domain/entities/people.entity'
 
 export class PeopleMapper {
