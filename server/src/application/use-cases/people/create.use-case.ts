@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common'
+import { ConflictException } from '@shared/exceptions/conflict.exception'
 import { PeopleCreateDTO, peopleCreateSchema } from '@application/dto/people/create.dto'
+import { People } from '@domain/entities/people.entity'
 import { Validator } from '@domain/adapters/validator'
 import { PeopleRepository } from '@domain/repositories/people.repository'
 
@@ -12,8 +14,24 @@ export class PeopleCreateUseCase {
   ) { }
 
   async perform(args: PeopleCreateDTO) {
-    const { } = this.validator.validate(peopleCreateSchema, args)
+    const { cpfCnpj, name, dateOfBirth, gender, type } = this.validator.validate(peopleCreateSchema, args)
 
-    return { ok: true }
+    const peopleWithSameCpfCnpj = await this.peopleRepository.findByCpfCnpj(cpfCnpj)
+
+    if (peopleWithSameCpfCnpj) {
+      throw new ConflictException('People', cpfCnpj, { cpfCnpj: 'CPF/CNPJ already exists' })
+    }
+
+    const people = People.load({
+      name,
+      cpfCnpj,
+      dateOfBirth,
+      gender,
+      type,
+    })
+
+    const peopleCreated = await this.peopleRepository.create(people)
+
+    return { people: peopleCreated }
   }
 }

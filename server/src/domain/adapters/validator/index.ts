@@ -7,5 +7,5 @@ export type ValidatorOptions = {
 
 export abstract class Validator {
 
-  abstract validate<T>(schema: z.ZodSchema<T>, args: any, options?: ValidatorOptions): T
+  abstract validate<Schema extends z.ZodSchema>(schema: Schema, args: unknown, options?: ValidatorOptions): z.output<Schema>
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
+import { CriticalException } from '@shared/exceptions/critical.exception'
 import { ValidatorException } from '@infrastructure/adapters/validator/exception.validator'
 import { Validator, ValidatorOptions } from '@domain/adapters/validator'
 
@@ -21,6 +22,8 @@ export class ZodValidatorAdapterImplementation extends Validator {
       if (options.debugLogError) {
         console.log(err)
       }
+
+      throw new CriticalException(err.message)
     }
 
     const causes = err.issues.map(issue => ({
