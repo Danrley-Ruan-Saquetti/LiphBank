@@ -1,4 +1,4 @@
-import { expect, vi } from 'vitest'
+import { vi } from 'vitest'
 import { Test } from '@nestjs/testing'
 import { ConflictException } from '@shared/exceptions/conflict.exception'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
