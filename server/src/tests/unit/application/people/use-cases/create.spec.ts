@@ -7,7 +7,7 @@ import { PeopleCreateUseCase } from '@application/use-cases/people/create.use-ca
 import { People } from '@domain/entities/people.entity'
 import { Validator } from '@domain/adapters/validator'
 import { PeopleRepository } from '@domain/repositories/people.repository'
-import { PeopleRepositoryMock } from '@tests/shared/mocks/people/repository.mock'
+import { PeopleRepositoryMock } from '@tests/unit/shared/mocks/people/repository.mock'
 
 describe('Application - People - UseCase - Create', () => {
   let peopleCreateUseCase: PeopleCreateUseCase
