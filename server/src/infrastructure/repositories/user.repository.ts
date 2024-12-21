@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { UserMapper } from '@infrastructure/mappers/user.mapper'
-import { User } from '@domain/entities/user.entity'
+import { User, UserType } from '@domain/entities/user.entity'
 import { UserQueryArgs, UserRepository } from '@domain/repositories/user.repository'
 
 export class UserRepositoryImplementation extends UserRepository {
@@ -81,6 +81,39 @@ export class UserRepositoryImplementation extends UserRepository {
   async findById(id: number) {
     try {
       const userDatabase = await this.prisma.user.findUnique({ where: { id } })
+
+      return userDatabase ? UserMapper.databaseToEntity(userDatabase) : null
+    } catch (error: any) {
+
+      throw error
+    }
+  }
+
+  async findByCode(code: string) {
+    try {
+      const userDatabase = await this.prisma.user.findUnique({ where: { code } })
+
+      return userDatabase ? UserMapper.databaseToEntity(userDatabase) : null
+    } catch (error: any) {
+
+      throw error
+    }
+  }
+
+  async findByPeopleIdAndType(peopleId: number, type: UserType) {
+    try {
+      const userDatabase = await this.prisma.user.findFirst({ where: { peopleId, type } })
+
+      return userDatabase ? UserMapper.databaseToEntity(userDatabase) : null
+    } catch (error: any) {
+
+      throw error
+    }
+  }
+
+  async findByLoginAndType(login: string, type: UserType) {
+    try {
+      const userDatabase = await this.prisma.user.findFirst({ where: { login, type } })
 
       return userDatabase ? UserMapper.databaseToEntity(userDatabase) : null
     } catch (error: any) {

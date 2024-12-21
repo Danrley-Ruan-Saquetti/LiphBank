@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { User } from '@domain/entities/user.entity'
+import { User, UserType } from '@domain/entities/user.entity'
 import { UserRepository } from '@domain/repositories/user.repository'
 
 export class UserRepositoryMock extends UserRepository {
@@ -28,4 +28,10 @@ export class UserRepositoryMock extends UserRepository {
   findMany = vi.fn().mockImplementation(() => [])
 
   findByCpfCnpj = vi.fn().mockImplementation(() => null)
+
+  findByCode = vi.fn().mockImplementation(() => null)
+
+  findByPeopleIdAndType = vi.fn().mockImplementation(() => null)
+
+  findByLoginAndType = vi.fn().mockImplementation(() => null)
 }

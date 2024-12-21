@@ -4,16 +4,16 @@ import { ConflictException } from '@shared/exceptions/conflict.exception'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { ZodValidatorAdapterImplementation } from '@infrastructure/adapters/validator/zod.validator'
 import { PeopleCreateUseCase } from '@application/use-cases/people/create.use-case'
-import { People } from '@domain/entities/people.entity'
 import { Validator } from '@domain/adapters/validator'
 import { PeopleRepository } from '@domain/repositories/people.repository'
+import { People, PeopleType } from '@domain/entities/people.entity'
 import { PeopleRepositoryMock } from '@tests/unit/shared/mocks/people/repository.mock'
 
 describe('Application - People - UseCase - Create', () => {
   let peopleCreateUseCase: PeopleCreateUseCase
   let peopleRepository: PeopleRepositoryMock
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     peopleRepository = new PeopleRepositoryMock()
 
     const module = await Test.createTestingModule({
@@ -40,14 +40,14 @@ describe('Application - People - UseCase - Create', () => {
     const arrange = {
       name: 'Dan Ruan',
       cpfCnpj: '102.547.109-13',
-      type: People.Type.NATURAL_PERSON,
+      type: PeopleType.NATURAL_PERSON,
     }
 
     const response = await peopleCreateUseCase.perform(arrange)
 
     expect(response.people).toBeInstanceOf(People)
     expect(response.people.id).toEqual(1)
-    expect(response.people.type).toEqual(People.Type.NATURAL_PERSON)
+    expect(response.people.type).toEqual(PeopleType.NATURAL_PERSON)
     expect(response.people.name).toEqual('Dan Ruan')
     expect(response.people.cpfCnpj).toEqual('10254710913')
   })
@@ -56,7 +56,7 @@ describe('Application - People - UseCase - Create', () => {
     const arrange = {
       name: 'Dan Ruan',
       cpfCnpj: '102.547.109-13',
-      type: People.Type.NATURAL_PERSON,
+      type: PeopleType.NATURAL_PERSON,
     }
 
     vi.spyOn(peopleRepository, 'findByCpfCnpj').mockImplementation(() => People.load({ cpfCnpj: '10254710913' }))
@@ -66,7 +66,7 @@ describe('Application - People - UseCase - Create', () => {
         await peopleCreateUseCase.perform(arrange)
       } catch (error: any) {
         if (error instanceof ConflictException) {
-          expect(error.details?.value).toEqual('10254710913')
+          expect(error.details?.conflict.every(path => ['cpfCnpj'].includes(path))).toEqual(true)
         }
 
         throw error

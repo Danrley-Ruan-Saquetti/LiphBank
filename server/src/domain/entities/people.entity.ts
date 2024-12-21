@@ -16,8 +16,6 @@ export interface PeopleProps extends PeoplePrisma {
 }
 
 export class People implements PeopleProps {
-  static readonly Type = PeopleType
-  static readonly Gender = PeopleGender
 
   private _id: number
   private _name: string

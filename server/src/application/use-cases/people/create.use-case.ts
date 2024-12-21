@@ -19,7 +19,7 @@ export class PeopleCreateUseCase {
     const peopleWithSameCpfCnpj = await this.peopleRepository.findByCpfCnpj(cpfCnpj)
 
     if (peopleWithSameCpfCnpj) {
-      throw new ConflictException('People', cpfCnpj, { cpfCnpj: 'CPF/CNPJ already exists' })
+      throw new ConflictException('People', cpfCnpj, { conflict: ['cpfCnpj'] })
     }
 
     const people = People.load({
