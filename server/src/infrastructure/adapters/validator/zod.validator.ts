@@ -1,18 +1,19 @@
-import { z } from 'zod'
-import { Validator, ValidatorOptions } from '@domain/adapters/validator'
 import { Injectable } from '@nestjs/common'
+import { z } from 'zod'
+import { ValidatorException } from '@infrastructure/adapters/validator/exception.validator'
+import { Validator, ValidatorOptions } from '@domain/adapters/validator'
 
 @Injectable()
 export class ZodValidatorAdapterImplementation extends Validator {
 
-  validate<T>(schema: z.ZodSchema<T>, args: any, options: ValidatorOptions = {}): T {
+  validate<Schema extends z.ZodSchema>(schema: Schema, args: unknown, options?: ValidatorOptions): z.output<Schema> {
     const { success, data, error } = schema.safeParse(args)
 
     if (!success) {
       this.throwValidateError(error, options)
     }
 
-    return data as T
+    return data as Schema
   }
 
   private throwValidateError(err: any, options: ValidatorOptions = {}): never {
@@ -34,6 +35,6 @@ export class ZodValidatorAdapterImplementation extends Validator {
       })
     }
 
-    throw ''
+    throw new ValidatorException('Invalid data', { causes })
   }
 }
