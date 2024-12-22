@@ -20,4 +20,4 @@ export const userCreateSchema = z.object({
     .nativeEnum(UserType, { errorMap: () => ({ message: UserMessage.type.valueInvalid }) }),
 })
 
-export type UserCreateDTO = z.infer<typeof userCreateSchema>
+export type UserCreateDTO = z.input<typeof userCreateSchema>
