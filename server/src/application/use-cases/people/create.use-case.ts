@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common'
 import { ConflictException } from '@shared/exceptions'
+import { UseCase } from '@application/use-cases/use-case'
 import { PeopleCreateDTO, peopleCreateSchema } from '@application/dto/people/create.dto'
 import { People } from '@domain/entities/people.entity'
-import { Validator } from '@domain/adapters/validator'
 import { PeopleRepository } from '@domain/repositories/people.repository'
 
 @Injectable()
-export class PeopleCreateUseCase {
+export class PeopleCreateUseCase extends UseCase {
 
   constructor(
-    private readonly validator: Validator,
     private readonly peopleRepository: PeopleRepository
-  ) { }
+  ) {
+    super()
+  }
 
   async perform(args: PeopleCreateDTO) {
     const { cpfCnpj, name, dateOfBirth, gender, type } = this.validator.validate(peopleCreateSchema, args)
