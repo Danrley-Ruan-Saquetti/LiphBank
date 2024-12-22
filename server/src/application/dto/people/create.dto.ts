@@ -3,6 +3,7 @@ import { extractDigits } from '@shared/utils/string'
 import { PeopleMessage } from '@application/messages/people.message'
 import { PeopleRule } from '@domain/rules/people.rule'
 import { PeopleGender, PeopleType } from '@domain/entities/people.entity'
+import { validateCNPJ, validateCPF } from '../../../shared/validators/cpf-cnpj'
 
 export const peopleCreateSchema = z.object({
   name: z
@@ -11,7 +12,8 @@ export const peopleCreateSchema = z.object({
     .min(PeopleRule.name.minCharacters, { message: PeopleMessage.name.rangeCharacters })
     .max(PeopleRule.name.maxCharacters, { message: PeopleMessage.name.rangeCharacters }),
   type: z
-    .nativeEnum(PeopleType, { errorMap: () => ({ message: PeopleMessage.type.valueInvalid }) }),
+    .nativeEnum(PeopleType, { errorMap: () => ({ message: PeopleMessage.type.valueInvalid }) })
+    .default(PeopleType.NATURAL_PERSON),
   cpfCnpj: z
     .string({ 'required_error': PeopleMessage.name.required })
     .trim()
@@ -31,5 +33,12 @@ export const peopleCreateSchema = z.object({
       },
     ),
 })
+  .refine(({ type, cpfCnpj }) => {
+    if (type == PeopleType.NATURAL_PERSON) {
+      return validateCPF(cpfCnpj)
+    }
 
-export type PeopleCreateDTO = z.infer<typeof peopleCreateSchema>
+    return type == PeopleType.LEGAL_ENTITY && validateCNPJ(cpfCnpj)
+  }, ({ type }) => ({ message: type == PeopleType.LEGAL_ENTITY ? `${PeopleMessage.cnpj.valueInvalid}` : `${PeopleMessage.cpf.valueInvalid}`, path: ['cpfCnpj'] }))
+
+export type PeopleCreateDTO = z.input<typeof peopleCreateSchema>
