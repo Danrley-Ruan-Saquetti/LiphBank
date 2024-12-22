@@ -11,13 +11,13 @@ export class ZodValidatorAdapterImplementation extends Validator {
     const { success, data, error } = schema.safeParse(args)
 
     if (!success) {
-      this.throwValidateError(error, options)
+      this.resolveValidateError(error, options)
     }
 
     return data as Schema
   }
 
-  private throwValidateError(err: any, options: ValidatorOptions = {}): never {
+  private resolveValidateError(err: any, options: ValidatorOptions = {}): never {
     if (!(err instanceof z.ZodError)) {
       if (options.debugLogError) {
         console.log(err)
