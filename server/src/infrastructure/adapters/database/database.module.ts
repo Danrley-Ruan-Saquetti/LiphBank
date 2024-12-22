@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common'
-import { PrismaClient } from '@prisma/client'
 import { PrismaDatabaseService } from '@infrastructure/adapters/database/prisma.service'
+import { Database } from '@domain/database'
 
 @Module({
   providers: [
     PrismaDatabaseService,
     {
-      provide: PrismaClient,
+      provide: Database,
       useClass: PrismaDatabaseService
     }
   ],
