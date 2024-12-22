@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { ConflictException } from '@shared/exceptions/conflict.exception'
+import { ConflictException } from '@shared/exceptions'
 import { PeopleCreateDTO, peopleCreateSchema } from '@application/dto/people/create.dto'
 import { People } from '@domain/entities/people.entity'
 import { Validator } from '@domain/adapters/validator'

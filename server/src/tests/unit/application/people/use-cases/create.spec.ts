@@ -1,6 +1,6 @@
 import { vi } from 'vitest'
 import { Test } from '@nestjs/testing'
-import { ConflictException } from '@shared/exceptions/conflict.exception'
+import { ConflictException } from '@shared/exceptions'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { ZodValidatorAdapterImplementation } from '@infrastructure/adapters/validator/zod.validator'
 import { PeopleCreateUseCase } from '@application/use-cases/people/create.use-case'
