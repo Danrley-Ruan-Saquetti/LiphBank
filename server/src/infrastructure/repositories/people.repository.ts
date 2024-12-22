@@ -1,12 +1,12 @@
-import { PrismaClient } from '@prisma/client'
 import { PeopleMapper } from '@infrastructure/mappers/people.mapper'
 import { People } from '@domain/entities/people.entity'
+import { Database } from '@domain/database'
 import { PeopleQueryArgs, PeopleRepository } from '@domain/repositories/people.repository'
 
 export class PeopleRepositoryImplementation extends PeopleRepository {
 
   constructor(
-    private readonly prisma: PrismaClient
+    private readonly database: Database
   ) {
     super()
   }
@@ -15,7 +15,7 @@ export class PeopleRepositoryImplementation extends PeopleRepository {
     try {
       const peopleModel = PeopleMapper.entityToDatabase(people)
 
-      const peopleDatabase = await this.prisma.people.create({
+      const peopleDatabase = await this.database.people.create({
         data: {
           cpfCnpj: peopleModel.cpfCnpj,
           name: peopleModel.name,
@@ -27,8 +27,7 @@ export class PeopleRepositoryImplementation extends PeopleRepository {
 
       return PeopleMapper.databaseToEntity(peopleDatabase)
     } catch (error: any) {
-
-      throw error
+      this.database.resolveError(error)
     }
   }
 
@@ -36,7 +35,7 @@ export class PeopleRepositoryImplementation extends PeopleRepository {
     try {
       const peopleModel = PeopleMapper.entityToDatabase(people)
 
-      const peopleDatabase = await this.prisma.people.update({
+      const peopleDatabase = await this.database.people.update({
         where: { id },
         data: {
           cpfCnpj: peopleModel.cpfCnpj,
@@ -49,50 +48,45 @@ export class PeopleRepositoryImplementation extends PeopleRepository {
 
       return PeopleMapper.databaseToEntity(peopleDatabase)
     } catch (error: any) {
-
-      throw error
+      this.database.resolveError(error)
     }
   }
 
   async delete(id: number) {
     try {
-      await this.prisma.people.delete({ where: { id } })
+      await this.database.people.delete({ where: { id } })
     } catch (error: any) {
-
-      throw error
+      this.database.resolveError(error)
     }
   }
 
   async findMany(args: PeopleQueryArgs = {}) {
     try {
-      const peoplesDatabase = await this.prisma.people.findMany({ ...args } as any)
+      const peoplesDatabase = await this.database.people.findMany({ ...args } as any)
 
       return PeopleMapper.multiDatabaseToEntity(peoplesDatabase)
     } catch (error: any) {
-
-      throw error
+      this.database.resolveError(error)
     }
   }
 
   async findById(id: number) {
     try {
-      const peopleDatabase = await this.prisma.people.findUnique({ where: { id } })
+      const peopleDatabase = await this.database.people.findUnique({ where: { id } })
 
       return peopleDatabase ? PeopleMapper.databaseToEntity(peopleDatabase) : null
     } catch (error: any) {
-
-      throw error
+      this.database.resolveError(error)
     }
   }
 
   async findByCpfCnpj(cpfCnpj: string) {
     try {
-      const peopleDatabase = await this.prisma.people.findUnique({ where: { cpfCnpj } })
+      const peopleDatabase = await this.database.people.findUnique({ where: { cpfCnpj } })
 
       return peopleDatabase ? PeopleMapper.databaseToEntity(peopleDatabase) : null
     } catch (error: any) {
-
-      throw error
+      this.database.resolveError(error)
     }
   }
 }
