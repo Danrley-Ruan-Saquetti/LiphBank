@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common'
 import { PeopleCreateUseCase } from '@application/use-cases/people/create.use-case'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
+import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
 
 @Module({
   imports: [
-    InfrastructureValidatorModule
+    InfrastructureValidatorModule,
+    InfrastructureRepositoryModule,
   ],
   providers: [
     PeopleCreateUseCase

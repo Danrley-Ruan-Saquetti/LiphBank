@@ -9,6 +9,13 @@ import { CodeGenerator } from '@domain/adapters/generator/code/code.generator'
       provide: CodeGenerator,
       useClass: CodeGeneratorImplementation
     }
+  ],
+  exports: [
+    CodeGeneratorImplementation,
+    {
+      provide: CodeGenerator,
+      useClass: CodeGeneratorImplementation
+    }
   ]
 })
 export class InfrastructureGeneratorCodeModule { }

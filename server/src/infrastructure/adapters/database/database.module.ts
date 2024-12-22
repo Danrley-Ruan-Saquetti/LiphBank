@@ -11,7 +11,11 @@ import { Database } from '@domain/database'
     }
   ],
   exports: [
-    PrismaDatabaseService
+    PrismaDatabaseService,
+    {
+      provide: Database,
+      useClass: PrismaDatabaseService
+    }
   ]
 })
 export class InfrastructureDatabaseModule {

@@ -2,7 +2,9 @@ import { PeopleMapper } from '@infrastructure/mappers/people.mapper'
 import { People } from '@domain/entities/people.entity'
 import { Database } from '@domain/database'
 import { PeopleQueryArgs, PeopleRepository } from '@domain/repositories/people.repository'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class PeopleRepositoryImplementation extends PeopleRepository {
 
   constructor(

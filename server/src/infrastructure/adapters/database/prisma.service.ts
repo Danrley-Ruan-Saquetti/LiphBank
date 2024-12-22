@@ -9,7 +9,7 @@ import { Database } from '@domain/database'
 export class PrismaDatabaseService extends Database implements OnModuleInit {
 
   constructor() {
-    super({ log: ['error', 'warn', 'info'] })
+    super({ log: ['error', 'warn'] })
   }
 
   async onModuleInit() {
