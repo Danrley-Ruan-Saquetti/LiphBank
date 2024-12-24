@@ -5,6 +5,7 @@ import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
 import { UserCreateDTO, userCreateSchema } from '@application/dto/user/create.dto'
 import { User } from '@domain/entities/user.entity'
+import { Hash } from '@domain/adapters/crypto/hash'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { PeopleRepository } from '@domain/repositories/people.repository'
 
@@ -15,6 +16,7 @@ export class UserCreateUseCase extends UseCase {
     private readonly userRepository: UserRepository,
     private readonly peopleRepository: PeopleRepository,
     private readonly userGenerateCodeUseCase: UserGenerateCodeUseCase,
+    private readonly hash: Hash
   ) {
     super()
   }
@@ -41,12 +43,13 @@ export class UserCreateUseCase extends UseCase {
     }
 
     const { code } = await this.userGenerateCodeUseCase.perform()
+    const passwordHashed = await this.hash.hash(password)
 
     const user = User.load({
       login,
-      password,
       type,
       code,
+      password: passwordHashed,
       peopleId: people.id,
       active: true,
     })
