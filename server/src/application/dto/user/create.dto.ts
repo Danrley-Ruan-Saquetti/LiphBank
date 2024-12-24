@@ -11,11 +11,11 @@ export const userCreateSchema = z.object({
   login: z
     .string({ 'required_error': UserMessage.login.required })
     .trim()
-    .email({ message: UserMessage.login.valueInvalid }),
+    .email(UserMessage.login.valueInvalid),
   password: z
     .string({ 'required_error': UserMessage.password.required })
     .trim()
-    .regex(UserRule.password.regexp, { message: UserMessage.password.valueInvalid }),
+    .regex(UserRule.password.regexp, UserMessage.password.valueInvalid),
   type: z
     .nativeEnum(UserType, { errorMap: () => ({ message: UserMessage.type.valueInvalid }) }),
 })

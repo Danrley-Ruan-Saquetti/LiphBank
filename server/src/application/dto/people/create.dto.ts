@@ -1,16 +1,16 @@
 import { z } from 'zod'
-import { extractDigits } from '@shared/utils/string'
 import { PeopleMessage } from '@application/messages/people.message'
 import { PeopleRule } from '@domain/rules/people.rule'
 import { PeopleGender, PeopleType } from '@domain/entities/people.entity'
-import { validateCNPJ, validateCPF } from '../../../shared/validators/cpf-cnpj'
+import { extractDigits } from '@shared/utils/string'
+import { validateCNPJ, validateCPF } from '@shared/validators/cpf-cnpj'
 
 export const peopleCreateSchema = z.object({
   name: z
     .string({ 'required_error': PeopleMessage.name.required })
     .trim()
-    .min(PeopleRule.name.minCharacters, { message: PeopleMessage.name.rangeCharacters })
-    .max(PeopleRule.name.maxCharacters, { message: PeopleMessage.name.rangeCharacters }),
+    .min(PeopleRule.name.minCharacters, PeopleMessage.name.rangeCharacters)
+    .max(PeopleRule.name.maxCharacters, PeopleMessage.name.rangeCharacters),
   type: z
     .nativeEnum(PeopleType, { errorMap: () => ({ message: PeopleMessage.type.valueInvalid }) })
     .default(PeopleType.NATURAL_PERSON),
@@ -29,7 +29,7 @@ export const peopleCreateSchema = z.object({
       value => !value || value.getTime() < new Date(Date.now()).getTime(),
       {
         message: PeopleMessage.dateGreaterCurrent.dateGreaterThanCurrent,
-        path: ['date_greater_current_date']
+        path: ['dateOfBirth']
       },
     ),
 })
