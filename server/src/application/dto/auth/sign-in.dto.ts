@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { AuthMessage } from '@application/messages/auth.message'
+import { UserType } from '@domain/entities/user.entity'
 
 export const authSignInSchema = z.object({
   login: z
@@ -8,6 +9,8 @@ export const authSignInSchema = z.object({
   password: z
     .string({ 'required_error': AuthMessage.password.required })
     .min(1, AuthMessage.password.required),
+  type: z
+    .nativeEnum(UserType),
 })
 
 export type AuthSignInDTO = z.input<typeof authSignInSchema>
