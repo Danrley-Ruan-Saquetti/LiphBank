@@ -3,6 +3,7 @@ export type Environment = {
   SECRET_PEPPER: string
   DATABASE_URL: string
   JWT_SECRET: string
+  JWT_EXPIRATION: string
   PORT: number
   TZ: string
 }

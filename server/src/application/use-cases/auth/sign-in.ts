@@ -1,6 +1,8 @@
+import { env } from '@shared/env'
 import { UseCase } from '@application/use-cases/use-case'
 import { AuthSignInDTO, authSignInSchema } from '@application/dto/auth/sign-in.dto'
 import { SignInCredentialInvalidException } from '@application/exceptions/sign-in-credential-invalid.exception'
+import { JWT } from '@domain/adapters/jwt'
 import { Hash } from '@domain/adapters/crypto/hash'
 import { UserRepository } from '@domain/repositories/user.repository'
 
@@ -8,7 +10,8 @@ export class AuthSignInUseCase extends UseCase {
 
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly hash: Hash
+    private readonly hash: Hash,
+    private readonly jwt: JWT
   ) {
     super()
   }
@@ -33,7 +36,10 @@ export class AuthSignInUseCase extends UseCase {
       code: user.code,
     }
 
-    const token = ''
+    const token = this.jwt.encode(payload, {
+      secret: env('JWT_SECRET'),
+      exp: env('JWT_EXPIRATION'),
+    })
 
     return { token, payload }
   }
