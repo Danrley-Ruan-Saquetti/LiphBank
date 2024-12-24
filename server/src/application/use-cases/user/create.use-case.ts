@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { NotFoundException, ConflictException } from '@shared/exceptions'
 import { UseCase } from '@application/use-cases/use-case'
+import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
 import { UserCreateDTO, userCreateSchema } from '@application/dto/user/create.dto'
 import { User } from '@domain/entities/user.entity'
 import { UserRepository } from '@domain/repositories/user.repository'
@@ -12,6 +13,7 @@ export class UserCreateUseCase extends UseCase {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly peopleRepository: PeopleRepository,
+    private readonly userGenerateCodeUseCase: UserGenerateCodeUseCase,
   ) {
     super()
   }
@@ -37,10 +39,13 @@ export class UserCreateUseCase extends UseCase {
       throw new ConflictException('User', login, { conflict: ['login', 'type'] })
     }
 
+    const { code } = await this.userGenerateCodeUseCase.perform()
+
     const user = User.load({
       login,
       password,
       type,
+      code,
       peopleId: people.id,
       active: true,
     })
