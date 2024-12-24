@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
-import { NotFoundException, ConflictException } from '@shared/exceptions'
 import { UseCase } from '@application/use-cases/use-case'
+import { ConflictException } from '@application/exceptions/conflict.exception'
+import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
 import { UserCreateDTO, userCreateSchema } from '@application/dto/user/create.dto'
 import { User } from '@domain/entities/user.entity'

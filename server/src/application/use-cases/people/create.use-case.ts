@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { ConflictException } from '@shared/exceptions'
 import { UseCase } from '@application/use-cases/use-case'
+import { ConflictException } from '@application/exceptions/conflict.exception'
 import { PeopleCreateDTO, peopleCreateSchema } from '@application/dto/people/create.dto'
 import { People } from '@domain/entities/people.entity'
 import { PeopleRepository } from '@domain/repositories/people.repository'
