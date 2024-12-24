@@ -11,7 +11,7 @@ export class AuthSignInUseCase extends UseCase {
   }
 
   async perform(args: AuthSignInDTO) {
-    const { } = this.validator.validate(authSignInSchema, args)
+    const { login, password } = this.validator.validate(authSignInSchema, args)
 
   }
 }
