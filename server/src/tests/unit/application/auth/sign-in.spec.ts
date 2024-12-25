@@ -2,7 +2,6 @@ import { vi } from 'vitest'
 import { JwtModule } from '@nestjs/jwt'
 import { InfrastructureJWTModule } from '@infrastructure/adapters/jwt/jwt.module'
 import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
-import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { AuthSignInUseCase } from '@application/use-cases/auth/sign-in'
 import { SignInCredentialInvalidException } from '@application/exceptions/sign-in-credential-invalid.exception'
 import { Hash } from '@domain/adapters/crypto/hash'
@@ -22,7 +21,6 @@ describe('Application - Auth - UseCase - SignIn', () => {
     const module = await createApplicationMock({
       imports: [
         JwtModule.register({}),
-        InfrastructureValidatorModule,
         InfrastructureHashModule,
         InfrastructureJWTModule
       ],

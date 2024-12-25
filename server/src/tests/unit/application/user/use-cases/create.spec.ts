@@ -1,8 +1,6 @@
 import { vi } from 'vitest'
-import { Test } from '@nestjs/testing'
 import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
 import { CodeGeneratorImplementation } from '@infrastructure/adapters/generator/code/code.generator'
-import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { ConflictException } from '@application/exceptions/conflict.exception'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserCreateUseCase } from '@application/use-cases/user/create.use-case'
@@ -29,7 +27,6 @@ describe('Application - User - UseCase - Create', () => {
 
     const module = await createApplicationMock({
       imports: [
-        InfrastructureValidatorModule,
         InfrastructureHashModule,
       ],
       providers: [

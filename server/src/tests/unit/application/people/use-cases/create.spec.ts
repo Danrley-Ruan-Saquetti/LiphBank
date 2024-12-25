@@ -1,6 +1,4 @@
 import { vi } from 'vitest'
-import { Test } from '@nestjs/testing'
-import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { ConflictException } from '@application/exceptions/conflict.exception'
 import { PeopleCreateUseCase } from '@application/use-cases/people/create.use-case'
 import { PeopleRepository } from '@domain/repositories/people.repository'
@@ -16,9 +14,6 @@ describe('Application - People - UseCase - Create', () => {
     peopleRepository = new PeopleRepositoryMock()
 
     const module = await createApplicationMock({
-      imports: [
-        InfrastructureValidatorModule,
-      ],
       providers: [
         PeopleCreateUseCase,
         {

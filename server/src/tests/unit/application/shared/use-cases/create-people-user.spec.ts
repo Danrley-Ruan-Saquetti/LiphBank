@@ -6,7 +6,6 @@ import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-co
 import { CreatePeopleAndUserUseCase } from '@application/use-cases/shared/create-people-user.use-case'
 import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
 import { CodeGeneratorImplementation } from '@infrastructure/adapters/generator/code/code.generator'
-import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { People } from '@domain/entities/people.entity'
 import { User, UserType } from '@domain/entities/user.entity'
 import { CodeGenerator } from '@domain/adapters/generator/code/code.generator'
@@ -30,7 +29,6 @@ describe('Application - Shared - UseCase - Create People and User', () => {
 
     const module = await createApplicationMock({
       imports: [
-        InfrastructureValidatorModule,
         InfrastructureHashModule,
       ],
       providers: [
