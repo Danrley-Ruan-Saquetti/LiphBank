@@ -6,6 +6,7 @@ import { PeopleCreateUseCase } from '@application/use-cases/people/create.use-ca
 import { PeopleRepository } from '@domain/repositories/people.repository'
 import { People, PeopleType } from '@domain/entities/people.entity'
 import { PeopleRepositoryMock } from '@tests/unit/shared/mocks/people/repository.mock'
+import { createApplicationMock } from '@tests/unit/shared/mocks/module.mock'
 
 describe('Application - People - UseCase - Create', () => {
   let peopleCreateUseCase: PeopleCreateUseCase
@@ -14,7 +15,7 @@ describe('Application - People - UseCase - Create', () => {
   beforeEach(async () => {
     peopleRepository = new PeopleRepositoryMock()
 
-    const module = await Test.createTestingModule({
+    const module = await createApplicationMock({
       imports: [
         InfrastructureValidatorModule,
       ],
@@ -25,7 +26,7 @@ describe('Application - People - UseCase - Create', () => {
           useValue: peopleRepository,
         },
       ],
-    }).compile()
+    })
 
     peopleCreateUseCase = module.get(PeopleCreateUseCase)
   })

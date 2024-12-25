@@ -15,6 +15,7 @@ import { PeopleRepository } from '@domain/repositories/people.repository'
 import { DatabaseTransaction } from '@domain/database/transaction'
 import { UserRepositoryMock } from '@tests/unit/shared/mocks/user/repository.mock'
 import { PeopleRepositoryMock } from '@tests/unit/shared/mocks/people/repository.mock'
+import { createApplicationMock } from '@tests/unit/shared/mocks/module.mock'
 
 describe('Application - Shared - UseCase - Create People and User', () => {
   let createPeopleAndUserUseCase: CreatePeopleAndUserUseCase
@@ -27,7 +28,7 @@ describe('Application - Shared - UseCase - Create People and User', () => {
     peopleRepository = new PeopleRepositoryMock()
     codeGenerator = new CodeGeneratorImplementation()
 
-    const module = await Test.createTestingModule({
+    const module = await createApplicationMock({
       imports: [
         InfrastructureValidatorModule,
         InfrastructureHashModule,
@@ -54,7 +55,7 @@ describe('Application - Shared - UseCase - Create People and User', () => {
           useFactory: () => ({ transaction: async (handler: () => Promise<any | void>) => await handler() })
         }
       ],
-    }).compile()
+    })
 
     createPeopleAndUserUseCase = module.get(CreatePeopleAndUserUseCase)
   })
