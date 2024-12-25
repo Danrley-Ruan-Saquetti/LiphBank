@@ -1,14 +1,20 @@
 import { vi } from 'vitest'
 import { Test } from '@nestjs/testing'
+import { HashImplementation } from '@infrastructure/adapters/crypto/hash'
+import { CodeGeneratorImplementation } from '@infrastructure/adapters/generator/code/code.generator'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { ZodValidatorAdapterImplementation } from '@infrastructure/adapters/validator/zod.validator'
+import { ConflictException } from '@application/exceptions/conflict.exception'
+import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserCreateUseCase } from '@application/use-cases/user/create.use-case'
+import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
+import { Hash } from '@domain/adapters/crypto/hash'
 import { People } from '@domain/entities/people.entity'
 import { Validator } from '@domain/adapters/validator'
+import { CodeGenerator } from '@domain/adapters/generator/code/code.generator'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { User, UserType } from '@domain/entities/user.entity'
 import { PeopleRepository } from '@domain/repositories/people.repository'
-import { ConflictException, NotFoundException } from '@shared/exceptions'
 import { UserRepositoryMock } from '@tests/unit/shared/mocks/user/repository.mock'
 import { PeopleRepositoryMock } from '@tests/unit/shared/mocks/people/repository.mock'
 
@@ -16,16 +22,19 @@ describe('Application - User - UseCase - Create', () => {
   let userCreateUseCase: UserCreateUseCase
   let peopleRepository: PeopleRepositoryMock
   let userRepository: UserRepositoryMock
+  let codeGenerator: CodeGeneratorImplementation
 
   beforeEach(async () => {
     userRepository = new UserRepositoryMock()
     peopleRepository = new PeopleRepositoryMock()
+    codeGenerator = new CodeGeneratorImplementation()
 
     const module = await Test.createTestingModule({
       imports: [
         InfrastructureValidatorModule,
       ],
       providers: [
+        UserGenerateCodeUseCase,
         UserCreateUseCase,
         {
           provide: Validator,
@@ -38,6 +47,14 @@ describe('Application - User - UseCase - Create', () => {
         {
           provide: PeopleRepository,
           useValue: peopleRepository,
+        },
+        {
+          provide: CodeGenerator,
+          useValue: codeGenerator,
+        },
+        {
+          provide: Hash,
+          useClass: HashImplementation,
         },
       ],
     }).compile()
@@ -82,7 +99,7 @@ describe('Application - User - UseCase - Create', () => {
         await userCreateUseCase.perform(arrange)
       } catch (error: any) {
         if (error instanceof ConflictException) {
-          expect(error.details?.conflict.every(path => ['type', 'peopleId'].includes(path))).toEqual(true)
+          expect(error.details?.conflict?.every(path => ['type', 'peopleId'].includes(path))).toEqual(true)
         }
 
         throw error
