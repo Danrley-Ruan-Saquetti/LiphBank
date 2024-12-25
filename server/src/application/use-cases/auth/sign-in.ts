@@ -24,13 +24,13 @@ export class AuthSignInUseCase extends UseCase {
     const user = await this.userRepository.findByLoginAndType(login, type)
 
     if (!user) {
-      throw new SignInCredentialInvalidException({ login })
+      throw new SignInCredentialInvalidException()
     }
 
     const isSamePassword = await this.hash.compare(password, user.password)
 
     if (!isSamePassword) {
-      throw new SignInCredentialInvalidException({ password })
+      throw new SignInCredentialInvalidException()
     }
 
     const payload = {
