@@ -1,16 +1,13 @@
 import { vi } from 'vitest'
 import { Test } from '@nestjs/testing'
-import { HashImplementation } from '@infrastructure/adapters/crypto/hash'
+import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
 import { CodeGeneratorImplementation } from '@infrastructure/adapters/generator/code/code.generator'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
-import { ZodValidatorAdapterImplementation } from '@infrastructure/adapters/validator/zod.validator'
 import { ConflictException } from '@application/exceptions/conflict.exception'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserCreateUseCase } from '@application/use-cases/user/create.use-case'
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
-import { Hash } from '@domain/adapters/crypto/hash'
 import { People } from '@domain/entities/people.entity'
-import { Validator } from '@domain/adapters/validator'
 import { CodeGenerator } from '@domain/adapters/generator/code/code.generator'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { User, UserType } from '@domain/entities/user.entity'
@@ -32,14 +29,11 @@ describe('Application - User - UseCase - Create', () => {
     const module = await Test.createTestingModule({
       imports: [
         InfrastructureValidatorModule,
+        InfrastructureHashModule,
       ],
       providers: [
         UserGenerateCodeUseCase,
         UserCreateUseCase,
-        {
-          provide: Validator,
-          useClass: ZodValidatorAdapterImplementation,
-        },
         {
           provide: UserRepository,
           useValue: userRepository,
@@ -51,10 +45,6 @@ describe('Application - User - UseCase - Create', () => {
         {
           provide: CodeGenerator,
           useValue: codeGenerator,
-        },
-        {
-          provide: Hash,
-          useClass: HashImplementation,
         },
       ],
     }).compile()
@@ -70,7 +60,7 @@ describe('Application - User - UseCase - Create', () => {
       type: UserType.CLIENT,
     }
 
-    peopleRepository.findById = vi.fn().mockImplementation(() => People.load({ id: 1 }))
+    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => People.load({ id: 1 }))
 
     const response = await userCreateUseCase.perform(arrange)
 
@@ -91,8 +81,8 @@ describe('Application - User - UseCase - Create', () => {
       type: UserType.CLIENT,
     }
 
-    peopleRepository.findById = vi.fn().mockImplementation(() => People.load({ id: 1 }))
-    userRepository.findByPeopleIdAndType = vi.fn().mockImplementation(() => User.load({ id: 2, peopleId: 1, type: UserType.CLIENT }))
+    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => People.load({ id: 1 }))
+    vi.spyOn(userRepository, 'findByPeopleIdAndType').mockImplementation(() => User.load({ id: 2, peopleId: 1, type: UserType.CLIENT }))
 
     await expect(async () => {
       try {

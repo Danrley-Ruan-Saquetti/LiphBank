@@ -1,10 +1,8 @@
 import { vi } from 'vitest'
 import { Test } from '@nestjs/testing'
-import { ConflictException } from '@shared/exceptions'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
-import { ZodValidatorAdapterImplementation } from '@infrastructure/adapters/validator/zod.validator'
+import { ConflictException } from '@application/exceptions/conflict.exception'
 import { PeopleCreateUseCase } from '@application/use-cases/people/create.use-case'
-import { Validator } from '@domain/adapters/validator'
 import { PeopleRepository } from '@domain/repositories/people.repository'
 import { People, PeopleType } from '@domain/entities/people.entity'
 import { PeopleRepositoryMock } from '@tests/unit/shared/mocks/people/repository.mock'
@@ -22,10 +20,6 @@ describe('Application - People - UseCase - Create', () => {
       ],
       providers: [
         PeopleCreateUseCase,
-        {
-          provide: Validator,
-          useClass: ZodValidatorAdapterImplementation,
-        },
         {
           provide: PeopleRepository,
           useValue: peopleRepository,
