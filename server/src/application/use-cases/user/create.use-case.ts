@@ -27,7 +27,7 @@ export class UserCreateUseCase extends UseCase {
     const people = await this.peopleRepository.findById(peopleId)
 
     if (!people) {
-      throw new NotFoundException('User', `${peopleId}`)
+      throw new NotFoundException('People', `${peopleId}`)
     }
 
     const userWithSamePeopleAndType = await this.userRepository.findByPeopleIdAndType(people.id, type)
