@@ -23,15 +23,16 @@ enum PeopleGender {
 }
 
 model People {
-  id          Int           @id @default(autoincrement())
-  type        PeopleType    @default(NP)
-  name        String        @db.VarChar(128)
-  cpfCnpj     String        @unique @map("cpf_cnpj") @db.VarChar(14)
-  gender      PeopleGender?
-  dateOfBirth DateTime?     @map("date_of_birth") @db.Timestamptz(3)
-  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt   DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
-  User        User[]
+  id           Int           @id @default(autoincrement())
+  type         PeopleType    @default(NP)
+  name         String        @db.VarChar(128)
+  cpfCnpj      String        @unique @map("cpf_cnpj") @db.VarChar(14)
+  gender       PeopleGender?
+  dateOfBirth  DateTime?     @map("date_of_birth") @db.Timestamptz(3)
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  User         User[]
+  bankAccounts BankAccount[]
 
   @@map("peoples")
 }
@@ -59,4 +60,20 @@ model User {
   @@unique(name: "user_people_type", fields: [peopleId, type], map: "user_people_type")
   @@unique(name: "user_login_type", fields: [login, type], map: "user_login_type")
   @@map("users")
+}
+
+model BankAccount {
+  id        Int      @id @default(autoincrement())
+  peopleId  Int      @map("people_id")
+  code      String   @unique @db.VarChar(15)
+  name      String   @db.VarChar(45)
+  slug      String   @db.VarChar(45)
+  balance   Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  people    People   @relation(fields: [peopleId], references: [id], onDelete: Restrict)
+
+  @@unique(name: "bank_account_people_slug", fields: [peopleId, slug], map: "bank_account_people_slug")
+  @@map("bank_accounts")
 }
