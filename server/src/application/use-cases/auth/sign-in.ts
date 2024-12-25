@@ -5,7 +5,9 @@ import { SignInCredentialInvalidException } from '@application/exceptions/sign-i
 import { JWT } from '@domain/adapters/jwt'
 import { Hash } from '@domain/adapters/crypto/hash'
 import { UserRepository } from '@domain/repositories/user.repository'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class AuthSignInUseCase extends UseCase {
 
   constructor(
