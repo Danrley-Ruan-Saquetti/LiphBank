@@ -3,7 +3,9 @@ import { UserCreateUseCase } from '@application/use-cases/user/create.use-case'
 import { PeopleCreateUseCase } from '@application/use-cases/people/create.use-case'
 import { CreatePeopleAndUserDTO } from '@application/dto/shared/create-people-user.dto'
 import { DatabaseTransaction } from '@domain/database/transaction'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class CreatePeopleAndUserUseCase extends UseCase {
 
   constructor(
