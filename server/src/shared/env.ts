@@ -1,5 +1,5 @@
 export type Environment = {
-  ENVIRONMENT: string
+  ENVIRONMENT: 'DEVELOPMENT' | 'PRODUCTION' | 'TEST'
   SECRET_PEPPER: string
   DATABASE_URL: string
   JWT_SECRET: string

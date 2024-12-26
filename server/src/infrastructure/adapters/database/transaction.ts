@@ -1,6 +1,8 @@
+import { Injectable } from '@nestjs/common'
 import { Database } from '@domain/database'
 import { DatabaseTransaction } from '@domain/database/transaction'
 
+@Injectable()
 export class PrismaDatabaseTransaction extends DatabaseTransaction {
 
   constructor(

@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common'
+import { APP_FILTER } from '@nestjs/core'
 import { ConfigModule } from '@nestjs/config'
-import { InfrastructureModule } from '@infrastructure/infrastructure.module'
+import { CatchAllExceptionFilter } from '@presentation/filters/all-exception.filter'
 import { PresentationModule } from '@presentation/presentation.module'
+import { InfrastructureModule } from '@infrastructure/infrastructure.module'
 
 @Module({
   imports: [
@@ -13,6 +15,11 @@ import { PresentationModule } from '@presentation/presentation.module'
     PresentationModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: CatchAllExceptionFilter
+    }
+  ],
 })
 export class MainModule { }
