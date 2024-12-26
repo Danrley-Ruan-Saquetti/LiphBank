@@ -34,6 +34,10 @@ import { BankAccountRepositoryImplementation } from '@infrastructure/repositorie
       provide: UserRepository,
       useClass: UserRepositoryImplementation
     },
+    {
+      provide: BankAccountRepository,
+      useClass: BankAccountRepositoryImplementation
+    },
   ]
 })
 export class InfrastructureRepositoryModule {
