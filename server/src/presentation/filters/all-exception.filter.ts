@@ -18,19 +18,20 @@ export class CatchAllExceptionFilter implements ExceptionFilter {
   }
 
   private static getResponseException(exception: any) {
-    const responseBody = {
-      message: exception?.message || 'Error',
-      details: exception?.details || {}
-    }
+    return Result.failure(
+      CatchAllExceptionFilter.getResponseBody(exception),
+      CatchAllExceptionFilter.getStatusCode(exception)
+    )
+  }
 
+  private static getResponseBody(exception: any) {
     if (env('ENVIRONMENT') == 'PRODUCTION') {
       if (exception instanceof CriticalException || (exception instanceof HttpException && exception.getStatus() >= 500)) {
-        responseBody.message = 'Internal Server Error. Try again later'
-        responseBody.details = {}
+        return { message: 'Internal Server Error. Try again later' }
       }
     }
 
-    return Result.failure(responseBody, CatchAllExceptionFilter.getStatusCode(exception))
+    return { message: exception?.message || 'Error', ...exception }
   }
 
   private static getStatusCode(exception: unknown) {
