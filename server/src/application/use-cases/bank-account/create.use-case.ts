@@ -14,9 +14,17 @@ export class BankAccountCreateUseCase extends UseCase {
   }
 
   async perform(args: BankAccountCreateDTO) {
-    const { } = this.validator.validate(bankAccountSchemaCreate, args)
+    const { name, peopleId } = this.validator.validate(bankAccountSchemaCreate, args)
 
-    const bankAccount = BankAccount.load({})
+    const code = ''
+
+    const bankAccount = BankAccount.load({
+      name,
+      peopleId,
+      code,
+      balance: 0,
+      active: true,
+    })
 
     await this.bankAccountRepository.create(bankAccount)
 
