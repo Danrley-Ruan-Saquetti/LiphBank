@@ -37,6 +37,6 @@ export class UserGenerateCodeUseCase extends UseCase {
       }
     }
 
-    throw new CodeGenerationFailedException()
+    throw new CodeGenerationFailedException('user')
   }
 }
