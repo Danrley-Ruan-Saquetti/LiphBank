@@ -67,13 +67,11 @@ model BankAccount {
   peopleId  Int      @map("people_id")
   code      String   @unique @db.VarChar(15)
   name      String   @db.VarChar(45)
-  slug      String   @db.VarChar(45)
   balance   Int      @default(0)
   active    Boolean  @default(true)
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
   people    People   @relation(fields: [peopleId], references: [id], onDelete: Restrict)
 
-  @@unique(name: "bank_account_people_slug", fields: [peopleId, slug], map: "bank_account_people_slug")
   @@map("bank_accounts")
 }

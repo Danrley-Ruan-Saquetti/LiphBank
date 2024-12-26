@@ -20,7 +20,6 @@ export class BankAccountMapper {
       code: entity.code,
       createdAt: entity.createdAt,
       peopleId: entity.peopleId,
-      slug: entity.slug,
       updatedAt: entity.updatedAt,
     }
 
@@ -36,7 +35,6 @@ export class BankAccountMapper {
       code: databaseModel.code,
       createdAt: databaseModel.createdAt,
       peopleId: databaseModel.peopleId,
-      slug: databaseModel.slug,
       updatedAt: databaseModel.updatedAt,
     })
   }

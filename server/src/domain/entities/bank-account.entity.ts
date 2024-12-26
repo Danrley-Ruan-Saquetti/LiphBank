@@ -7,7 +7,6 @@ export class BankAccount implements BankAccountProps {
   private _name: string
   private _id: number
   private _peopleId: number
-  private _slug: string
   private _balance: number
   private _active: boolean
   private _createdAt: Date
@@ -17,7 +16,6 @@ export class BankAccount implements BankAccountProps {
   get name() { return this._name }
   get id() { return this._id }
   get peopleId() { return this._peopleId }
-  get slug() { return this._slug }
   get balance() { return this._balance }
   get active() { return this._active }
   get createdAt() { return this._createdAt }
@@ -27,7 +25,6 @@ export class BankAccount implements BankAccountProps {
   set name(value) { this._name = value }
   set id(value) { this._id = value }
   set peopleId(value) { this._peopleId = value }
-  set slug(value) { this._slug = value }
   set balance(value) { this._balance = value }
   set active(value) { this._active = value }
   set createdAt(value) { this._createdAt = value }
@@ -42,7 +39,6 @@ export class BankAccount implements BankAccountProps {
     if (props.balance) bankAccount.balance = props.balance
     if (props.active) bankAccount.active = props.active
     if (props.peopleId) bankAccount.peopleId = props.peopleId
-    if (props.slug) bankAccount.slug = props.slug
     if (props.updatedAt) bankAccount.updatedAt = props.updatedAt
     if (props.createdAt) bankAccount.createdAt = props.createdAt
 
