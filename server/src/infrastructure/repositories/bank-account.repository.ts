@@ -21,7 +21,6 @@ export class BankAccountRepositoryImplementation extends BankAccountRepository {
         data: {
           code: bankAccountModel.code,
           name: bankAccountModel.name,
-          slug: bankAccountModel.slug,
           active: bankAccountModel.active,
           balance: bankAccountModel.balance,
           peopleId: bankAccountModel.peopleId,
@@ -44,7 +43,6 @@ export class BankAccountRepositoryImplementation extends BankAccountRepository {
           active: bankAccountModel.active,
           balance: bankAccountModel.balance,
           code: bankAccountModel.code,
-          slug: bankAccountModel.slug,
           name: bankAccountModel.name,
           peopleId: bankAccountModel.peopleId,
         }
@@ -77,6 +75,16 @@ export class BankAccountRepositoryImplementation extends BankAccountRepository {
   async findById(id: number) {
     try {
       const bankAccountDatabase = await this.database.bankAccount.findUnique({ where: { id } })
+
+      return bankAccountDatabase ? BankAccountMapper.databaseToEntity(bankAccountDatabase) : null
+    } catch (error: any) {
+      this.database.resolveError(error)
+    }
+  }
+
+  async findByCode(code: string) {
+    try {
+      const bankAccountDatabase = await this.database.bankAccount.findUnique({ where: { code } })
 
       return bankAccountDatabase ? BankAccountMapper.databaseToEntity(bankAccountDatabase) : null
     } catch (error: any) {

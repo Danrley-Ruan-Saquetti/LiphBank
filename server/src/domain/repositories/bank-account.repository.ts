@@ -10,5 +10,6 @@ export abstract class BankAccountRepository {
   abstract update(id: number, bankAccount: BankAccount): Promise<BankAccount>
   abstract delete(id: number): Promise<void>
   abstract findById(id: number): Promise<BankAccount | null>
+  abstract findByCode(code: string): Promise<BankAccount | null>
   abstract findMany(args?: BankAccountQueryArgs): Promise<BankAccount[]>
 }
