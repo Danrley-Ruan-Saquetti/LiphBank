@@ -31,7 +31,6 @@ describe('Application - BankAccount - UseCase - Create', () => {
     const arrange = {
       peopleId: 1,
       name: 'Bank Account Test',
-      slug: 'bank_account_test',
     }
 
     const response = await bankAccountCreateUseCase.perform(arrange)
