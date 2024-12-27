@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 import { ConfigModule } from '@nestjs/config'
+import { EventEmitterModule } from '@nestjs/event-emitter'
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 import { ResultInterceptor } from '@presentation/interceptors/result.interceptor'
 import { PresentationModule } from '@presentation/presentation.module'
 import { CatchAllExceptionFilter } from '@presentation/filters/all-exception.filter'
@@ -12,6 +13,7 @@ import { InfrastructureModule } from '@infrastructure/infrastructure.module'
       envFilePath: ['.env'],
       isGlobal: true,
     }),
+    EventEmitterModule.forRoot(),
     InfrastructureModule,
     PresentationModule,
   ],
