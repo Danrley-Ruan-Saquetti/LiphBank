@@ -31,12 +31,12 @@ export enum FinancialTransactionSituation {
 }
 
 export type FinancialTransactionSettings = {
-  isObservable: false
-  isSendNotification: false
-  timesToRepeat: 0
-  countRepeatedOccurrences: 0
+  isObservable: boolean
+  isSendNotification: boolean
+  timesToRepeat: number | null
+  countRepeatedOccurrences: number
   typeOccurrence: FinancialTransactionTypeOccurrence
-  frequency: null
+  frequency: FinancialTransactionFrequency | null
 }
 
 export interface FinancialTransactionProps extends FinancialTransactionPrisma {
