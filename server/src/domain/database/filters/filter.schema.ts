@@ -13,17 +13,17 @@ type GlobalFilter<Schema extends object> = {
 
 export type FilterSchema<Schema extends object> = GlobalFilter<Schema> & {
   [x in keyof Schema]?:
-  Schema[x] extends number
+  NonNullable<Schema[x]> extends number
   ? NumberFilterOperators
-  : Schema[x] extends string
+  : NonNullable<Schema[x]> extends string
   ? StringFilterOperators
-  : Schema[x] extends boolean
+  : NonNullable<Schema[x]> extends boolean
   ? BooleanFilterOperators
-  : Schema[x] extends Date
+  : NonNullable<Schema[x]> extends Date
   ? DateFilterOperators
-  : Schema[x] extends Record<string, unknown>
+  : NonNullable<Schema[x]> extends Record<string, unknown>
   ? JSONFilterOperators
-  : Schema[x] extends object
-  ? FilterSchema<Schema[x]>
-  : Schema[x]
+  : NonNullable<Schema[x]> extends object
+  ? FilterSchema<NonNullable<Schema[x]>>
+  : NonNullable<Schema[x]>
 }

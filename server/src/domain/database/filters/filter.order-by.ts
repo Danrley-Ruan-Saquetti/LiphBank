@@ -2,11 +2,11 @@ type OrderArgs = 'asc' | 'desc'
 
 export type OrderBySchema<Schema extends object> = {
   [x in keyof Schema]?:
-  Schema[x] extends Date
+  NonNullable<Schema[x]> extends Date
   ? OrderArgs
-  : Schema[x] extends Array<unknown>
+  : NonNullable<Schema[x]> extends Array<unknown>
   ? OrderArgs
-  : Schema[x] extends object
-  ? OrderBySchema<Schema[x]>
+  : NonNullable<Schema[x]> extends object
+  ? OrderBySchema<NonNullable<Schema[x]>>
   : OrderArgs
 } | OrderBySchema<Schema>[]
