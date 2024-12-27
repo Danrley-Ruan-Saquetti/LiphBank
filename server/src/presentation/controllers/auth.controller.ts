@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
 import { UserType } from '@domain/entities/user.entity'
-import { AuthSignInUseCase } from '@application/use-cases/auth/sign-in'
+import { AuthSignInUseCase } from '@application/use-cases/auth/sign-in.use-case'
 import { CreatePeopleAndUserUseCase } from '@application/use-cases/shared/create-people-user.use-case'
 
 @Controller('/auth')
@@ -27,7 +27,6 @@ export class AuthController {
     return { message: 'User successfully created' }
   }
 
-  @HttpCode(HttpStatus.CREATED)
   @Post('/sign-in')
   async signIn(@Body() body: any) {
     const response = await this.authSignInUseCase.perform({ ...body, type: UserType.CLIENT })
