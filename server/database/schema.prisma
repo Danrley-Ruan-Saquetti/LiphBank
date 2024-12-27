@@ -132,3 +132,42 @@ model FinancialTransaction {
 
   @@map("financial_transactions")
 }
+
+enum NotificationSituation {
+  IQ // IN_QUEUE
+  ER // ERROR
+  SN // SENT
+
+  @@map("notification_situation")
+}
+
+enum NotificationType {
+  P // PUSH
+  I // INTERNAL
+  E // EMAIL
+
+  @@map("notification_type")
+}
+
+model Notification {
+  id        Int                   @id @default(autoincrement())
+  subject   String                @db.VarChar(45)
+  body      String
+  type      NotificationType
+  situation NotificationSituation @default(IQ)
+  sendAt    DateTime?             @map("send_at") @db.Timestamptz(3)
+  createdAt DateTime              @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  email     Email?
+
+  @@map("notifications")
+}
+
+model Email {
+  id           Int          @id @default(autoincrement())
+  recipient    String       @db.VarChar(45)
+  sender       String       @db.VarChar(45)
+  notification Notification @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@map("emails")
+}
