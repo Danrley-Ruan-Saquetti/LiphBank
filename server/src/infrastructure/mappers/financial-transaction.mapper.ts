@@ -1,5 +1,6 @@
 import { FinancialTransactionModel } from '@infrastructure/models/financial-transaction.model'
 import { FinancialTransaction, FinancialTransactionSettings, FinancialTransactionSituation, FinancialTransactionType } from '@domain/entities/financial-transaction.entity'
+import { Prisma } from '@prisma/client'
 
 export class FinancialTransactionMapper {
 
@@ -20,7 +21,7 @@ export class FinancialTransactionMapper {
       description: entity.description,
       expiresIn: entity.expiresIn,
       senderRecipient: entity.senderRecipient,
-      settings: entity.settings,
+      settings: entity.settings as Prisma.JsonValue,
       situation: entity.situation,
       title: entity.title,
       type: entity.type,
