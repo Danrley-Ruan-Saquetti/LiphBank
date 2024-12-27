@@ -33,6 +33,10 @@ export class AuthSignInUseCase extends UseCase {
       throw new SignInCredentialInvalidException()
     }
 
+    user.lastAccess = new Date(Date.now())
+
+    await this.userRepository.update(user.id, user)
+
     const payload = {
       sub: user.id,
       code: user.code,
