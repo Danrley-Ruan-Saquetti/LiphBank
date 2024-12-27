@@ -15,6 +15,6 @@ export class FinancialTransactionController {
   async create(@Body() body: any, @Param('id') bankAccountId: string) {
     await this.financialTransactionCreateUseCase.perform({ ...body, bankAccountId: +bankAccountId })
 
-    return { message: 'Bank Account successfully created' }
+    return { message: 'Financial Transaction successfully created' }
   }
 }
