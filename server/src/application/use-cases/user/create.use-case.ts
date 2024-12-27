@@ -6,6 +6,7 @@ import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-co
 import { UserCreateDTO, userCreateSchema } from '@application/dto/user/create.dto'
 import { User } from '@domain/entities/user.entity'
 import { Hash } from '@domain/adapters/crypto/hash'
+import { People } from '@domain/entities/people.entity'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { PeopleRepository } from '@domain/repositories/people.repository'
 
@@ -22,13 +23,9 @@ export class UserCreateUseCase extends UseCase {
   }
 
   async perform(args: UserCreateDTO) {
-    const { login, password, peopleId, type } = this.validator.validate(userCreateSchema, args)
+    const { login, password, peopleId, type, cpfCnpj } = this.validator.validate(userCreateSchema, args)
 
-    const people = await this.peopleRepository.findById(peopleId)
-
-    if (!people) {
-      throw new NotFoundException('People', `${peopleId}`)
-    }
+    const people = await this.getPeopleByIdOrCpfCnpj({ cpfCnpj, peopleId })
 
     const userWithSamePeopleAndType = await this.userRepository.findByPeopleIdAndType(people.id, type)
 
@@ -57,5 +54,22 @@ export class UserCreateUseCase extends UseCase {
     const userCreated = await this.userRepository.create(user)
 
     return { user: userCreated, people }
+  }
+
+  private async getPeopleByIdOrCpfCnpj({ cpfCnpj, peopleId }: { peopleId?: number, cpfCnpj?: string }) {
+    let people: People | null = null
+
+    if (peopleId) {
+      people = await this.peopleRepository.findById(peopleId)
+    }
+    else if (cpfCnpj) {
+      people = await this.peopleRepository.findByCpfCnpj(cpfCnpj)
+    }
+
+    if (!people) {
+      throw new NotFoundException('People', `${peopleId}`)
+    }
+
+    return people
   }
 }

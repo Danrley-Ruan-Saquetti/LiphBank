@@ -5,6 +5,9 @@ export const UserMessage = {
   peopleId: {
     required: 'Id People is required',
   },
+  peopleIdOrCpfCnpj: {
+    required: 'Id People or CPF/CNPJ is required',
+  },
   login: {
     required: 'Login is required',
     valueInvalid: 'Login invalid',
