@@ -16,7 +16,11 @@ export class PrismaDatabaseService extends Database implements OnModuleInit {
     await this.$connect()
   }
 
-  resolveError(error: any): never {
+  resolveError(error: any, options?: { debugLogError?: boolean }): never {
+    if (options?.debugLogError) {
+      console.log({ message: error?.message || 'Error', ...error })
+    }
+
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       throw new DatabaseClientException(PRISMA_CLIENT_ERRORS_CODE[error.code] || '')
     }
