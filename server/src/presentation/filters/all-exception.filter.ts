@@ -32,6 +32,10 @@ export class CatchAllExceptionFilter implements ExceptionFilter {
       }
     }
 
+    if (exception instanceof HttpException) {
+      return { message: exception.message }
+    }
+
     return { message: exception?.message || 'Error', ...exception }
   }
 
