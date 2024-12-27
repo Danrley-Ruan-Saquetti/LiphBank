@@ -4,6 +4,7 @@ import { BankAccountRule } from '@domain/rules/bank-account.rule'
 
 export const bankAccountSchemaCreate = z.object({
   peopleId: z
+    .coerce
     .number()
     .int(),
   name: z
