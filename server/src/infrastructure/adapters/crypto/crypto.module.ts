@@ -4,14 +4,12 @@ import { Hash } from '@domain/adapters/crypto/hash'
 
 @Module({
   providers: [
-    HashImplementation,
     {
       provide: Hash,
       useClass: HashImplementation
     }
   ],
   exports: [
-    HashImplementation,
     {
       provide: Hash,
       useClass: HashImplementation
