@@ -8,14 +8,12 @@ import { JWT } from '@domain/adapters/jwt'
     JwtModule.register({})
   ],
   providers: [
-    JWTServiceImplementation,
     {
       provide: JWT,
       useClass: JWTServiceImplementation
     }
   ],
   exports: [
-    JWTServiceImplementation,
     {
       provide: JWT,
       useClass: JWTServiceImplementation

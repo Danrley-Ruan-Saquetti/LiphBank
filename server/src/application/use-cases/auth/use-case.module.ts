@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { InfrastructureJWTModule } from '@infrastructure/adapters/jwt/jwt.module'
 import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
+import { InfrastructureObserverModule } from '@infrastructure/adapters/observer/observer.module'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
 import { AuthSignInUseCase } from '@application/use-cases/auth/sign-in.use-case'
@@ -12,6 +13,7 @@ import { AuthAuthorizationUseCase } from '@application/use-cases/auth/authorizat
     InfrastructureRepositoryModule,
     InfrastructureHashModule,
     InfrastructureJWTModule,
+    InfrastructureObserverModule,
   ],
   providers: [
     AuthSignInUseCase,
