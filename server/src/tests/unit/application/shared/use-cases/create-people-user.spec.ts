@@ -11,7 +11,6 @@ import { User, UserType } from '@domain/entities/user.entity'
 import { CodeGenerator } from '@domain/adapters/generator/code/code.generator'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { PeopleRepository } from '@domain/repositories/people.repository'
-import { DatabaseTransaction } from '@domain/database/transaction'
 import { UserRepositoryMock } from '@tests/unit/shared/mocks/user/repository.mock'
 import { PeopleRepositoryMock } from '@tests/unit/shared/mocks/people/repository.mock'
 import { createApplicationMock } from '@tests/unit/shared/mocks/module.mock'
@@ -48,10 +47,6 @@ describe('Application - Shared - UseCase - Create People and User', () => {
           provide: CodeGenerator,
           useValue: codeGenerator,
         },
-        {
-          provide: DatabaseTransaction,
-          useFactory: () => ({ transaction: async (handler: () => Promise<any | void>) => await handler() })
-        }
       ],
     })
 
