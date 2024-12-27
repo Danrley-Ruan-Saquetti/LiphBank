@@ -12,13 +12,13 @@ export class AuthController {
 
   @HttpCode(HttpStatus.CREATED)
   @Post('/sign-up')
-  async signUp(@Body() body: CreatePeopleAndUserDTO) {
+  async signUp(@Body() body: any) {
     await this.createPeopleAndUserUseCase.perform({
       people: {
-        ...body?.people,
+        ...body,
       },
       user: {
-        ...body?.user,
+        ...body,
         type: UserType.CLIENT
       }
     })
