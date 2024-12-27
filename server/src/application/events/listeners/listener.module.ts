@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
+import { UserListener } from '@application/events/listeners/user.listener'
 
 @Module({
-  providers: []
+  providers: [UserListener]
 })
 export class ListenerModule { }

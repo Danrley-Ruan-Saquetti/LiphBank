@@ -27,6 +27,6 @@ export const userCreateSchema = z.object({
   type: z
     .nativeEnum(UserType, { errorMap: () => ({ message: UserMessage.type.valueInvalid }) }),
 })
-  .refine(({ peopleId, cpfCnpj }) => !peopleId && !cpfCnpj, UserMessage.peopleIdOrCpfCnpj.required)
+  .refine(({ peopleId, cpfCnpj }) => peopleId || cpfCnpj, UserMessage.peopleIdOrCpfCnpj.required)
 
 export type UserCreateDTO = z.input<typeof userCreateSchema>
