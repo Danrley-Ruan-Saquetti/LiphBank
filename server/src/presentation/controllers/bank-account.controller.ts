@@ -1,4 +1,5 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common'
+import { User } from '@presentation/decorators/user.decorator'
 import { AuthGuard } from '@presentation/guards/auth.guard'
 import { BankAccountCreateUseCase } from '@application/use-cases/bank-account/create.use-case'
 
@@ -11,8 +12,8 @@ export class BankAccountController {
 
   @UseGuards(AuthGuard)
   @Post('/create')
-  async create(@Body() body: any) {
-    await this.bankAccountCreateUseCase.perform({ ...body })
+  async create(@Body() body: any, @User() user: any) {
+    await this.bankAccountCreateUseCase.perform({ ...body, peopleId: user.peopleId })
 
     return { message: 'Bank Account successfully created' }
   }

@@ -39,6 +39,7 @@ export class AuthSignInUseCase extends UseCase {
 
     const payload = {
       sub: user.id,
+      peopleId: user.peopleId,
       code: user.code,
     }
 

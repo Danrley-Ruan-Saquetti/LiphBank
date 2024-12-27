@@ -13,7 +13,13 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest()
     const token = request.headers.authorization || ''
 
-    await this.authAuthorizationUseCase.perform({ token })
+    const { payload } = await this.authAuthorizationUseCase.perform({ token })
+
+    request.user = {
+      id: payload.sub,
+      code: payload.code,
+      peopleId: payload.peopleId,
+    }
 
     return true
   }
