@@ -6,6 +6,7 @@ import { ResultInterceptor } from '@presentation/interceptors/result.interceptor
 import { PresentationModule } from '@presentation/presentation.module'
 import { CatchAllExceptionFilter } from '@presentation/filters/all-exception.filter'
 import { InfrastructureModule } from '@infrastructure/infrastructure.module'
+import { ApplicationModule } from '@application/application.module'
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { InfrastructureModule } from '@infrastructure/infrastructure.module'
     EventEmitterModule.forRoot(),
     InfrastructureModule,
     PresentationModule,
+    ApplicationModule,
   ],
   controllers: [],
   providers: [
