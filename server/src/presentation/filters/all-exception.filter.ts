@@ -1,7 +1,8 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common'
 import { HttpAdapterHost } from '@nestjs/core'
-import { Result } from '@presentation/util/result'
 import { env } from '@shared/env'
+import { Result } from '@presentation/util/result'
+import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
 import { CriticalException, RuntimeException } from '@shared/exceptions'
 
 @Catch()
@@ -35,6 +36,7 @@ export class CatchAllExceptionFilter implements ExceptionFilter {
   }
 
   private static getStatusCode(exception: unknown) {
+    if (exception instanceof UnauthorizedException) return HttpStatus.UNAUTHORIZED
     if (exception instanceof RuntimeException) return HttpStatus.BAD_REQUEST
     if (exception instanceof CriticalException) return HttpStatus.INTERNAL_SERVER_ERROR
     if (exception instanceof HttpException) return exception.getStatus()
