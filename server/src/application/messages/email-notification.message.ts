@@ -1,4 +1,4 @@
-export const NotificationMessage = {
+export const EmailNotificationMessage = {
   subject: {
     required: 'Subject is required'
   },

@@ -9,7 +9,7 @@ import { AuthUseCaseModule } from '@application/use-cases/auth/use-case.module'
 import { PeopleUseCaseModule } from '@application/use-cases/people/use-case.module'
 import { SharedUseCaseModule } from '@application/use-cases/shared/use-case.module'
 import { BankAccountUseCaseModule } from '@application/use-cases/bank-account/use-case.module'
-import { NotificationUseCaseModule } from '@application/use-cases/notification/use-case.module'
+import { EmailNotificationUseCaseModule } from '@application/use-cases/email-notification/use-case.module'
 import { FinancialTransactionUseCaseModule } from '@application/use-cases/financial-transaction/use-case.module'
 
 @Module({
@@ -20,7 +20,7 @@ import { FinancialTransactionUseCaseModule } from '@application/use-cases/financ
     AuthUseCaseModule,
     BankAccountUseCaseModule,
     FinancialTransactionUseCaseModule,
-    NotificationUseCaseModule,
+    EmailNotificationUseCaseModule,
   ],
   controllers: [
     PeopleController,

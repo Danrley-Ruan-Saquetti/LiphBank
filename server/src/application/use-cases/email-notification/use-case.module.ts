@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { NotificationCreateUseCase } from '@application/use-cases/notification/create.use-case'
+import { EmailNotificationCreateUseCase } from '@application/use-cases/email-notification/create.use-case'
 import { InfrastructureObserverModule } from '@infrastructure/adapters/observer/observer.module'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
@@ -11,10 +11,10 @@ import { InfrastructureRepositoryModule } from '@infrastructure/repositories/rep
     InfrastructureObserverModule,
   ],
   providers: [
-    NotificationCreateUseCase,
+    EmailNotificationCreateUseCase,
   ],
   exports: [
-    NotificationCreateUseCase,
+    EmailNotificationCreateUseCase,
   ]
 })
-export class NotificationUseCaseModule { }
+export class EmailNotificationUseCaseModule { }
