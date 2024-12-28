@@ -10,9 +10,17 @@ export const notificationCreateSchema = z.object({
     .string({ 'required_error': NotificationMessage.body.required })
     .min(1, NotificationMessage.body.required),
   type: z
-    .nativeEnum(NotificationType, {
-      errorMap: () => ({ message: NotificationMessage.type.enumInvalid })
-    }),
+    .union([
+      z.array(
+        z.nativeEnum(NotificationType, {
+          errorMap: () => ({ message: NotificationMessage.type.enumInvalid })
+        })
+      ).min(1, NotificationMessage.type.required),
+      z.nativeEnum(NotificationType, {
+        errorMap: () => ({ message: NotificationMessage.type.enumInvalid })
+      }),
+    ])
+    .transform(val => Array.isArray(val) ? val : [val]),
 })
 
 export type NotificationCreateDTO = z.input<typeof notificationCreateSchema>

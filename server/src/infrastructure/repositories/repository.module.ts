@@ -1,13 +1,15 @@
 import { Module, Provider } from '@nestjs/common'
-import { UserRepository } from '@domain/repositories/user.repository'
-import { PeopleRepository } from '@domain/repositories/people.repository'
-import { BankAccountRepository } from '@domain/repositories/bank-account.repository'
-import { FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
 import { InfrastructureDatabaseModule } from '@infrastructure/adapters/database/database.module'
 import { UserRepositoryImplementation } from '@infrastructure/repositories/user.repository'
 import { PeopleRepositoryImplementation } from '@infrastructure/repositories/people.repository'
 import { BankAccountRepositoryImplementation } from '@infrastructure/repositories/bank-account.repository'
+import { NotificationRepositoryImplementation } from '@infrastructure/repositories/notification.repository'
 import { FinancialTransactionRepositoryImplementation } from '@infrastructure/repositories/financial-transaction.repository'
+import { UserRepository } from '@domain/repositories/user.repository'
+import { PeopleRepository } from '@domain/repositories/people.repository'
+import { BankAccountRepository } from '@domain/repositories/bank-account.repository'
+import { NotificationRepository } from '@domain/repositories/notification.repository'
+import { FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
 
 const providers: Provider[] = [
   {
@@ -25,6 +27,10 @@ const providers: Provider[] = [
   {
     provide: FinancialTransactionRepository,
     useClass: FinancialTransactionRepositoryImplementation
+  },
+  {
+    provide: NotificationRepository,
+    useClass: NotificationRepositoryImplementation
   },
 ] as const
 

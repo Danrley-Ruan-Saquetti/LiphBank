@@ -1,8 +1,10 @@
+import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { NotificationCreateDTO, notificationCreateSchema } from '@application/dto/notification/create.dto'
 import { Notification } from '@domain/entities/notification.entity'
 import { NotificationRepository } from '@domain/repositories/notification.repository'
 
+@Injectable()
 export class NotificationCreateUseCase extends UseCase {
 
   constructor(
@@ -14,14 +16,20 @@ export class NotificationCreateUseCase extends UseCase {
   async perform(args: NotificationCreateDTO) {
     const { body, subject, type } = this.validator.validate(notificationCreateSchema, args)
 
-    const notification = Notification.load({
-      body,
-      subject,
-      type
-    })
+    const notifications: Notification[] = []
 
-    const notificationCreated = await this.notificationRepository.create(notification)
+    for (let i = 0; i < type.length; i++) {
+      const notification = Notification.load({
+        body,
+        subject,
+        type: type[0]
+      })
 
-    return { notification: notificationCreated }
+      const notificationCreated = await this.notificationRepository.create(notification)
+
+      notifications.push(notificationCreated)
+    }
+
+    return { notifications }
   }
 }
