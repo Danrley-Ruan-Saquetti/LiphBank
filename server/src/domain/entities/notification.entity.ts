@@ -47,7 +47,7 @@ export class Notification implements NotificationProps {
   set updatedAt(value) { this._updatedAt = value }
 
   static load(props: Partial<NotificationProps>) {
-    const notification = new Notification()
+    const notification = new this()
 
     if (props.id) notification.id = props.id
     if (props.type) notification.type = props.type
