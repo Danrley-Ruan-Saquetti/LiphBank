@@ -12,7 +12,7 @@ export class ResultInterceptor implements NestInterceptor {
         map(data => ({
           status: response.statusCode,
           ok: response.statusCode < 400,
-          data: response.statusCode < 400 ? data : null,
+          value: response.statusCode < 400 ? data : null,
           error: response.statusCode >= 400 ? data : null,
         }))
       )
