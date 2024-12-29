@@ -27,6 +27,7 @@ export class AuthController {
     return { message: 'User successfully created' }
   }
 
+  @HttpCode(HttpStatus.OK)
   @Post('/sign-in')
   async signIn(@Body() body: any) {
     const response = await this.authSignInUseCase.perform({ ...body, type: UserType.CLIENT })

@@ -1,12 +1,17 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common'
+import { UserFindUseCase } from '@application/use-cases/user/find.use-case'
 import { UserCreateUseCase } from '@application/use-cases/user/create.use-case'
 import { UserType } from '@domain/entities/user.entity'
+import { User } from '@presentation/decorators/user.decorator'
+import { AuthGuard } from '@presentation/guards/auth.guard'
+import { UserSession } from '@presentation/types/user-session.type'
 
 @Controller('/users')
 export class UserController {
 
   constructor(
-    private readonly userCreateUseCase: UserCreateUseCase
+    private readonly userCreateUseCase: UserCreateUseCase,
+    private readonly userFindUseCase: UserFindUseCase,
   ) { }
 
   @Post('/create')
@@ -14,5 +19,25 @@ export class UserController {
     await this.userCreateUseCase.perform({ ...body, type: UserType.CLIENT })
 
     return { message: 'User successfully created' }
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('/current')
+  async find(@User() user: UserSession) {
+    const response = await this.userFindUseCase.perform({ id: user.id })
+
+    return {
+      user: {
+        id: response.user.id,
+        type: response.user.type,
+        active: response.user.active,
+        code: response.user.code,
+        login: response.user.login,
+        lastAccess: response.user.lastAccess,
+        createdAt: response.user.createdAt,
+        updatedAt: response.user.updatedAt,
+        people: response.people
+      }
+    }
   }
 }
