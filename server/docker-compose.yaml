@@ -3,7 +3,6 @@ name: liph-bank-services
 services:
   liph-bank.service.database:
     image: postgres:latest
-    restart: always
     container_name: liph-bank.service.database
     environment:
       POSTGRES_USER: postgres
