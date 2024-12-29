@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common'
 import { UserController } from '@presentation/controllers/user.controller'
-import { AuthController } from '@presentation/controllers/auth.controller'
+import { AuthUserController } from '@presentation/controllers/auth-user.controller'
 import { PeopleController } from '@presentation/controllers/people.controller'
 import { BankAccountController } from '@presentation/controllers/bank-account.controller'
+import { AuthBankAccountController } from '@presentation/controllers/auth-bank-account.controller'
 import { FinancialTransactionController } from '@presentation/controllers/financial-transaction.controller'
 import { UserUseCaseModule } from '@application/use-cases/user/use-case.module'
 import { AuthUseCaseModule } from '@application/use-cases/auth/use-case.module'
@@ -25,9 +26,10 @@ import { FinancialTransactionUseCaseModule } from '@application/use-cases/financ
   controllers: [
     PeopleController,
     UserController,
-    AuthController,
+    AuthUserController,
     BankAccountController,
-    FinancialTransactionController
+    FinancialTransactionController,
+    AuthBankAccountController
   ]
 })
 export class ControllerModule { }
