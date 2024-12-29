@@ -1,7 +1,10 @@
+name: liph-bank-services
+
 services:
   liph-bank.service.database:
     image: postgres:latest
     restart: always
+    container_name: liph-bank.service.database
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
@@ -10,12 +13,14 @@ services:
       - '5433:5432'
   liph-bank.service.redis:
     image: redis:latest
-    container_name: redis_container
+    container_name: liph-bank.service.redis
+    environment:
+      REDIS_PASSWORD: admin
     ports:
-      - '6379:6379'
+      - 6379:6379
     volumes:
       - redis_data:/data
-    command: ['redis-server', '--appendonly', 'yes']
+      - ./docker/redis/storage/redis.conf:/usr/local/etc/redis/redis.conf
 
 volumes:
   redis_data:
