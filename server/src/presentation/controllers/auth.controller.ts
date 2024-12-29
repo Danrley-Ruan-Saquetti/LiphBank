@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
 import { UserType } from '@domain/entities/user.entity'
-import { AuthSignInUseCase } from '@application/use-cases/auth/sign-in.use-case'
+import { AuthSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
 import { CreatePeopleAndUserUseCase } from '@application/use-cases/shared/create-people-user.use-case'
 
 @Controller('/auth')

@@ -1,6 +1,6 @@
 
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
-import { AuthAuthorizationUseCase } from '@application/use-cases/auth/authorization.use-case'
+import { AuthAuthorizationUseCase } from '@application/use-cases/auth/user/authorization.use-case'
 
 @Injectable()
 export class AuthGuard implements CanActivate {

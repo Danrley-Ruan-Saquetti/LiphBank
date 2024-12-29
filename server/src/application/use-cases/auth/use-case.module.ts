@@ -4,9 +4,9 @@ import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto
 import { InfrastructureObserverModule } from '@infrastructure/adapters/observer/observer.module'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
-import { AuthSignInUseCase } from '@application/use-cases/auth/sign-in.use-case'
-import { AuthAuthorizationUseCase } from '@application/use-cases/auth/authorization.use-case'
-import { ConsumerModule } from '../../jobs/consumer.module'
+import { ConsumerModule } from '@application/jobs/consumer.module'
+import { AuthSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
+import { AuthAuthorizationUseCase } from '@application/use-cases/auth/user/authorization.use-case'
 
 @Module({
   imports: [
