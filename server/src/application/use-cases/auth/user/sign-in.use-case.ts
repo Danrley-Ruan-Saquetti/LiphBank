@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common'
 import { InjectQueue } from '@nestjs/bull'
 import { Queue } from 'bull'
 import { UseCase } from '@application/use-cases/use-case'
-import { AuthUserSignInDTO, authUserSignInSchema } from '@application/dto/auth/user/sign-in.dto'
+import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
+import { SendEmailNotificationJob } from '@application/jobs/email-notification/send-email-notification.job'
 import { SignInCredentialInvalidException } from '@application/exceptions/sign-in-credential-invalid.exception'
+import { AuthUserSignInDTO, authUserSignInSchema } from '@application/dto/auth/user/sign-in.dto'
 import { JWT } from '@domain/adapters/jwt'
 import { Hash } from '@domain/adapters/crypto/hash'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { env } from '@shared/env'
-import { SendEmailNotificationJob } from '@application/jobs/email-notification/send-email-notification.job'
 
 @Injectable()
 export class AuthUserSignInUseCase extends UseCase {
@@ -35,6 +36,10 @@ export class AuthUserSignInUseCase extends UseCase {
 
     if (!isSamePassword) {
       throw new SignInCredentialInvalidException()
+    }
+
+    if (!user.active) {
+      throw new UnauthorizedException('This currently inactive user account')
     }
 
     user.lastAccess = new Date(Date.now())

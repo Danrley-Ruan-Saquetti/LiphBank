@@ -5,8 +5,10 @@ export type Environment = {
   REDIS_HOST: string
   REDIS_PORT: number
   REDIS_PASSWORD: string
-  JWT_SECRET: string
-  JWT_EXPIRATION: string
+  JWT_USER_SECRET: string
+  JWT_USER_EXPIRATION: string
+  JWT_BANK_ACCOUNT_SECRET: string
+  JWT_BANK_ACCOUNT_EXPIRATION: string
   PORT: number
   TZ: string
 }
