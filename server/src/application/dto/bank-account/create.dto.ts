@@ -5,7 +5,7 @@ import { BankAccountRule } from '@domain/rules/bank-account.rule'
 export const bankAccountSchemaCreate = z.object({
   peopleId: z
     .coerce
-    .number()
+    .number({ 'required_error': BankAccountMessage.peopleId.required })
     .int(),
   name: z
     .string({ 'required_error': BankAccountMessage.name.required })
