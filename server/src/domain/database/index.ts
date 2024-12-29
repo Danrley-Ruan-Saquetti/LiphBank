@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { FilterSchema } from './filters'
+import { FilterSchema } from '@domain/database/filters'
 
 export abstract class Database extends PrismaClient {
 

@@ -7,6 +7,8 @@ import { InfrastructureRepositoryModule } from '@infrastructure/repositories/rep
 import { ConsumerModule } from '@application/jobs/consumer.module'
 import { AuthUserSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
 import { AuthUserAuthorizationUseCase } from '@application/use-cases/auth/user/authorization.use-case'
+import { AuthBankAccountSignInUseCase } from '@application/use-cases/auth/bank-account/sign-in.use-case'
+import { AuthBankAccountAuthorizationUseCase } from '@application/use-cases/auth/bank-account/authorization.use-case'
 
 @Module({
   imports: [
@@ -20,10 +22,14 @@ import { AuthUserAuthorizationUseCase } from '@application/use-cases/auth/user/a
   providers: [
     AuthUserSignInUseCase,
     AuthUserAuthorizationUseCase,
+    AuthBankAccountAuthorizationUseCase,
+    AuthBankAccountSignInUseCase,
   ],
   exports: [
     AuthUserSignInUseCase,
     AuthUserAuthorizationUseCase,
+    AuthBankAccountAuthorizationUseCase,
+    AuthBankAccountSignInUseCase,
   ]
 })
 export class AuthUseCaseModule { }
