@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
-import { AuthUserAuthorizationDTO, authUserAuthorizationSchema } from '@application/dto/auth/authorization.dto'
+import { AuthUserAuthorizationDTO, authUserAuthorizationSchema } from '@application/dto/auth/user/authorization.dto'
 import { JWT } from '@domain/adapters/jwt'
 
 @Injectable()
