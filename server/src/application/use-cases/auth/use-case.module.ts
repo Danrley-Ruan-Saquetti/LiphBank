@@ -5,7 +5,7 @@ import { InfrastructureObserverModule } from '@infrastructure/adapters/observer/
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
 import { ConsumerModule } from '@application/jobs/consumer.module'
-import { AuthSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
+import { AuthUserSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
 import { AuthUserAuthorizationUseCase } from '@application/use-cases/auth/user/authorization.use-case'
 
 @Module({
@@ -18,11 +18,11 @@ import { AuthUserAuthorizationUseCase } from '@application/use-cases/auth/user/a
     ConsumerModule,
   ],
   providers: [
-    AuthSignInUseCase,
+    AuthUserSignInUseCase,
     AuthUserAuthorizationUseCase,
   ],
   exports: [
-    AuthSignInUseCase,
+    AuthUserSignInUseCase,
     AuthUserAuthorizationUseCase,
   ]
 })

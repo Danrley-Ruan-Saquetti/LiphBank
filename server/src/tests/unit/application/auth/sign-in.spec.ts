@@ -2,7 +2,7 @@ import { vi } from 'vitest'
 import { JwtModule } from '@nestjs/jwt'
 import { InfrastructureJWTModule } from '@infrastructure/adapters/jwt/jwt.module'
 import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
-import { AuthSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
+import { AuthUserSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
 import { SignInCredentialInvalidException } from '@application/exceptions/sign-in-credential-invalid.exception'
 import { Hash } from '@domain/adapters/crypto/hash'
 import { User, UserType } from '@domain/entities/user.entity'
@@ -12,7 +12,7 @@ import { createApplicationMock } from '@tests/unit/shared/mocks/module.mock'
 
 describe('Application - Auth - UseCase - SignIn', () => {
   let hash: Hash
-  let authSignInUseCase: AuthSignInUseCase
+  let authUserSignInUseCase: AuthUserSignInUseCase
   let userRepositoryMock: UserRepositoryMock
 
   beforeEach(async () => {
@@ -25,7 +25,7 @@ describe('Application - Auth - UseCase - SignIn', () => {
         InfrastructureJWTModule
       ],
       providers: [
-        AuthSignInUseCase,
+        AuthUserSignInUseCase,
         {
           provide: UserRepository,
           useValue: userRepositoryMock
@@ -33,7 +33,7 @@ describe('Application - Auth - UseCase - SignIn', () => {
       ]
     })
 
-    authSignInUseCase = module.get(AuthSignInUseCase)
+    authUserSignInUseCase = module.get(AuthUserSignInUseCase)
     hash = module.get(Hash)
   })
 
@@ -52,7 +52,7 @@ describe('Application - Auth - UseCase - SignIn', () => {
       password: await hash.hash('Dan!@#123')
     }))
 
-    const response = await authSignInUseCase.perform(arrange)
+    const response = await authUserSignInUseCase.perform(arrange)
 
     expect(response.payload.sub).toEqual(1)
     expect(response.payload.code).toEqual('USR-CODE_TEST')
@@ -66,7 +66,7 @@ describe('Application - Auth - UseCase - SignIn', () => {
       type: UserType.CLIENT,
     }
 
-    await expect(authSignInUseCase.perform(arrange)).rejects.toThrow(SignInCredentialInvalidException)
+    await expect(authUserSignInUseCase.perform(arrange)).rejects.toThrow(SignInCredentialInvalidException)
   })
 
   test('Should dispatch an exception when invalid password', async () => {
@@ -84,6 +84,6 @@ describe('Application - Auth - UseCase - SignIn', () => {
       password: await hash.hash('Dan!@#123')
     }))
 
-    await expect(authSignInUseCase.perform(arrange)).rejects.toThrow(SignInCredentialInvalidException)
+    await expect(authUserSignInUseCase.perform(arrange)).rejects.toThrow(SignInCredentialInvalidException)
   })
 })

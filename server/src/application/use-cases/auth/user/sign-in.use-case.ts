@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectQueue } from '@nestjs/bull'
 import { Queue } from 'bull'
 import { UseCase } from '@application/use-cases/use-case'
-import { AuthSignInDTO, authSignInSchema } from '@application/dto/auth/sign-in.dto'
+import { AuthUserSignInDTO, authUserSignInSchema } from '@application/dto/auth/sign-in.dto'
 import { SignInCredentialInvalidException } from '@application/exceptions/sign-in-credential-invalid.exception'
 import { JWT } from '@domain/adapters/jwt'
 import { Hash } from '@domain/adapters/crypto/hash'
@@ -11,7 +11,7 @@ import { env } from '@shared/env'
 import { SendEmailNotificationJob } from '@application/jobs/email-notification/send-email-notification.job'
 
 @Injectable()
-export class AuthSignInUseCase extends UseCase {
+export class AuthUserSignInUseCase extends UseCase {
 
   constructor(
     private readonly userRepository: UserRepository,
@@ -22,8 +22,8 @@ export class AuthSignInUseCase extends UseCase {
     super()
   }
 
-  async perform(args: AuthSignInDTO) {
-    const { login, type, password } = this.validator.validate(authSignInSchema, args)
+  async perform(args: AuthUserSignInDTO) {
+    const { login, type, password } = this.validator.validate(authUserSignInSchema, args)
 
     const user = await this.userRepository.findByLoginAndType(login, type)
 
