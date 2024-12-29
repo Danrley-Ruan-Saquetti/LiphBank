@@ -3,8 +3,8 @@ import { UserType } from '@domain/entities/user.entity'
 import { AuthUserSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
 import { CreatePeopleAndUserUseCase } from '@application/use-cases/shared/create-people-user.use-case'
 
-@Controller('/auth')
-export class AuthController {
+@Controller('/auth/user')
+export class AuthUserController {
 
   constructor(
     private readonly createPeopleAndUserUseCase: CreatePeopleAndUserUseCase,

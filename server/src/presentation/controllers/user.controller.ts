@@ -3,7 +3,7 @@ import { UserFindUseCase } from '@application/use-cases/user/find.use-case'
 import { UserCreateUseCase } from '@application/use-cases/user/create.use-case'
 import { UserType } from '@domain/entities/user.entity'
 import { User } from '@presentation/decorators/user.decorator'
-import { AuthGuard } from '@presentation/guards/auth.guard'
+import { AuthUserGuard } from '@presentation/guards/auth-user.guard'
 import { UserSession } from '@presentation/types/user-session.type'
 
 @Controller('/users')
@@ -21,7 +21,7 @@ export class UserController {
     return { message: 'User successfully created' }
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthUserGuard)
   @Get('/current')
   async find(@User() user: UserSession) {
     const response = await this.userFindUseCase.perform({ id: user.id })

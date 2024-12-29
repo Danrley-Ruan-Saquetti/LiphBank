@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common'
 import { User } from '@presentation/decorators/user.decorator'
-import { AuthGuard } from '@presentation/guards/auth.guard'
+import { AuthUserGuard } from '@presentation/guards/auth-user.guard'
 import { BankAccountQueryUseCase } from '@application/use-cases/bank-account/query.use-case'
 import { BankAccountCreateUseCase } from '@application/use-cases/bank-account/create.use-case'
 
@@ -12,7 +12,7 @@ export class BankAccountController {
     private readonly bankAccountQueryUseCase: BankAccountQueryUseCase
   ) { }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthUserGuard)
   @Get('')
   async query(@Query() query: any, @User() user: any) {
     const { bankAccounts } = await this.bankAccountQueryUseCase.perform({ ...query, peopleId: user.peopleId })
@@ -20,7 +20,7 @@ export class BankAccountController {
     return { bankAccounts }
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthUserGuard)
   @Post('/create')
   async create(@Body() body: any, @User() user: any) {
     await this.bankAccountCreateUseCase.perform({ ...body, peopleId: user.peopleId })
