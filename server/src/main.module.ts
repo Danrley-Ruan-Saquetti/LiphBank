@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+import { BullModule } from '@nestjs/bull'
 import { ConfigModule } from '@nestjs/config'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
@@ -7,6 +8,7 @@ import { PresentationModule } from '@presentation/presentation.module'
 import { CatchAllExceptionFilter } from '@presentation/filters/all-exception.filter'
 import { InfrastructureModule } from '@infrastructure/infrastructure.module'
 import { ApplicationModule } from '@application/application.module'
+import { env } from '@shared/env'
 
 @Module({
   imports: [
@@ -14,10 +16,17 @@ import { ApplicationModule } from '@application/application.module'
       envFilePath: ['.env'],
       isGlobal: true,
     }),
+    BullModule.forRoot({
+      redis: {
+        host: env('REDIS_HOST'),
+        port: env('REDIS_PORT'),
+        // password: env('REDIS_PASSWORD'),
+      },
+    }),
     EventEmitterModule.forRoot(),
     InfrastructureModule,
-    PresentationModule,
     ApplicationModule,
+    PresentationModule,
   ],
   controllers: [],
   providers: [
