@@ -6,6 +6,7 @@ import { InfrastructureValidatorModule } from '@infrastructure/adapters/validato
 import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
 import { AuthSignInUseCase } from '@application/use-cases/auth/sign-in.use-case'
 import { AuthAuthorizationUseCase } from '@application/use-cases/auth/authorization.use-case'
+import { ConsumerModule } from '../../jobs/consumer.module'
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AuthAuthorizationUseCase } from '@application/use-cases/auth/authorizat
     InfrastructureHashModule,
     InfrastructureJWTModule,
     InfrastructureObserverModule,
+    ConsumerModule,
   ],
   providers: [
     AuthSignInUseCase,
