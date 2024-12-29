@@ -43,4 +43,54 @@ export class PrismaDatabaseService extends Database implements OnModuleInit {
 
     throw new DatabaseServerException('Operation database failed')
   }
+
+  pipeWhere(whereConditions: Record<string, Record<string, any>>) {
+    const filters: Record<string, any> = {}
+
+    for (const key in whereConditions) {
+      const value = whereConditions[key]
+
+      if (value instanceof Array || value instanceof Date || typeof value != 'object') {
+        filters[key] = value
+      } else if (typeof value == 'object') {
+        filters[key] = this.transformOperators(value)
+      }
+    }
+
+    return filters
+  }
+
+  private transformOperators(operators: Record<string, any>) {
+    const operatorsMap: Record<string, any> = {}
+
+    const KEYS_OPERATOR_MAP = {
+      'eq': 'equals',
+      'nin': 'notIn',
+      'sw': 'startsWith',
+      'ew': 'endsWith',
+    }
+
+    for (const key in operators) {
+      const keyMap = KEYS_OPERATOR_MAP[key] || key
+
+      if (keyMap == 'dif') {
+        operatorsMap['not'] = {
+          equals: operators[key]
+        }
+      } else {
+        operatorsMap[keyMap] = operators[key]
+      }
+    }
+
+    return operatorsMap
+  }
 }
+
+/*
+{
+  name: { eq: 'Dan', dif: 'Dan' },
+  active: { eq: true, dif: true },
+  balance: { lt: 10 },
+  peopleId: 1
+}
+*/
