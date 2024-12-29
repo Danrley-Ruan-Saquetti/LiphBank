@@ -64,7 +64,10 @@ export class BankAccountRepositoryImplementation extends BankAccountRepository {
 
   async findMany(args: BankAccountQueryArgs = {}) {
     try {
-      const bankAccountsDatabase = await this.database.bankAccount.findMany({ ...args } as any)
+      const bankAccountsDatabase = await this.database.bankAccount.findMany({
+        ...args as any,
+        where: this.database.pipeWhere(args.where || {}),
+      })
 
       return BankAccountMapper.multiDatabaseToEntity(bankAccountsDatabase)
     } catch (error: any) {

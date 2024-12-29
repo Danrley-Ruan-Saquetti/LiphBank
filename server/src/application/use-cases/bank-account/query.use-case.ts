@@ -13,12 +13,15 @@ export class BankAccountQueryUseCase extends UseCase {
   }
 
   async perform(args: BankAccountQueryDTO) {
-    const { peopleId } = this.validator.validate(bankAccountQuerySchema, args)
+    const { peopleId, pageIndex, pageSize, ...filters } = this.validator.validate(bankAccountQuerySchema, args)
 
     const bankAccounts = await this.bankAccountRepository.findMany({
       where: {
+        ...filters,
         peopleId
-      }
+      },
+      take: pageSize,
+      skip: pageSize * pageIndex
     })
 
     return { bankAccounts }
