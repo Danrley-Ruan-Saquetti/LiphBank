@@ -44,4 +44,17 @@ export class BankAccount implements BankAccountProps {
 
     return bankAccount
   }
+
+  toJSON(): BankAccountProps {
+    return {
+      id: this.id,
+      name: this.name,
+      code: this.code,
+      balance: this.balance,
+      active: this.active,
+      peopleId: this.peopleId,
+      updatedAt: this.updatedAt,
+      createdAt: this.createdAt,
+    }
+  }
 }

@@ -22,4 +22,13 @@ export class EmailNotification extends Notification implements EmailNotification
 
     return emailNotification
   }
+
+  toJSON(): EmailNotificationProps & NotificationProps {
+    return {
+      ...super.toJSON(),
+      id: this.id,
+      recipient: this.recipient,
+      sender: this.sender,
+    }
+  }
 }

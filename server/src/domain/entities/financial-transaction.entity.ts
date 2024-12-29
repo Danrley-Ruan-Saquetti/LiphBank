@@ -108,4 +108,22 @@ export class FinancialTransaction implements FinancialTransactionProps {
 
     return financialTransaction
   }
+
+  toJSON(): FinancialTransactionProps {
+    return {
+      id: this.id,
+      bankAccountId: this.bankAccountId,
+      createdAt: this.createdAt,
+      dateTimeCompetence: this.dateTimeCompetence,
+      description: this.description,
+      expiresIn: this.expiresIn,
+      senderRecipient: this.senderRecipient,
+      settings: this.settings,
+      situation: this.situation,
+      title: this.title,
+      type: this.type,
+      updatedAt: this.updatedAt,
+      value: this.value,
+    }
+  }
 }

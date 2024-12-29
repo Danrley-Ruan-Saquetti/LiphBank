@@ -58,4 +58,17 @@ export class People implements PeopleProps {
 
     return people
   }
+
+  toJSON(): PeopleProps {
+    return {
+      id: this.id,
+      name: this.name,
+      type: this.type,
+      cpfCnpj: this.cpfCnpj,
+      gender: this.gender,
+      dateOfBirth: this.dateOfBirth,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    }
+  }
 }

@@ -60,4 +60,17 @@ export class Notification implements NotificationProps {
 
     return notification
   }
+
+  toJSON(): NotificationProps {
+    return {
+      id: this.id,
+      type: this.type,
+      body: this.body,
+      sendAt: this.sendAt,
+      situation: this.situation,
+      subject: this.subject,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    }
+  }
 }

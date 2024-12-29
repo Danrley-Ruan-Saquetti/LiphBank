@@ -60,4 +60,19 @@ export class User {
 
     return user
   }
+
+  toJSON(): UserPrisma {
+    return {
+      id: this.id,
+      peopleId: this.peopleId,
+      type: this.type,
+      active: this.active,
+      code: this.code,
+      login: this.login,
+      password: this.password,
+      lastAccess: this.lastAccess,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    }
+  }
 }
