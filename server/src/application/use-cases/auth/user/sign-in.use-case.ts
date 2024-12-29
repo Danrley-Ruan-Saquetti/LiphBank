@@ -46,8 +46,6 @@ export class AuthUserSignInUseCase extends UseCase {
 
     await this.userRepository.update(user.id, user)
 
-    await this.sendEmailNotificationQueue.add(SendEmailNotificationJob.KEY_JOB, new SendEmailNotificationJob(user).getData())
-
     const payload = {
       sub: user.id,
       peopleId: user.peopleId,
@@ -58,6 +56,8 @@ export class AuthUserSignInUseCase extends UseCase {
       secret: env('JWT_USER_SECRET'),
       exp: env('JWT_USER_EXPIRATION'),
     })
+
+    await this.sendEmailNotificationQueue.add(SendEmailNotificationJob.KEY_JOB, new SendEmailNotificationJob(user).getData())
 
     return { token, payload }
   }
