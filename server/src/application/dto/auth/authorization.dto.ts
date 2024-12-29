@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
-export const authAuthorizationSchema = z.object({
+export const authUserAuthorizationSchema = z.object({
   token: z
     .string()
     .trim()
 })
 
-export type AuthAuthorizationDTO = z.input<typeof authAuthorizationSchema>
+export type AuthUserAuthorizationDTO = z.input<typeof authUserAuthorizationSchema>

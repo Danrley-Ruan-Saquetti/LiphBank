@@ -6,7 +6,7 @@ import { InfrastructureValidatorModule } from '@infrastructure/adapters/validato
 import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
 import { ConsumerModule } from '@application/jobs/consumer.module'
 import { AuthSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
-import { AuthAuthorizationUseCase } from '@application/use-cases/auth/user/authorization.use-case'
+import { AuthUserAuthorizationUseCase } from '@application/use-cases/auth/user/authorization.use-case'
 
 @Module({
   imports: [
@@ -19,11 +19,11 @@ import { AuthAuthorizationUseCase } from '@application/use-cases/auth/user/autho
   ],
   providers: [
     AuthSignInUseCase,
-    AuthAuthorizationUseCase,
+    AuthUserAuthorizationUseCase,
   ],
   exports: [
     AuthSignInUseCase,
-    AuthAuthorizationUseCase,
+    AuthUserAuthorizationUseCase,
   ]
 })
 export class AuthUseCaseModule { }

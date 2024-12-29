@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
-import { AuthAuthorizationDTO, authAuthorizationSchema } from '@application/dto/auth/authorization.dto'
+import { AuthUserAuthorizationDTO, authUserAuthorizationSchema } from '@application/dto/auth/authorization.dto'
 import { JWT } from '@domain/adapters/jwt'
 
 @Injectable()
-export class AuthAuthorizationUseCase extends UseCase {
+export class AuthUserAuthorizationUseCase extends UseCase {
   constructor(
     private readonly jwtService: JWT
   ) {
     super()
   }
-  async perform(args: AuthAuthorizationDTO) {
-    const { token: authorizationToken } = this.validator.validate(authAuthorizationSchema, args)
+  async perform(args: AuthUserAuthorizationDTO) {
+    const { token: authorizationToken } = this.validator.validate(authUserAuthorizationSchema, args)
 
     if (!authorizationToken) {
       throw new UnauthorizedException('Unauthorized', [{ message: 'Authorization token not defined', path: ['authorization', 'required'] }])
