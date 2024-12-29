@@ -9,4 +9,4 @@ export const stringQuerySchema = () => z.object({
   gte: baseZodDate.optional(),
   lt: baseZodDate.optional(),
   lte: baseZodDate.optional(),
-})
+}).optional()

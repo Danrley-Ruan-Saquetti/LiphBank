@@ -9,4 +9,4 @@ export const stringQuerySchema = () => z.object({
   nin: z.array(baseZodString).optional(),
   sw: baseZodString.optional(),
   ew: baseZodString.optional(),
-})
+}).optional()

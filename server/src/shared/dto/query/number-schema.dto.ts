@@ -11,4 +11,4 @@ export const numberQuerySchema = () => z.object({
   gte: baseZodNumber.optional(),
   lt: baseZodNumber.optional(),
   lte: baseZodNumber.optional(),
-})
+}).optional()
