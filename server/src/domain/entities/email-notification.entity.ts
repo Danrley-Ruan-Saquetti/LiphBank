@@ -14,13 +14,15 @@ export class EmailNotification extends Notification implements EmailNotification
   set recipient(value) { this._recipient = value }
   set sender(value) { this._sender = value }
 
+  constructor(props: Partial<EmailNotificationProps> & Partial<NotificationProps> = {}) {
+    super(props)
+
+    this.recipient = props.recipient!
+    this.sender = props.sender!
+  }
+
   static load(props: Partial<EmailNotificationProps> & Partial<NotificationProps>) {
-    const emailNotification = super.load({ ...props }) as EmailNotification
-
-    if (props.recipient) emailNotification.recipient = props.recipient
-    if (props.sender) emailNotification.sender = props.sender
-
-    return emailNotification
+    return new EmailNotification(props)
   }
 
   toJSON(): EmailNotificationProps & NotificationProps {

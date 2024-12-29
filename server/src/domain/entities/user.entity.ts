@@ -44,21 +44,21 @@ export class User {
   set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
 
+  constructor(props: Partial<UserProps> = {}) {
+    this.id = props.id!
+    this.peopleId = props.peopleId!
+    this.type = props.type!
+    this.active = props.active ?? true
+    this.code = props.code!
+    this.login = props.login!
+    this.password = props.password!
+    this.lastAccess = props.lastAccess!
+    this.createdAt = props.createdAt!
+    this.updatedAt = props.updatedAt!
+  }
+
   static load(props: Partial<UserProps>) {
-    const user = new User()
-
-    if (props.id) user.id = props.id
-    if (props.peopleId) user.peopleId = props.peopleId
-    if (props.type) user.type = props.type
-    if (props.active) user.active = props.active
-    if (props.code) user.code = props.code
-    if (props.login) user.login = props.login
-    if (props.password) user.password = props.password
-    if (props.lastAccess) user.lastAccess = props.lastAccess
-    if (props.createdAt) user.createdAt = props.createdAt
-    if (props.updatedAt) user.updatedAt = props.updatedAt
-
-    return user
+    return new User(props)
   }
 
   toJSON(): UserPrisma {

@@ -44,19 +44,19 @@ export class People implements PeopleProps {
   set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
 
+  constructor(props: Partial<PeopleProps> = {}) {
+    this.id = props.id!
+    this.name = props.name!
+    this.type = props.type!
+    this.cpfCnpj = props.cpfCnpj!
+    this.gender = props.gender!
+    this.dateOfBirth = props.dateOfBirth!
+    this.createdAt = props.createdAt!
+    this.updatedAt = props.updatedAt!
+  }
+
   static load(props: Partial<PeopleProps>) {
-    const people = new People()
-
-    if (props.id) people.id = props.id
-    if (props.name) people.name = props.name
-    if (props.type) people.type = props.type
-    if (props.cpfCnpj) people.cpfCnpj = props.cpfCnpj
-    if (props.gender) people.gender = props.gender
-    if (props.dateOfBirth) people.dateOfBirth = props.dateOfBirth
-    if (props.createdAt) people.createdAt = props.createdAt
-    if (props.updatedAt) people.updatedAt = props.updatedAt
-
-    return people
+    return new People(props)
   }
 
   toJSON(): PeopleProps {

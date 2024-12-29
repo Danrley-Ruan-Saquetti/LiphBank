@@ -89,24 +89,24 @@ export class FinancialTransaction implements FinancialTransactionProps {
   set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
 
+  constructor(props: Partial<FinancialTransactionProps> = {}) {
+    this.id = props.id!
+    this.bankAccountId = props.bankAccountId!
+    this.createdAt = props.createdAt!
+    this.dateTimeCompetence = props.dateTimeCompetence!
+    this.description = props.description!
+    this.expiresIn = props.expiresIn!
+    this.senderRecipient = props.senderRecipient!
+    this.settings = props.settings ?? FinancialTransaction.getDefaultSettings()
+    this.situation = props.situation ?? FinancialTransactionSituation.PENDING
+    this.title = props.title!
+    this.type = props.type!
+    this.updatedAt = props.updatedAt!
+    this.value = props.value!
+  }
+
   static load(props: Partial<FinancialTransactionProps>) {
-    const financialTransaction = new FinancialTransaction()
-
-    if (props.id) financialTransaction.id = props.id
-    if (props.bankAccountId) financialTransaction.bankAccountId = props.bankAccountId
-    if (props.createdAt) financialTransaction.createdAt = props.createdAt
-    if (props.dateTimeCompetence) financialTransaction.dateTimeCompetence = props.dateTimeCompetence
-    if (props.description) financialTransaction.description = props.description
-    if (props.expiresIn) financialTransaction.expiresIn = props.expiresIn
-    if (props.senderRecipient) financialTransaction.senderRecipient = props.senderRecipient
-    if (props.settings) financialTransaction.settings = props.settings
-    if (props.situation) financialTransaction.situation = props.situation
-    if (props.title) financialTransaction.title = props.title
-    if (props.type) financialTransaction.type = props.type
-    if (props.updatedAt) financialTransaction.updatedAt = props.updatedAt
-    if (props.value) financialTransaction.value = props.value
-
-    return financialTransaction
+    return new FinancialTransaction(props)
   }
 
   toJSON(): FinancialTransactionProps {
@@ -124,6 +124,17 @@ export class FinancialTransaction implements FinancialTransactionProps {
       type: this.type,
       updatedAt: this.updatedAt,
       value: this.value,
+    }
+  }
+
+  static getDefaultSettings(): FinancialTransactionSettings {
+    return {
+      isObservable: false,
+      isSendNotification: false,
+      timesToRepeat: null,
+      countRepeatedOccurrences: 0,
+      typeOccurrence: FinancialTransactionTypeOccurrence.SINGLE,
+      frequency: null,
     }
   }
 }

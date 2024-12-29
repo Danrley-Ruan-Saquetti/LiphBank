@@ -3,6 +3,7 @@ import { BankAccount as BankAccountPrisma } from '@prisma/client'
 export type BankAccountProps = BankAccountPrisma
 
 export class BankAccount implements BankAccountProps {
+
   private _code: string
   private _name: string
   private _id: number
@@ -30,19 +31,19 @@ export class BankAccount implements BankAccountProps {
   set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
 
+  constructor(props: Partial<BankAccountProps> = {}) {
+    this.id = props.id!
+    this.name = props.name!
+    this.code = props.code!
+    this.balance = props.balance ?? 0
+    this.active = props.active ?? true
+    this.peopleId = props.peopleId!
+    this.updatedAt = props.updatedAt!
+    this.createdAt = props.createdAt!
+  }
+
   static load(props: Partial<BankAccountProps>) {
-    const bankAccount = new BankAccount()
-
-    if (props.id) bankAccount.id = props.id
-    if (props.name) bankAccount.name = props.name
-    if (props.code) bankAccount.code = props.code
-    if (props.balance) bankAccount.balance = props.balance
-    if (props.active) bankAccount.active = props.active
-    if (props.peopleId) bankAccount.peopleId = props.peopleId
-    if (props.updatedAt) bankAccount.updatedAt = props.updatedAt
-    if (props.createdAt) bankAccount.createdAt = props.createdAt
-
-    return bankAccount
+    return new BankAccount(props)
   }
 
   toJSON(): BankAccountProps {

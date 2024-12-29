@@ -46,19 +46,19 @@ export class Notification implements NotificationProps {
   set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
 
+  constructor(props: Partial<NotificationProps> = {}) {
+    this.id = props.id!
+    this.type = props.type!
+    this.body = props.body!
+    this.sendAt = props.sendAt!
+    this.situation = props.situation ?? NotificationSituation.IN_QUEUE
+    this.subject = props.subject!
+    this.createdAt = props.createdAt!
+    this.updatedAt = props.updatedAt!
+  }
+
   static load(props: Partial<NotificationProps>) {
-    const notification = new this()
-
-    if (props.id) notification.id = props.id
-    if (props.type) notification.type = props.type
-    if (props.body) notification.body = props.body
-    if (props.sendAt) notification.sendAt = props.sendAt
-    if (props.situation) notification.situation = props.situation
-    if (props.subject) notification.subject = props.subject
-    if (props.createdAt) notification.createdAt = props.createdAt
-    if (props.updatedAt) notification.updatedAt = props.updatedAt
-
-    return notification
+    return new this(props)
   }
 
   toJSON(): NotificationProps {
