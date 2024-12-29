@@ -55,8 +55,8 @@ export class AuthUserSignInUseCase extends UseCase {
     }
 
     const token = this.jwt.encode(payload, {
-      secret: env('JWT_SECRET'),
-      exp: env('JWT_EXPIRATION'),
+      secret: env('JWT_USER_SECRET'),
+      exp: env('JWT_USER_EXPIRATION'),
     })
 
     return { token, payload }
