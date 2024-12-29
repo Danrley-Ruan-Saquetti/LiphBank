@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const baseZodString = z.string()
 
-export const stringQuerySchema = z.object({
+export const stringQuerySchema = () => z.object({
   eq: baseZodString.optional(),
   dif: baseZodString.optional(),
   in: z.array(baseZodString).optional(),

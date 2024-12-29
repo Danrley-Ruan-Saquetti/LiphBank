@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const baseZodDate = z.coerce.date()
 
-export const stringQuerySchema = z.object({
+export const stringQuerySchema = () => z.object({
   eq: baseZodDate.optional(),
   dif: baseZodDate.optional(),
   gt: baseZodDate.optional(),
