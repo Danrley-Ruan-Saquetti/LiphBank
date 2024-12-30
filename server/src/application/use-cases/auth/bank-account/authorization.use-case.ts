@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
+import { BankAccountJWTPayload } from '@application/types/bank-account-jwt-payload.type'
 import { AuthBankAccountAuthorizationDTO, authBankAccountAuthorizationSchema } from '@application/dto/auth/bank-account/authorization.dto'
 import { JWT } from '@domain/adapters/jwt'
 
@@ -12,7 +13,7 @@ export class AuthBankAccountAuthorizationUseCase extends UseCase {
     super()
   }
 
-  async perform(args: AuthBankAccountAuthorizationDTO) {
+  perform(args: AuthBankAccountAuthorizationDTO) {
     const { token: authorizationToken } = this.validator.validate(authBankAccountAuthorizationSchema, args)
 
     if (!authorizationToken) {
@@ -30,7 +31,7 @@ export class AuthBankAccountAuthorizationUseCase extends UseCase {
     }
 
     try {
-      const payload = await this.jwtService.decode(token)
+      const payload = this.jwtService.decode<BankAccountJWTPayload>(token)
 
       return { payload }
     } catch {

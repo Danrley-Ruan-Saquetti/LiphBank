@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
+import { BankAccountJWTPayload } from '@application/types/bank-account-jwt-payload.type'
 import { AuthBankAccountSignInDTO, authBankAccountSignInSchema } from '@application/dto/auth/bank-account/sign-in.dto'
 import { JWT } from '@domain/adapters/jwt'
 import { BankAccountRepository } from '@domain/repositories/bank-account.repository'
@@ -34,7 +35,7 @@ export class AuthBankAccountSignInUseCase extends UseCase {
       throw new UnauthorizedException('This currently inactive bank account')
     }
 
-    const payload = {
+    const payload: BankAccountJWTPayload = {
       sub: bankAccount.id,
       code: bankAccount.code,
     }
