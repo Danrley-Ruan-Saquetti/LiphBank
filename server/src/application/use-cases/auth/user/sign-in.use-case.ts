@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectQueue } from '@nestjs/bull'
 import { Queue } from 'bull'
 import { UseCase } from '@application/use-cases/use-case'
+import { UserJWTPayload } from '@application/types/user-jwt-payload.type'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
 import { SendEmailNotificationJob } from '@application/jobs/email-notification/send-email-notification.job'
 import { SignInCredentialInvalidException } from '@application/exceptions/sign-in-credential-invalid.exception'
@@ -46,7 +47,7 @@ export class AuthUserSignInUseCase extends UseCase {
 
     await this.userRepository.update(user.id, user)
 
-    const payload = {
+    const payload: UserJWTPayload = {
       sub: user.id,
       peopleId: user.peopleId,
       code: user.code,

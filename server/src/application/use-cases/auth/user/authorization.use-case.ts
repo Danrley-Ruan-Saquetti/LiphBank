@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
+import { UserJWTPayload } from '@application/types/user-jwt-payload.type'
 import { AuthUserAuthorizationDTO, authUserAuthorizationSchema } from '@application/dto/auth/user/authorization.dto'
 import { JWT } from '@domain/adapters/jwt'
 
@@ -11,7 +12,8 @@ export class AuthUserAuthorizationUseCase extends UseCase {
   ) {
     super()
   }
-  async perform(args: AuthUserAuthorizationDTO) {
+
+  perform(args: AuthUserAuthorizationDTO) {
     const { token: authorizationToken } = this.validator.validate(authUserAuthorizationSchema, args)
 
     if (!authorizationToken) {
@@ -29,7 +31,7 @@ export class AuthUserAuthorizationUseCase extends UseCase {
     }
 
     try {
-      const payload = await this.jwtService.decode(token)
+      const payload = this.jwtService.decode<UserJWTPayload>(token)
 
       return { payload }
     } catch {
