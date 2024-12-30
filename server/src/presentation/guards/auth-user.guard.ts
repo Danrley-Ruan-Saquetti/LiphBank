@@ -1,4 +1,3 @@
-
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { AuthUserAuthorizationUseCase } from '@application/use-cases/auth/user/authorization.use-case'
 
@@ -9,11 +8,11 @@ export class AuthUserGuard implements CanActivate {
     private readonly authUserAuthorizationUseCase: AuthUserAuthorizationUseCase
   ) { }
 
-  async canActivate(context: ExecutionContext) {
+  canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest()
     const token = request.headers.authorization || ''
 
-    const { payload } = await this.authUserAuthorizationUseCase.perform({ token })
+    const { payload } = this.authUserAuthorizationUseCase.perform({ token })
 
     request.user = {
       id: payload.sub,
