@@ -64,7 +64,10 @@ export class PeopleRepositoryImplementation extends PeopleRepository {
 
   async findMany(args: PeopleQueryArgs = {}) {
     try {
-      const peoplesDatabase = await this.database.people.findMany({ ...args } as any)
+      const peoplesDatabase = await this.database.people.findMany({
+        ...args as any,
+        where: this.database.pipeWhere(args.where || {}),
+      })
 
       return PeopleMapper.multiDatabaseToEntity(peoplesDatabase)
     } catch (error: any) {

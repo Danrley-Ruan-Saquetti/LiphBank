@@ -75,7 +75,10 @@ export class FinancialTransactionRepositoryImplementation extends FinancialTrans
 
   async findMany(args: FinancialTransactionQueryArgs = {}) {
     try {
-      const financialTransactionsDatabase = await this.database.financialTransaction.findMany({ ...args } as any)
+      const financialTransactionsDatabase = await this.database.financialTransaction.findMany({
+        ...args as any,
+        where: this.database.pipeWhere(args.where || {}),
+      })
 
       return FinancialTransactionMapper.multiDatabaseToEntity(financialTransactionsDatabase)
     } catch (error: any) {

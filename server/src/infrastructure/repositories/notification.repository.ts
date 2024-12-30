@@ -64,7 +64,10 @@ export class NotificationRepositoryImplementation extends NotificationRepository
 
   async findMany(args: NotificationQueryArgs = {}) {
     try {
-      const notificationsDatabase = await this.database.notification.findMany({ ...args } as any)
+      const notificationsDatabase = await this.database.notification.findMany({
+        ...args as any,
+        where: this.database.pipeWhere(args.where || {}),
+      })
 
       return NotificationMapper.multiDatabaseToEntity(notificationsDatabase)
     } catch (error: any) {

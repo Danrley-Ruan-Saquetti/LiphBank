@@ -69,7 +69,10 @@ export class UserRepositoryImplementation extends UserRepository {
 
   async findMany(args: UserQueryArgs = {}) {
     try {
-      const usersDatabase = await this.database.user.findMany({ ...args } as any)
+      const usersDatabase = await this.database.user.findMany({
+        ...args as any,
+        where: this.database.pipeWhere(args.where || {}),
+      })
 
       return UserMapper.multiDatabaseToEntity(usersDatabase)
     } catch (error: any) {

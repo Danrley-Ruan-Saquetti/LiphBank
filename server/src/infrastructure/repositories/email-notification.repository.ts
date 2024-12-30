@@ -82,7 +82,13 @@ export class EmailNotificationRepositoryImplementation extends EmailNotification
 
   async findMany(args: EmailNotificationQueryArgs = {}) {
     try {
-      const emailNotificationsDatabase = await this.database.email.findMany({ ...args, include: { notification: true } } as any)
+      const emailNotificationsDatabase = await this.database.email.findMany({
+        ...args as any,
+        where: this.database.pipeWhere(args.where || {}),
+        include: {
+          notification: true
+        }
+      })
 
       return EmailNotificationMapper.multiDatabaseToEntity(emailNotificationsDatabase as any)
     } catch (error: any) {
