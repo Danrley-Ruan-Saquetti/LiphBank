@@ -1,5 +1,7 @@
 export const FinancialTransactionMessage = {
-  bankAccountId: 'ID Bank Account is required',
+  bankAccountId: {
+    required: 'ID Bank Account is required',
+  },
   title: {
     required: 'Title is required',
     rangeCharacters: 'The Title must be between 3 and 55 characters',

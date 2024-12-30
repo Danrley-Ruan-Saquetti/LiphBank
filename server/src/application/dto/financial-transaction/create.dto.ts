@@ -6,7 +6,7 @@ import { FinancialTransactionSituation, FinancialTransactionTypeOccurrence } fro
 export const financialTransactionCreateSchema = z.object({
   bankAccountId: z
     .coerce
-    .number({ 'required_error': FinancialTransactionMessage.bankAccountId })
+    .number({ 'required_error': FinancialTransactionMessage.bankAccountId.required })
     .int(),
   title: z
     .string({ 'required_error': FinancialTransactionMessage.title.required })
