@@ -3,10 +3,12 @@ import { Prisma } from '@prisma/client'
 import { DatabaseServerException } from '@infrastructure/adapters/database/exceptions/server.exception'
 import { DatabaseClientException } from '@infrastructure/adapters/database/exceptions/client.exception'
 import { PRISMA_CLIENT_ERRORS_CODE } from '@infrastructure/adapters/database/errors.code'
-import { Database } from '@domain/database'
+import { Database, SchemaFilterQuery } from '@domain/database'
 
 @Injectable()
 export class PrismaDatabaseService extends Database implements OnModuleInit {
+
+  private queryFilterSchema: SchemaFilterQuery = {}
 
   constructor() {
     super({ log: ['error', 'warn'] })
@@ -41,56 +43,106 @@ export class PrismaDatabaseService extends Database implements OnModuleInit {
       throw new DatabaseServerException('Failed to initialize Prisma Client')
     }
 
-    throw new DatabaseServerException('Operation database failed')
+    throw new DatabaseServerException('Operation database failed. Error: ' + error.message || '')
+  }
+
+  setSchemaFilter<T = any>(schema: SchemaFilterQuery<T>): void {
+    this.queryFilterSchema = schema
   }
 
   pipeWhere(whereConditions: Record<string, Record<string, any>>) {
-    const filters: Record<string, any> = {}
+    return new QueryFilterBuilder(this.queryFilterSchema).build(whereConditions)
+  }
+}
 
-    for (const key in whereConditions) {
-      const value = whereConditions[key]
+class QueryFilterBuilder {
 
-      if (value instanceof Array || value instanceof Date || typeof value != 'object') {
-        filters[key] = value
-      } else if (typeof value == 'object') {
-        filters[key] = this.transformOperators(value)
+  private filters: Record<string, any> = {}
+
+  constructor(
+    private readonly queryFilterSchema: SchemaFilterQuery = {}
+  ) { }
+
+  build(whereConditions: Record<string, Record<string, any>>) {
+    for (const field in whereConditions) {
+      const operators = whereConditions[field]
+
+      for (const operator in operators) {
+        const value = operators[operator]
+
+        this.parseOperatorField(field, operator, value)
       }
     }
 
-    return filters
+    return this.filters
   }
 
-  private transformOperators(operators: Record<string, any>) {
-    const operatorsMap: Record<string, any> = {}
+  private parseOperatorField(field: string, operator: string, value: any) {
+    const type = this.queryFilterSchema[field]
 
-    const KEYS_OPERATOR_MAP = {
-      'eq': 'equals',
-      'nin': 'notIn',
-      'sw': 'startsWith',
-      'ew': 'endsWith',
+    if (!type) return
+
+    const SCHEMA_TYPE: Record<string, Record<string, () => { filters?: any, superFilters?: { BASE?: any, NOT?: any } }>> = {
+      string: {
+        notContains: () => ({ superFilters: { NOT: { contains: value } } }),
+        fil: () => ({}),
+      },
+      number: {
+        fil: () => ({}),
+      },
+      boolean: {
+        fil: () => ({}),
+      },
+      date: {
+        between: () => ({ filters: { lte: value[0], gte: value[1] } }),
+        notBetween: () => ({ superFilters: { NOT: { lte: value[0], gte: value[1] } } }),
+        fil: () => ({}),
+      },
+      json: {
+        fil: () => ({}),
+      },
+      enum: {
+        fil: () => ({}),
+      }
     }
 
-    for (const key in operators) {
-      const keyMap = KEYS_OPERATOR_MAP[key] || key
+    const schemaType = SCHEMA_TYPE[type]
 
-      if (keyMap == 'dif') {
-        operatorsMap['not'] = {
-          equals: operators[key]
+    if (!schemaType) return
+
+    const schemaOperator = schemaType[operator] || (() => ({
+      filters: { [operator]: value }
+    }))
+
+    const { filters, superFilters } = schemaOperator()
+
+    this.addFilter(field, { filters, superFilters })
+  }
+
+  private addFilter(field: string, { filters, superFilters }: { filters?: any, superFilters?: { NOT?: any, BASE?: any } }) {
+    if (filters) {
+      this.filters[field] = { ...this.filters[field], ...filters }
+    }
+
+    if (superFilters) {
+      if (superFilters.NOT) {
+        this.filters.NOT = {
+          ...this.filters?.NOT,
+          [field]: {
+            ...this.filters?.NOT?.[field],
+            ...superFilters.NOT,
+          }
         }
-      } else {
-        operatorsMap[keyMap] = operators[key]
+      }
+
+      if (superFilters.BASE) {
+        this.filters = {
+          ...this.filters,
+          ...superFilters.BASE,
+          AND: [...(this.filters.AND ?? []), ...(superFilters.BASE.AND ?? [])],
+          OR: [...(this.filters.OR ?? []), ...(superFilters.BASE.OR ?? [])],
+        }
       }
     }
-
-    return operatorsMap
   }
 }
-
-/*
-{
-  name: { eq: 'Dan', dif: 'Dan' },
-  active: { eq: true, dif: true },
-  balance: { lt: 10 },
-  peopleId: 1
-}
-*/
