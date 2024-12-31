@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { EmailNotificationMapper } from '@infrastructure/mappers/email-notification.mapper'
 import { Database } from '@domain/database'
-import { EmailNotification } from '@domain/entities/email-notification.entity'
+import { EmailNotification, EmailNotificationProps } from '@domain/entities/email-notification.entity'
 import { EmailNotificationQueryArgs, EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
 
 @Injectable()
@@ -11,6 +11,12 @@ export class EmailNotificationRepositoryImplementation extends EmailNotification
     private readonly database: Database
   ) {
     super()
+
+    this.database.setSchemaFilter<EmailNotificationProps>({
+      recipient: 'string',
+      sender: 'string',
+      id: 'number',
+    })
   }
 
   async create(emailNotification: EmailNotification) {

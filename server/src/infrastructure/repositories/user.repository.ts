@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { UserMapper } from '@infrastructure/mappers/user.mapper'
 import { Database } from '@domain/database'
-import { User, UserType } from '@domain/entities/user.entity'
+import { User, UserType, UserProps } from '@domain/entities/user.entity'
 import { UserQueryArgs, UserRepository } from '@domain/repositories/user.repository'
 
 @Injectable()
@@ -11,6 +11,19 @@ export class UserRepositoryImplementation extends UserRepository {
     private readonly database: Database
   ) {
     super()
+
+    this.database.setSchemaFilter<UserProps>({
+      active: 'boolean',
+      code: 'string',
+      createdAt: 'date',
+      id: 'number',
+      lastAccess: 'date',
+      login: 'string',
+      password: 'string',
+      peopleId: 'number',
+      type: 'enum',
+      updatedAt: 'date',
+    })
   }
 
   async create(user: User) {

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 import { FinancialTransactionMapper } from '@infrastructure/mappers/financial-transaction.mapper'
 import { Database } from '@domain/database'
-import { FinancialTransaction } from '@domain/entities/financial-transaction.entity'
+import { FinancialTransaction, FinancialTransactionProps } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionQueryArgs, FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
 
 @Injectable()
@@ -12,6 +12,22 @@ export class FinancialTransactionRepositoryImplementation extends FinancialTrans
     private readonly database: Database
   ) {
     super()
+
+    this.database.setSchemaFilter<FinancialTransactionProps>({
+      type: 'enum',
+      situation: 'enum',
+      id: 'number',
+      bankAccountId: 'number',
+      title: 'string',
+      description: 'string',
+      value: 'number',
+      senderRecipient: 'string',
+      expiresIn: 'date',
+      dateTimeCompetence: 'date',
+      settings: 'json',
+      createdAt: 'date',
+      updatedAt: 'date',
+    })
   }
 
   async create(financialTransaction: FinancialTransaction) {

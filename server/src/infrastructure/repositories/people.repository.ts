@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PeopleMapper } from '@infrastructure/mappers/people.mapper'
-import { People } from '@domain/entities/people.entity'
+import { People, PeopleProps } from '@domain/entities/people.entity'
 import { Database } from '@domain/database'
 import { PeopleQueryArgs, PeopleRepository } from '@domain/repositories/people.repository'
 
@@ -11,6 +11,17 @@ export class PeopleRepositoryImplementation extends PeopleRepository {
     private readonly database: Database
   ) {
     super()
+
+    this.database.setSchemaFilter<PeopleProps>({
+      cpfCnpj: 'string',
+      dateOfBirth: 'date',
+      gender: 'enum',
+      name: 'string',
+      createdAt: 'date',
+      id: 'number',
+      type: 'enum',
+      updatedAt: 'date',
+    })
   }
 
   async create(people: People) {

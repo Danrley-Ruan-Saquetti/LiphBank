@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { BankAccountMapper } from '@infrastructure/mappers/bank-account.mapper'
 import { Database } from '@domain/database'
-import { BankAccount } from '@domain/entities/bank-account.entity'
+import { BankAccount, BankAccountProps } from '@domain/entities/bank-account.entity'
 import { BankAccountQueryArgs, BankAccountRepository } from '@domain/repositories/bank-account.repository'
 
 @Injectable()
@@ -11,6 +11,17 @@ export class BankAccountRepositoryImplementation extends BankAccountRepository {
     private readonly database: Database
   ) {
     super()
+
+    this.database.setSchemaFilter<BankAccountProps>({
+      active: 'boolean',
+      balance: 'number',
+      code: 'string',
+      name: 'string',
+      peopleId: 'number',
+      createdAt: 'date',
+      id: 'number',
+      updatedAt: 'date',
+    })
   }
 
   async create(bankAccount: BankAccount) {

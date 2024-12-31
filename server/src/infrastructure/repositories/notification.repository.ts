@@ -1,5 +1,5 @@
 import { NotificationMapper } from '@infrastructure/mappers/notification.mapper'
-import { Notification } from '@domain/entities/notification.entity'
+import { Notification, NotificationProps } from '@domain/entities/notification.entity'
 import { Database } from '@domain/database'
 import { NotificationQueryArgs, NotificationRepository } from '@domain/repositories/notification.repository'
 import { Injectable } from '@nestjs/common'
@@ -11,6 +11,17 @@ export class NotificationRepositoryImplementation extends NotificationRepository
     private readonly database: Database
   ) {
     super()
+
+    this.database.setSchemaFilter<NotificationProps>({
+      body: 'string',
+      createdAt: 'date',
+      sendAt: 'date',
+      situation: 'enum',
+      subject: 'string',
+      type: 'enum',
+      updatedAt: 'date',
+      id: 'number',
+    })
   }
 
   async create(notification: Notification) {
