@@ -1,8 +1,13 @@
-import { FinancialTransaction } from '@domain/entities/financial-transaction.entity'
 import { FilterSchema, QuerySchema } from '@domain/database/filters'
+import { FinancialTransaction, FinancialTransactionProps } from '@domain/entities/financial-transaction.entity'
 
-export type FinancialTransactionFilter = FilterSchema<FinancialTransaction>
-export type FinancialTransactionQueryArgs = QuerySchema<FinancialTransaction>
+interface FinancialTransactionFilterArgs extends Omit<FinancialTransactionProps, 'type' | 'situation'> {
+  type: 'enum'
+  situation: 'enum'
+}
+
+export type FinancialTransactionFilter = FilterSchema<FinancialTransactionFilterArgs>
+export type FinancialTransactionQueryArgs = QuerySchema<FinancialTransactionFilterArgs>
 
 export abstract class FinancialTransactionRepository {
 

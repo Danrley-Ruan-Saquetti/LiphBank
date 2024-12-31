@@ -1,12 +1,13 @@
 import { z } from 'zod'
 
 const baseZodNumber = z.coerce.number()
+const baseUnionZodNumber = z.union([baseZodNumber, z.array(baseZodNumber)]).optional().transform(val => !val ? undefined : Array.isArray(val) ? val : [val])
 
 export const numberQuerySchema = () => z.object({
-  eq: baseZodNumber.optional(),
-  dif: baseZodNumber.optional(),
-  in: z.array(baseZodNumber).optional(),
-  nin: z.array(baseZodNumber).optional(),
+  equals: baseZodNumber.optional(),
+  not: baseZodNumber.optional(),
+  in: baseUnionZodNumber,
+  notIn: baseUnionZodNumber,
   gt: baseZodNumber.optional(),
   gte: baseZodNumber.optional(),
   lt: baseZodNumber.optional(),

@@ -1,6 +1,7 @@
 import {
   BooleanFilterOperators,
   DateFilterOperators,
+  EnumFilterOperators,
   JSONFilterOperators,
   NumberFilterOperators,
   StringFilterOperators
@@ -15,6 +16,8 @@ export type FilterSchema<Schema extends object> = GlobalFilter<Schema> & {
   [x in keyof Schema]?:
   NonNullable<Schema[x]> extends number
   ? NumberFilterOperators
+  : NonNullable<Schema[x]> extends 'enum'
+  ? EnumFilterOperators
   : NonNullable<Schema[x]> extends string
   ? StringFilterOperators
   : NonNullable<Schema[x]> extends boolean
