@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt'
 import { HashService } from '@domain/adapters/crypto/hash.service'
 
 @Injectable()
-export class HashImplementation extends HashService {
+export class HashServiceImplementation extends HashService {
 
   async hash(value: string) {
     return await bcrypt.hash(value, 10)
