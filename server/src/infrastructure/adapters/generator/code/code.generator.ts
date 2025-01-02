@@ -1,4 +1,4 @@
-import { CodeGenerator, CodeGeneratorOptions } from '@domain/adapters/generator/code/code.generator'
+import { CodeGenerator, CodeGeneratorOptions } from '@domain/adapters/generator/code/code.service'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()

@@ -2,7 +2,7 @@ import { CodeGeneratorImplementation } from '@infrastructure/adapters/generator/
 import { BankAccountCreateUseCase } from '@application/use-cases/bank-account/create.use-case'
 import { BankAccountGenerateCodeUseCase } from '@application/use-cases/bank-account/generate-code.use-case'
 import { BankAccount } from '@domain/entities/bank-account.entity'
-import { CodeGenerator } from '@domain/adapters/generator/code/code.generator'
+import { CodeGenerator } from '@domain/adapters/generator/code/code.service'
 import { BankAccountRepository } from '@domain/repositories/bank-account.repository'
 import { PeopleRepositoryMock } from '@tests/unit/shared/mocks/people/repository.mock'
 import { createApplicationMock } from '@tests/unit/shared/mocks/module.mock'

@@ -5,7 +5,7 @@ import { SendEmailNotificationJobData } from '@application/jobs/email-notificati
 import { Templates } from '@domain/templates/templates'
 import { MailService } from '@domain/adapters/mail/mail'
 import { PeopleRepository } from '@domain/repositories/people.repository'
-import { TemplateGenerator } from '@domain/adapters/generator/template/template.generator'
+import { TemplateGeneratorService } from '@domain/adapters/generator/template/template.service'
 import { env } from '@shared/env'
 
 @Processor('queue.email-notification')
@@ -13,7 +13,7 @@ export class EmailNotificationConsumer extends QueueConsumer {
 
   constructor(
     private readonly peopleRepository: PeopleRepository,
-    private readonly templateGenerator: TemplateGenerator,
+    private readonly templateGenerator: TemplateGeneratorService,
     private readonly mailService: MailService,
   ) {
     super()

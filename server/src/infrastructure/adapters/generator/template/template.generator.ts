@@ -1,10 +1,10 @@
 import Handlebars from 'handlebars'
 import { Injectable } from '@nestjs/common'
 import { GenerateTemplateException } from '@infrastructure/adapters/generator/template/template.exception'
-import { TemplateGenerator, TemplateGeneratorOptions } from '@domain/adapters/generator/template/template.generator'
+import { TemplateGeneratorService, TemplateGeneratorOptions } from '@domain/adapters/generator/template/template.service'
 
 @Injectable()
-export class TemplateGeneratorImplementation extends TemplateGenerator {
+export class TemplateGeneratorServiceImplementation extends TemplateGeneratorService {
 
   generate(template: string, variables?: Record<string, any>, options?: TemplateGeneratorOptions) {
     try {

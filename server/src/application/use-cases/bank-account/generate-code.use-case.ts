@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { CodeGenerationFailedException } from '@application/exceptions/code-generation-failed.exception'
 import { BankAccountGenerateCodeDTO, bankAccountGenerateCodeSchema } from '@application/dto/bank-account/generate-code.dto'
-import { CodeGenerator } from '@domain/adapters/generator/code/code.generator'
+import { CodeGenerator } from '@domain/adapters/generator/code/code.service'
 import { BankAccountRepository } from '@domain/repositories/bank-account.repository'
 
 @Injectable()

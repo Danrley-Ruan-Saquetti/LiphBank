@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common'
-import { TemplateGeneratorImplementation } from '@infrastructure/adapters/generator/template/template.generator'
-import { TemplateGenerator } from '@domain/adapters/generator/template/template.generator'
+import { TemplateGeneratorServiceImplementation } from '@infrastructure/adapters/generator/template/template.generator'
+import { TemplateGeneratorService } from '@domain/adapters/generator/template/template.service'
 
 @Module({
   providers: [
     {
-      provide: TemplateGenerator,
-      useClass: TemplateGeneratorImplementation
+      provide: TemplateGeneratorService,
+      useClass: TemplateGeneratorServiceImplementation
     }
   ],
   exports: [
     {
-      provide: TemplateGenerator,
-      useClass: TemplateGeneratorImplementation
+      provide: TemplateGeneratorService,
+      useClass: TemplateGeneratorServiceImplementation
     }
   ]
 })

@@ -8,7 +8,7 @@ import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto
 import { CodeGeneratorImplementation } from '@infrastructure/adapters/generator/code/code.generator'
 import { People } from '@domain/entities/people.entity'
 import { User, UserType } from '@domain/entities/user.entity'
-import { CodeGenerator } from '@domain/adapters/generator/code/code.generator'
+import { CodeGenerator } from '@domain/adapters/generator/code/code.service'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { PeopleRepository } from '@domain/repositories/people.repository'
 import { UserRepositoryMock } from '@tests/unit/shared/mocks/user/repository.mock'
