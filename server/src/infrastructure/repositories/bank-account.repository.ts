@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { BankAccountMapper } from '@infrastructure/mappers/bank-account.mapper'
-import { Database } from '@domain/database'
+import { DatabaseService } from '@domain/database/database.service'
 import { BankAccount, BankAccountProps } from '@domain/entities/bank-account.entity'
 import { BankAccountQueryArgs, BankAccountRepository } from '@domain/repositories/bank-account.repository'
 
@@ -8,7 +8,7 @@ import { BankAccountQueryArgs, BankAccountRepository } from '@domain/repositorie
 export class BankAccountRepositoryImplementation extends BankAccountRepository {
 
   constructor(
-    private readonly database: Database
+    private readonly database: DatabaseService
   ) {
     super()
 

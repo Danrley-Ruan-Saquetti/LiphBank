@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common'
 import { PeopleMapper } from '@infrastructure/mappers/people.mapper'
 import { People, PeopleProps } from '@domain/entities/people.entity'
-import { Database } from '@domain/database'
+import { DatabaseService } from '@domain/database/database.service'
 import { PeopleQueryArgs, PeopleRepository } from '@domain/repositories/people.repository'
 
 @Injectable()
 export class PeopleRepositoryImplementation extends PeopleRepository {
 
   constructor(
-    private readonly database: Database
+    private readonly database: DatabaseService
   ) {
     super()
 

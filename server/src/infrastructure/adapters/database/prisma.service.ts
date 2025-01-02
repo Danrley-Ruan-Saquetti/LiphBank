@@ -3,10 +3,10 @@ import { Prisma } from '@prisma/client'
 import { DatabaseServerException } from '@infrastructure/adapters/database/exceptions/server.exception'
 import { DatabaseClientException } from '@infrastructure/adapters/database/exceptions/client.exception'
 import { PRISMA_CLIENT_ERRORS_CODE } from '@infrastructure/adapters/database/errors.code'
-import { Database, SchemaFilterQuery } from '@domain/database'
+import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
 
 @Injectable()
-export class PrismaDatabaseService extends Database implements OnModuleInit {
+export class PrismaDatabaseService extends DatabaseService implements OnModuleInit {
 
   private queryFilterSchema: SchemaFilterQuery = {}
 

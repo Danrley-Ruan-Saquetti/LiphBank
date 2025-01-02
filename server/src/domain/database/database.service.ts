@@ -5,7 +5,7 @@ export type SchemaFilterQuery<T = Record<string, any>> = {
   [x in keyof T]: 'string' | 'number' | 'boolean' | 'date' | 'json' | 'enum'
 }
 
-export abstract class Database extends PrismaClient {
+export abstract class DatabaseService extends PrismaClient {
 
   abstract resolveError(error: any, options?: { debugLogError?: boolean }): never
   abstract pipeWhere<Schema extends FilterSchema<any>>(whereConditions: Schema): Record<string, Record<string, any>>

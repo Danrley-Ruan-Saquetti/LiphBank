@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 import { FinancialTransactionMapper } from '@infrastructure/mappers/financial-transaction.mapper'
-import { Database } from '@domain/database'
+import { DatabaseService } from '@domain/database/database.service'
 import { FinancialTransaction, FinancialTransactionProps } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionQueryArgs, FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
 
@@ -9,7 +9,7 @@ import { FinancialTransactionQueryArgs, FinancialTransactionRepository } from '@
 export class FinancialTransactionRepositoryImplementation extends FinancialTransactionRepository {
 
   constructor(
-    private readonly database: Database
+    private readonly database: DatabaseService
   ) {
     super()
 

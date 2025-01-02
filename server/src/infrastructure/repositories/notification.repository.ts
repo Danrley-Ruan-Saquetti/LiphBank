@@ -1,6 +1,6 @@
 import { NotificationMapper } from '@infrastructure/mappers/notification.mapper'
 import { Notification, NotificationProps } from '@domain/entities/notification.entity'
-import { Database } from '@domain/database'
+import { DatabaseService } from '@domain/database/database.service'
 import { NotificationQueryArgs, NotificationRepository } from '@domain/repositories/notification.repository'
 import { Injectable } from '@nestjs/common'
 
@@ -8,7 +8,7 @@ import { Injectable } from '@nestjs/common'
 export class NotificationRepositoryImplementation extends NotificationRepository {
 
   constructor(
-    private readonly database: Database
+    private readonly database: DatabaseService
   ) {
     super()
 

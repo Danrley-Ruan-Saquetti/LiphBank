@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { UserMapper } from '@infrastructure/mappers/user.mapper'
-import { Database } from '@domain/database'
+import { DatabaseService } from '@domain/database/database.service'
 import { User, UserType, UserProps } from '@domain/entities/user.entity'
 import { UserQueryArgs, UserRepository } from '@domain/repositories/user.repository'
 
@@ -8,7 +8,7 @@ import { UserQueryArgs, UserRepository } from '@domain/repositories/user.reposit
 export class UserRepositoryImplementation extends UserRepository {
 
   constructor(
-    private readonly database: Database
+    private readonly database: DatabaseService
   ) {
     super()
 

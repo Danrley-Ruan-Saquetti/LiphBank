@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { EmailNotificationMapper } from '@infrastructure/mappers/email-notification.mapper'
-import { Database } from '@domain/database'
+import { DatabaseService } from '@domain/database/database.service'
 import { EmailNotification, EmailNotificationProps } from '@domain/entities/email-notification.entity'
 import { EmailNotificationQueryArgs, EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
 
@@ -8,7 +8,7 @@ import { EmailNotificationQueryArgs, EmailNotificationRepository } from '@domain
 export class EmailNotificationRepositoryImplementation extends EmailNotificationRepository {
 
   constructor(
-    private readonly database: Database
+    private readonly database: DatabaseService
   ) {
     super()
 
