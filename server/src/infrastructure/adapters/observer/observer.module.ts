@@ -1,17 +1,17 @@
 import { Global, Module } from '@nestjs/common'
-import { Observer } from '@domain/adapters/observer/observer'
-import { ObserverEmitterService } from '@infrastructure/adapters/observer/observer-emitter'
+import { ObserverService } from '@domain/adapters/observer/observer.service'
+import { ObserverEmitterService } from '@infrastructure/adapters/observer/observer-emitter.service'
 
 @Module({
   providers: [
     {
-      provide: Observer,
+      provide: ObserverService,
       useClass: ObserverEmitterService
     }
   ],
   exports: [
     {
-      provide: Observer,
+      provide: ObserverService,
       useClass: ObserverEmitterService
     }
   ]

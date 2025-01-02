@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common'
-import { Observer } from '@domain/adapters/observer/observer'
+import { ObserverService } from '@domain/adapters/observer/observer.service'
 import { Validator } from '@domain/adapters/validator'
 
 export class UseCase {
@@ -7,7 +7,7 @@ export class UseCase {
   @Inject(Validator)
   protected validator: Validator
 
-  @Inject(Observer)
-  protected observer: Observer
+  @Inject(ObserverService)
+  protected observer: ObserverService
 
 }

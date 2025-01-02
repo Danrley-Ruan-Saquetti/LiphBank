@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common'
 import { EventEmitter2 } from '@nestjs/event-emitter'
-import { Observer } from '@domain/adapters/observer/observer'
+import { ObserverService } from '@domain/adapters/observer/observer.service'
 
 @Injectable()
-export class ObserverEmitterService extends Observer {
+export class ObserverEmitterService extends ObserverService {
 
   constructor(
     private readonly eventEmitter: EventEmitter2

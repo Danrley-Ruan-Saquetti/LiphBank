@@ -1,4 +1,4 @@
-export abstract class Observer {
+export abstract class ObserverService {
 
   abstract emit(event: string, data: any): void
 }
