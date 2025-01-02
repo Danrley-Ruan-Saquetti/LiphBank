@@ -1,8 +1,8 @@
-import { Inject } from '@nestjs/common'
+import { Inject, OnModuleInit } from '@nestjs/common'
 import { ValidatorService } from '@domain/adapters/validator/validator.service'
 import { HandlerListener, IEventsType, ObserverService } from '@domain/adapters/observer/observer.service'
 
-export class UseCase<Events extends IEventsType = any> {
+export class UseCase<Events extends IEventsType = any> implements OnModuleInit {
 
   @Inject(ValidatorService)
   protected validator: ValidatorService
@@ -29,4 +29,6 @@ export class UseCase<Events extends IEventsType = any> {
   getListenersByEvent(event: keyof Events) {
     return this.observer.getListenersByEvent(event)
   }
+
+  onModuleInit() { }
 }
