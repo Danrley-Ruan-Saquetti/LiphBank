@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
-import { UserCreateEvent } from '@application/events/user/create.event'
+import { UserCreateEvent } from '@application/observer/events/user/create.event'
 import { ConflictException } from '@application/exceptions/conflict.exception'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'

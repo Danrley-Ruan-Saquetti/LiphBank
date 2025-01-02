@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { UserJWTPayload } from '@application/types/user-jwt-payload.type'
-import { AuthUserSignInEvent } from '@application/events/auth/user/sign-in.event'
+import { AuthUserSignInEvent } from '@application/observer/events/auth/user/sign-in.event'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
 import { SignInCredentialInvalidException } from '@application/exceptions/sign-in-credential-invalid.exception'
 import { AuthUserSignInDTO, authUserSignInSchema } from '@application/dto/auth/user/sign-in.dto'
