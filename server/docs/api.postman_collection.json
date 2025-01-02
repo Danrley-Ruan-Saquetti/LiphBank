@@ -1,0 +1,372 @@
+{
+	"info": {
+		"_postman_id": "7cf96f62-2b03-4a39-8b5f-b1caa4ee416a",
+		"name": "api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27637177",
+		"_collection_link": "https://warped-shadow-254780.postman.co/workspace/Bank-Account~d112e31d-226b-4bfb-8f44-0c38e401d014/collection/27637177-7cf96f62-2b03-4a39-8b5f-b1caa4ee416a?action=share&source=collection_link&creator=27637177"
+	},
+	"item": [
+		{
+			"name": "/auth",
+			"item": [
+				{
+					"name": "/user",
+					"item": [
+						{
+							"name": "/sign-up",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"dan@gmail.com\",\r\n    \"password\": \"Dan!@#123\",\r\n    \"name\": \"Dan Ruan\",\r\n    \"cpfCnpj\": \"102-547-109-13\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/auth/user/sign-up",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"auth",
+										"user",
+										"sign-up"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/sign-in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code == 200) {\r",
+											"    const { value } = pm.response.json()\r",
+											"\r",
+											"    pm.environment.set(\"token\", value.token);\r",
+											"    pm.globals.set(\"token\", value.token);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"dan@gmail.com\",\r\n    \"password\": \"Dan!@#123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/auth/user/sign-in",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"auth",
+										"user",
+										"sign-in"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/bank-account",
+					"item": [
+						{
+							"name": "/sign-in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code == 200) {\r",
+											"    const { value } = pm.response.json()\r",
+											"\r",
+											"    pm.environment.set(\"tokenBankAccount\", value.token);\r",
+											"    pm.globals.set(\"tokenBankAccount\", value.token);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"code\": \"USR-V54SF72BGD8\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/auth/bank-account/sign-in",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"auth",
+										"bank-account",
+										"sign-in"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "/bank-accounts",
+			"item": [
+				{
+					"name": "/financial-transactions",
+					"item": [
+						{
+							"name": "/create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "AuthorizationBankAccount",
+										"value": "Bearer {{tokenBankAccount}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Trasação de Teste\",\r\n    \"value\": 10,\r\n    \"type\": \"I\",\r\n    \"senderRecipient\": \"Dan Ruan\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/bank-accounts/financial-transactions/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"bank-accounts",
+										"financial-transactions",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "AuthorizationBankAccount",
+										"value": "Bearer {{tokenBankAccount}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/bank-accounts/financial-transactions?senderRecipient[in]=Ruan",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"bank-accounts",
+										"financial-transactions"
+									],
+									"query": [
+										{
+											"key": "senderRecipient[in]",
+											"value": "Ruan"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"BA - Profissional\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bank-accounts/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bank-accounts",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bank-accounts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/bank-accounts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bank-accounts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/users",
+			"item": [
+				{
+					"name": "/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"dan@gmail.com\",\r\n    \"password\": \"Dan!@#123\",\r\n    \"cpfCnpj\": \"102-547-109-13\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/current",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/current",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"current"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
