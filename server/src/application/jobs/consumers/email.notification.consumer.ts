@@ -23,8 +23,8 @@ export class EmailNotificationConsumer extends QueueConsumer {
   async sendEmailNotification({ data }: Job<SendEmailNotificationJobData>) {
     const people = await this.peopleRepository.findById(data.peopleId)
 
-    const template = Templates.Templates['mail/hello-world']
-    const variables: Templates.Variables['mail/hello-world'] = {
+    const template = Templates.Templates['mail/user-sign-in']
+    const variables: Templates.Variables['mail/user-sign-in'] = {
       code: data.code,
       name: people?.name ?? '(empty)',
     }

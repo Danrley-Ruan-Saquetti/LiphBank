@@ -1,12 +1,12 @@
-import { HelloWorldTemplate, HelloWorldTemplateVariables } from '@domain/templates/mail/hello-world'
+import { UserSignInTemplate, UserSignInTemplateVariables } from '@domain/templates/mail/user-sign-in.template'
 
 export namespace Templates {
   export type Variables = {
-    'mail/hello-world': HelloWorldTemplateVariables
+    'mail/user-sign-in': UserSignInTemplateVariables
   }
 
   export const Templates: Record<keyof Variables, string> = {
-    'mail/hello-world': HelloWorldTemplate
+    'mail/user-sign-in': UserSignInTemplate
   }
 }
 
