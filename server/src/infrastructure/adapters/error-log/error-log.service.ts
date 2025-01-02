@@ -12,11 +12,12 @@ export class ErrorLogServiceImplementation extends ErrorLogService {
     super()
   }
 
-  async save({ message, origin, details }: ErrorLogSaveProps) {
+  async save({ message, origin, details, type }: ErrorLogSaveProps) {
     return await this.errorLogRepository.create(new ErrorLog({
+      origin,
+      type,
       details,
       message,
-      origin,
     }))
   }
 }

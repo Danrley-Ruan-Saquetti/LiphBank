@@ -14,6 +14,7 @@ export class ErrorLogRepositoryImplementation extends ErrorLogRepository {
     id: 'number',
     message: 'string',
     origin: 'string',
+    type: 'string',
   }
 
   constructor(
@@ -29,6 +30,7 @@ export class ErrorLogRepositoryImplementation extends ErrorLogRepository {
       const errorLogDatabase = await this.database.errorLog.create({
         data: {
           message: errorLogModel.message,
+          type: errorLogModel.type,
           origin: errorLogModel.origin,
           details: errorLogModel.details as Prisma.InputJsonObject,
         }
@@ -48,6 +50,7 @@ export class ErrorLogRepositoryImplementation extends ErrorLogRepository {
         where: { id },
         data: {
           message: errorLogModel.message,
+          type: errorLogModel.type,
           origin: errorLogModel.origin,
           details: errorLogModel.details as Prisma.InputJsonObject,
         }

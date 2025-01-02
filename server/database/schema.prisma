@@ -175,6 +175,7 @@ model Email {
 model ErrorLog {
   id        String   @id @default(uuid())
   origin    String
+  type      String
   message   String
   details   Json?
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)

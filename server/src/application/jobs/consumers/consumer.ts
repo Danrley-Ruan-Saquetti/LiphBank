@@ -11,7 +11,8 @@ export class QueueConsumer {
   @OnQueueFailed()
   async handler(job: Job, error: any) {
     await this.errorLogService.save({
-      origin: 'JOB',
+      type: 'JOB',
+      origin: `job.${job.name}`,
       message: error.message,
       details: {
         ...error.details,

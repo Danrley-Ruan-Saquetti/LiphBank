@@ -14,6 +14,7 @@ export class ErrorLogMapper {
   static entityToDatabase(entity: ErrorLog) {
     const errorLogDatabase: ErrorLogModel = {
       id: entity.id,
+      type: entity.type,
       createdAt: entity.createdAt,
       details: entity.details,
       message: entity.message,
@@ -26,6 +27,7 @@ export class ErrorLogMapper {
   static databaseToEntity(databaseModel: ErrorLogModel) {
     return ErrorLog.load({
       id: databaseModel.id,
+      type: databaseModel.type,
       createdAt: databaseModel.createdAt,
       details: databaseModel.details,
       message: databaseModel.message,

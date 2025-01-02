@@ -27,7 +27,8 @@ export class SendEmailNotificationCronTab extends CronTab {
         await this.updateSituationNotification(isSuccess, notificationInQueue[i])
       } catch (error: any) {
         await this.erroLogService.save({
-          origin: 'JOB',
+          type: 'JOB',
+          origin: 'cron-tab.send-email-notification.send',
           message: error.message ?? 'Error',
           details: {
             ...error.details,
