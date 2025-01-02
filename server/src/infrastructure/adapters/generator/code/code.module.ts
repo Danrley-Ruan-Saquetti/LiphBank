@@ -4,14 +4,12 @@ import { CodeGenerator } from '@domain/adapters/generator/code/code.generator'
 
 @Module({
   providers: [
-    CodeGeneratorImplementation,
     {
       provide: CodeGenerator,
       useClass: CodeGeneratorImplementation
     }
   ],
   exports: [
-    CodeGeneratorImplementation,
     {
       provide: CodeGenerator,
       useClass: CodeGeneratorImplementation
