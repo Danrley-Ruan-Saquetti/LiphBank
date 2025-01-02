@@ -8,15 +8,7 @@ export type Listener<TData = any> = {
   handler: HandlerListener<TData>
 }
 
-export interface IObservable<Events extends IEventsType = any> {
-  subscribe<EventName extends keyof Events>(event: EventName, handler: HandlerListener<Events[EventName]>): string
-  unsubscribe(id: string): boolean
-  notify<EventName extends keyof Events>(event: EventName, data: Events[EventName]): Promise<void>
-  getListeners(): Listener[]
-  getListenersByEvent(event: keyof Events): Listener[]
-}
-
-export abstract class ObserverService<Events extends IEventsType = any> implements IObservable<Events> {
+export abstract class ObserverService<Events extends IEventsType = any> {
 
   abstract subscribe<EventName extends keyof Events>(event: EventName, handler: HandlerListener<Events[EventName]>): string
   abstract unsubscribe(id: string): boolean
