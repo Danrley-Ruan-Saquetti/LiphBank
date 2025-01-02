@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common'
 import { BullModule } from '@nestjs/bull'
 import { ConfigModule } from '@nestjs/config'
 import { ScheduleModule } from '@nestjs/schedule'
-import { EventEmitterModule } from '@nestjs/event-emitter'
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 import { ResultInterceptor } from '@presentation/interceptors/result.interceptor'
 import { PresentationModule } from '@presentation/presentation.module'
@@ -25,7 +24,6 @@ import { env } from '@shared/env'
       },
     }),
     ScheduleModule.forRoot(),
-    EventEmitterModule.forRoot(),
     InfrastructureModule,
     ApplicationModule,
     PresentationModule,

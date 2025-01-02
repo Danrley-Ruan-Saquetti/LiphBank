@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
-import { UserCreatedEvent } from '@application/events/user/user-created.event'
 import { ConflictException } from '@application/exceptions/conflict.exception'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
@@ -53,8 +52,6 @@ export class UserCreateUseCase extends UseCase {
     })
 
     const userCreated = await this.userRepository.create(user)
-
-    this.observer.emit(UserCreatedEvent.KEY_EVENT, new UserCreatedEvent(user, people))
 
     return { user: userCreated, people }
   }
