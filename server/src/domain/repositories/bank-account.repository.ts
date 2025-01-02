@@ -1,8 +1,13 @@
-import { BankAccount } from '@domain/entities/bank-account.entity'
+import { PeopleProps } from '@domain/entities/people.entity'
 import { FilterSchema, QuerySchema } from '@domain/database/filters'
+import { BankAccount, BankAccountProps } from '@domain/entities/bank-account.entity'
 
-export type BankAccountFilter = FilterSchema<BankAccount>
-export type BankAccountQueryArgs = QuerySchema<BankAccount>
+interface BankAccountFilterArgs extends BankAccountProps {
+  people: PeopleProps
+}
+
+export type BankAccountFilter = FilterSchema<BankAccountFilterArgs>
+export type BankAccountQueryArgs = QuerySchema<BankAccountFilterArgs>
 
 export abstract class BankAccountRepository {
 

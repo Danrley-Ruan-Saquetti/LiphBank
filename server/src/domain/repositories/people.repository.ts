@@ -1,8 +1,10 @@
-import { People } from '@domain/entities/people.entity'
+import { People, PeopleProps } from '@domain/entities/people.entity'
 import { FilterSchema, QuerySchema } from '@domain/database/filters'
 
-export type PeopleFilter = FilterSchema<People>
-export type PeopleQueryArgs = QuerySchema<People>
+type PeopleFiltersArgs = PeopleProps
+
+export type PeopleFilter = FilterSchema<PeopleFiltersArgs>
+export type PeopleQueryArgs = QuerySchema<PeopleFiltersArgs>
 
 export abstract class PeopleRepository {
 

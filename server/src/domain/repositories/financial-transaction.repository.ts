@@ -1,9 +1,11 @@
+import { BankAccountProps } from '@domain/entities/bank-account.entity'
 import { FilterSchema, QuerySchema } from '@domain/database/filters'
 import { FinancialTransaction, FinancialTransactionProps } from '@domain/entities/financial-transaction.entity'
 
 interface FinancialTransactionFilterArgs extends Omit<FinancialTransactionProps, 'type' | 'situation'> {
   type: 'enum'
   situation: 'enum'
+  bankAccount: BankAccountProps
 }
 
 export type FinancialTransactionFilter = FilterSchema<FinancialTransactionFilterArgs>

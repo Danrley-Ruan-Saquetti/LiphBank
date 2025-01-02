@@ -1,8 +1,10 @@
-import { Notification } from '@domain/entities/notification.entity'
 import { FilterSchema, QuerySchema } from '@domain/database/filters'
+import { Notification, NotificationProps } from '@domain/entities/notification.entity'
 
-export type NotificationFilter = FilterSchema<Notification>
-export type NotificationQueryArgs = QuerySchema<Notification>
+type NotificationFilterArgs = NotificationProps
+
+export type NotificationFilter = FilterSchema<NotificationFilterArgs>
+export type NotificationQueryArgs = QuerySchema<NotificationFilterArgs>
 
 export abstract class NotificationRepository {
 
