@@ -30,13 +30,17 @@ export class BankAccountGenerateCodeUseCase extends UseCase {
     for (let i = 0; i < attempts; i++) {
       const code = this.codeGenerator.generate()
 
-      const bankAccountWithSameCode = await this.bankAccountRepository.findByCode(code)
+      const isCodeAlreadyExists = await this.codeAlreadyExists(code)
 
-      if (!bankAccountWithSameCode) {
+      if (!isCodeAlreadyExists) {
         return code
       }
     }
 
     throw new CodeGenerationFailedException('bank account')
+  }
+
+  private async codeAlreadyExists(code: string) {
+    return !(await this.bankAccountRepository.findByCode(code))
   }
 }
