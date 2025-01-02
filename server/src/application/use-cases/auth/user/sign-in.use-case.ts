@@ -7,7 +7,7 @@ import { UnauthorizedException } from '@application/exceptions/unauthorized.exce
 import { SendEmailNotificationJob } from '@application/jobs/email-notification/send-email-notification.job'
 import { SignInCredentialInvalidException } from '@application/exceptions/sign-in-credential-invalid.exception'
 import { AuthUserSignInDTO, authUserSignInSchema } from '@application/dto/auth/user/sign-in.dto'
-import { JWT } from '@domain/adapters/jwt'
+import { JWTService } from '@domain/adapters/jwt/jwt.service'
 import { HashService } from '@domain/adapters/crypto/hash.service'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { env } from '@shared/env'
@@ -18,7 +18,7 @@ export class AuthUserSignInUseCase extends UseCase {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly hash: HashService,
-    private readonly jwt: JWT,
+    private readonly jwt: JWTService,
     @InjectQueue('queue.email-notification') private readonly sendEmailNotificationQueue: Queue
   ) {
     super()

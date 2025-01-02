@@ -4,7 +4,7 @@ import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
 import { BankAccountJWTPayload } from '@application/types/bank-account-jwt-payload.type'
 import { AuthBankAccountSignInDTO, authBankAccountSignInSchema } from '@application/dto/auth/bank-account/sign-in.dto'
-import { JWT } from '@domain/adapters/jwt'
+import { JWTService } from '@domain/adapters/jwt/jwt.service'
 import { BankAccountRepository } from '@domain/repositories/bank-account.repository'
 import { env } from '@shared/env'
 
@@ -13,7 +13,7 @@ export class AuthBankAccountSignInUseCase extends UseCase {
 
   constructor(
     private readonly bankAccountRepository: BankAccountRepository,
-    private readonly jwt: JWT,
+    private readonly jwt: JWTService,
   ) {
     super()
   }

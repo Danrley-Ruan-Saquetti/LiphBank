@@ -3,12 +3,12 @@ import { UseCase } from '@application/use-cases/use-case'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
 import { UserJWTPayload } from '@application/types/user-jwt-payload.type'
 import { AuthUserAuthorizationDTO, authUserAuthorizationSchema } from '@application/dto/auth/user/authorization.dto'
-import { JWT } from '@domain/adapters/jwt'
+import { JWTService } from '@domain/adapters/jwt/jwt.service'
 
 @Injectable()
 export class AuthUserAuthorizationUseCase extends UseCase {
   constructor(
-    private readonly jwtService: JWT
+    private readonly jwtService: JWTService
   ) {
     super()
   }

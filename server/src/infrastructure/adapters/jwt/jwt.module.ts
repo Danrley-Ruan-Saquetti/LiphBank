@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
 import { JWTServiceImplementation } from '@infrastructure/adapters/jwt/jwt.service'
-import { JWT } from '@domain/adapters/jwt'
+import { JWTService } from '@domain/adapters/jwt/jwt.service'
 
 @Module({
   imports: [
@@ -9,13 +9,13 @@ import { JWT } from '@domain/adapters/jwt'
   ],
   providers: [
     {
-      provide: JWT,
+      provide: JWTService,
       useClass: JWTServiceImplementation
     }
   ],
   exports: [
     {
-      provide: JWT,
+      provide: JWTService,
       useClass: JWTServiceImplementation
     }
   ]

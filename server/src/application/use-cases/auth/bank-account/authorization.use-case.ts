@@ -3,12 +3,12 @@ import { UseCase } from '@application/use-cases/use-case'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
 import { BankAccountJWTPayload } from '@application/types/bank-account-jwt-payload.type'
 import { AuthBankAccountAuthorizationDTO, authBankAccountAuthorizationSchema } from '@application/dto/auth/bank-account/authorization.dto'
-import { JWT } from '@domain/adapters/jwt'
+import { JWTService } from '@domain/adapters/jwt/jwt.service'
 
 @Injectable()
 export class AuthBankAccountAuthorizationUseCase extends UseCase {
   constructor(
-    private readonly jwtService: JWT
+    private readonly jwtService: JWTService
   ) {
     super()
   }

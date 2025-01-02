@@ -1,9 +1,9 @@
 import { JwtService } from '@nestjs/jwt'
-import { JWT, JWTOptions } from '@domain/adapters/jwt'
+import { JWTService, JWTOptions } from '@domain/adapters/jwt/jwt.service'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
-export class JWTServiceImplementation extends JWT {
+export class JWTServiceImplementation extends JWTService {
 
   constructor(
     private jwtService: JwtService

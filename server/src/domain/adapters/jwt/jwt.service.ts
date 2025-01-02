@@ -19,7 +19,7 @@ export type JWTOptions = {
   algorithm?: JWTAlgorithm
 }
 
-export abstract class JWT {
+export abstract class JWTService {
 
   abstract encode(payload: Record<string, unknown>, options: JWTOptions): string
   abstract decode<Payload extends object = any>(token: string): Payload
