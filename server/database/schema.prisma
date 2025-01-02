@@ -165,7 +165,7 @@ model Notification {
 
 model Email {
   id           Int          @id @default(autoincrement())
-  recipient    String       @db.VarChar(45)
+  recipient    String[]     @db.VarChar(45)
   sender       String       @db.VarChar(45)
   notification Notification @relation(fields: [id], references: [id], onDelete: Cascade)
 

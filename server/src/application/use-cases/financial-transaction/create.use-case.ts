@@ -1,8 +1,8 @@
+import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { financialTransactionCreateSchema, FinancialTransactionCreateDTO } from '@application/dto/financial-transaction/create.dto'
 import { FinancialTransaction } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
-import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class FinancialTransactionCreateUseCase extends UseCase {

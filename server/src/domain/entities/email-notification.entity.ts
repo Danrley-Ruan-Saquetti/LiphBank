@@ -5,7 +5,7 @@ export type EmailNotificationProps = EmailPrisma
 
 export class EmailNotification extends Notification implements EmailNotificationProps {
 
-  private _recipient: string
+  private _recipient: string[]
   private _sender: string
 
   get recipient() { return this._recipient }

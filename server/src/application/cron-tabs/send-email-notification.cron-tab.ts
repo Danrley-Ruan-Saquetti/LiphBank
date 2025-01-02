@@ -34,7 +34,7 @@ export class SendEmailNotificationCronTab {
 
   private async sendEmail({ sender, recipient, body, subject }: EmailNotification) {
     try {
-      await this.mailService.send({ from: sender, to: recipient.split(','), subject, body })
+      await this.mailService.send({ from: sender, to: recipient, subject, body })
 
       return true
     } catch (error: any) {
