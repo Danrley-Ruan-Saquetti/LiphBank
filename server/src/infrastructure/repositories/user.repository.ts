@@ -1,29 +1,31 @@
 import { Injectable } from '@nestjs/common'
 import { UserMapper } from '@infrastructure/mappers/user.mapper'
-import { DatabaseService } from '@domain/database/database.service'
+import { PeopleProps } from '@domain/entities/people.entity'
 import { User, UserType, UserProps } from '@domain/entities/user.entity'
 import { UserQueryArgs, UserRepository } from '@domain/repositories/user.repository'
+import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
 
 @Injectable()
 export class UserRepositoryImplementation extends UserRepository {
+
+  static QUERY_SCHEMA_FILTER: SchemaFilterQuery<UserProps & { people: PeopleProps }> = {
+    active: 'boolean',
+    code: 'string',
+    createdAt: 'date',
+    id: 'number',
+    lastAccess: 'date',
+    login: 'string',
+    password: 'string',
+    peopleId: 'number',
+    type: 'enum',
+    updatedAt: 'date',
+    people: 'object'
+  }
 
   constructor(
     private readonly database: DatabaseService
   ) {
     super()
-
-    this.database.setSchemaFilter<UserProps>({
-      active: 'boolean',
-      code: 'string',
-      createdAt: 'date',
-      id: 'number',
-      lastAccess: 'date',
-      login: 'string',
-      password: 'string',
-      peopleId: 'number',
-      type: 'enum',
-      updatedAt: 'date',
-    })
   }
 
   async create(user: User) {
@@ -84,7 +86,7 @@ export class UserRepositoryImplementation extends UserRepository {
     try {
       const usersDatabase = await this.database.user.findMany({
         ...args as any,
-        where: this.database.pipeWhere(args.where || {}),
+        where: this.database.pipeWhere(args.where, UserRepositoryImplementation.QUERY_SCHEMA_FILTER, { debugFilter: true }),
       })
 
       return UserMapper.multiDatabaseToEntity(usersDatabase)

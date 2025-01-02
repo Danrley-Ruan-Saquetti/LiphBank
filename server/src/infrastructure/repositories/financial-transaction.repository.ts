@@ -1,33 +1,33 @@
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 import { FinancialTransactionMapper } from '@infrastructure/mappers/financial-transaction.mapper'
-import { DatabaseService } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
 import { FinancialTransaction, FinancialTransactionProps } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionQueryArgs, FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
 
 @Injectable()
 export class FinancialTransactionRepositoryImplementation extends FinancialTransactionRepository {
 
+  static QUERY_SCHEMA_FILTER: SchemaFilterQuery<FinancialTransactionProps> = {
+    type: 'enum',
+    situation: 'enum',
+    id: 'number',
+    bankAccountId: 'number',
+    title: 'string',
+    description: 'string',
+    value: 'number',
+    senderRecipient: 'string',
+    expiresIn: 'date',
+    dateTimeCompetence: 'date',
+    settings: 'json',
+    createdAt: 'date',
+    updatedAt: 'date',
+  }
+
   constructor(
     private readonly database: DatabaseService
   ) {
     super()
-
-    this.database.setSchemaFilter<FinancialTransactionProps>({
-      type: 'enum',
-      situation: 'enum',
-      id: 'number',
-      bankAccountId: 'number',
-      title: 'string',
-      description: 'string',
-      value: 'number',
-      senderRecipient: 'string',
-      expiresIn: 'date',
-      dateTimeCompetence: 'date',
-      settings: 'json',
-      createdAt: 'date',
-      updatedAt: 'date',
-    })
   }
 
   async create(financialTransaction: FinancialTransaction) {
@@ -93,7 +93,7 @@ export class FinancialTransactionRepositoryImplementation extends FinancialTrans
     try {
       const financialTransactionsDatabase = await this.database.financialTransaction.findMany({
         ...args as any,
-        where: this.database.pipeWhere(args.where || {}),
+        where: this.database.pipeWhere(args.where, FinancialTransactionRepositoryImplementation.QUERY_SCHEMA_FILTER),
       })
 
       return FinancialTransactionMapper.multiDatabaseToEntity(financialTransactionsDatabase)

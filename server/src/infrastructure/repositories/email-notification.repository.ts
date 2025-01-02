@@ -1,22 +1,22 @@
 import { Injectable } from '@nestjs/common'
 import { EmailNotificationMapper } from '@infrastructure/mappers/email-notification.mapper'
-import { DatabaseService } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
 import { EmailNotification, EmailNotificationProps } from '@domain/entities/email-notification.entity'
 import { EmailNotificationQueryArgs, EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
 
 @Injectable()
 export class EmailNotificationRepositoryImplementation extends EmailNotificationRepository {
 
+  static QUERY_SCHEMA_FILTER: SchemaFilterQuery<EmailNotificationProps> = {
+    recipient: 'string',
+    sender: 'string',
+    id: 'number',
+  }
+
   constructor(
     private readonly database: DatabaseService
   ) {
     super()
-
-    this.database.setSchemaFilter<EmailNotificationProps>({
-      recipient: 'string',
-      sender: 'string',
-      id: 'number',
-    })
   }
 
   async create(emailNotification: EmailNotification) {
@@ -90,7 +90,7 @@ export class EmailNotificationRepositoryImplementation extends EmailNotification
     try {
       const emailNotificationsDatabase = await this.database.email.findMany({
         ...args as any,
-        where: this.database.pipeWhere(args.where || {}),
+        where: this.database.pipeWhere(args.where, EmailNotificationRepositoryImplementation.QUERY_SCHEMA_FILTER),
         include: {
           notification: true
         }

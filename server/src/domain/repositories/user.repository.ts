@@ -1,8 +1,14 @@
-import { User, UserType } from '@domain/entities/user.entity'
+import { PeopleProps } from '@domain/entities/people.entity'
+import { User, UserProps, UserType } from '@domain/entities/user.entity'
 import { FilterSchema, QuerySchema } from '@domain/database/filters'
 
-export type UserFilter = FilterSchema<User>
-export type UserQueryArgs = QuerySchema<User>
+interface UserFilterArgs extends Omit<UserProps, 'settings'> {
+  settings: 'json'
+  people: PeopleProps
+}
+
+export type UserFilter = FilterSchema<UserFilterArgs>
+export type UserQueryArgs = QuerySchema<UserFilterArgs>
 
 export abstract class UserRepository {
 

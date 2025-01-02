@@ -1,27 +1,27 @@
 import { Injectable } from '@nestjs/common'
 import { BankAccountMapper } from '@infrastructure/mappers/bank-account.mapper'
-import { DatabaseService } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
 import { BankAccount, BankAccountProps } from '@domain/entities/bank-account.entity'
 import { BankAccountQueryArgs, BankAccountRepository } from '@domain/repositories/bank-account.repository'
 
 @Injectable()
 export class BankAccountRepositoryImplementation extends BankAccountRepository {
 
+  static QUERY_SCHEMA_FILTER: SchemaFilterQuery<BankAccountProps> = {
+    active: 'boolean',
+    balance: 'number',
+    code: 'string',
+    name: 'string',
+    peopleId: 'number',
+    createdAt: 'date',
+    id: 'number',
+    updatedAt: 'date',
+  }
+
   constructor(
     private readonly database: DatabaseService
   ) {
     super()
-
-    this.database.setSchemaFilter<BankAccountProps>({
-      active: 'boolean',
-      balance: 'number',
-      code: 'string',
-      name: 'string',
-      peopleId: 'number',
-      createdAt: 'date',
-      id: 'number',
-      updatedAt: 'date',
-    })
   }
 
   async create(bankAccount: BankAccount) {
@@ -77,7 +77,7 @@ export class BankAccountRepositoryImplementation extends BankAccountRepository {
     try {
       const bankAccountsDatabase = await this.database.bankAccount.findMany({
         ...args as any,
-        where: this.database.pipeWhere(args.where || {}),
+        where: this.database.pipeWhere(args.where, BankAccountRepositoryImplementation.QUERY_SCHEMA_FILTER),
       })
 
       return BankAccountMapper.multiDatabaseToEntity(bankAccountsDatabase)

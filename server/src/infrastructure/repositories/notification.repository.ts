@@ -1,27 +1,27 @@
 import { NotificationMapper } from '@infrastructure/mappers/notification.mapper'
 import { Notification, NotificationProps } from '@domain/entities/notification.entity'
-import { DatabaseService } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
 import { NotificationQueryArgs, NotificationRepository } from '@domain/repositories/notification.repository'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class NotificationRepositoryImplementation extends NotificationRepository {
 
+  static QUERY_SCHEMA_FILTER: SchemaFilterQuery<NotificationProps> = {
+    body: 'string',
+    createdAt: 'date',
+    sendAt: 'date',
+    situation: 'enum',
+    subject: 'string',
+    type: 'enum',
+    updatedAt: 'date',
+    id: 'number',
+  }
+
   constructor(
     private readonly database: DatabaseService
   ) {
     super()
-
-    this.database.setSchemaFilter<NotificationProps>({
-      body: 'string',
-      createdAt: 'date',
-      sendAt: 'date',
-      situation: 'enum',
-      subject: 'string',
-      type: 'enum',
-      updatedAt: 'date',
-      id: 'number',
-    })
   }
 
   async create(notification: Notification) {
@@ -77,7 +77,7 @@ export class NotificationRepositoryImplementation extends NotificationRepository
     try {
       const notificationsDatabase = await this.database.notification.findMany({
         ...args as any,
-        where: this.database.pipeWhere(args.where || {}),
+        where: this.database.pipeWhere(args.where, NotificationRepositoryImplementation.QUERY_SCHEMA_FILTER),
       })
 
       return NotificationMapper.multiDatabaseToEntity(notificationsDatabase)

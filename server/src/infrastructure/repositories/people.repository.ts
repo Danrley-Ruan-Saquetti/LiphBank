@@ -1,27 +1,27 @@
 import { Injectable } from '@nestjs/common'
 import { PeopleMapper } from '@infrastructure/mappers/people.mapper'
 import { People, PeopleProps } from '@domain/entities/people.entity'
-import { DatabaseService } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
 import { PeopleQueryArgs, PeopleRepository } from '@domain/repositories/people.repository'
 
 @Injectable()
 export class PeopleRepositoryImplementation extends PeopleRepository {
 
+  static QUERY_SCHEMA_FILTER: SchemaFilterQuery<PeopleProps> = {
+    cpfCnpj: 'string',
+    dateOfBirth: 'date',
+    gender: 'enum',
+    name: 'string',
+    createdAt: 'date',
+    id: 'number',
+    type: 'enum',
+    updatedAt: 'date',
+  }
+
   constructor(
     private readonly database: DatabaseService
   ) {
     super()
-
-    this.database.setSchemaFilter<PeopleProps>({
-      cpfCnpj: 'string',
-      dateOfBirth: 'date',
-      gender: 'enum',
-      name: 'string',
-      createdAt: 'date',
-      id: 'number',
-      type: 'enum',
-      updatedAt: 'date',
-    })
   }
 
   async create(people: People) {
@@ -77,7 +77,7 @@ export class PeopleRepositoryImplementation extends PeopleRepository {
     try {
       const peoplesDatabase = await this.database.people.findMany({
         ...args as any,
-        where: this.database.pipeWhere(args.where || {}),
+        where: this.database.pipeWhere(args.where, PeopleRepositoryImplementation.QUERY_SCHEMA_FILTER),
       })
 
       return PeopleMapper.multiDatabaseToEntity(peoplesDatabase)
