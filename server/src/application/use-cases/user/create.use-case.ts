@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
+import { UserCreateEvent } from '@application/events/user/create.event'
 import { ConflictException } from '@application/exceptions/conflict.exception'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
 import { UserCreateDTO, userCreateSchema } from '@application/dto/user/create.dto'
 import { User } from '@domain/entities/user.entity'
-import { HashService } from '@domain/adapters/crypto/hash.service'
 import { People } from '@domain/entities/people.entity'
+import { HashService } from '@domain/adapters/crypto/hash.service'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { PeopleRepository } from '@domain/repositories/people.repository'
 
 @Injectable()
-export class UserCreateUseCase extends UseCase {
+export class UserCreateUseCase extends UseCase<UserCreateEvent> {
 
   constructor(
     private readonly userRepository: UserRepository,
@@ -52,6 +53,8 @@ export class UserCreateUseCase extends UseCase {
     })
 
     const userCreated = await this.userRepository.create(user)
+
+    this.notify('events.user.created', { user, people })
 
     return { user: userCreated, people }
   }
