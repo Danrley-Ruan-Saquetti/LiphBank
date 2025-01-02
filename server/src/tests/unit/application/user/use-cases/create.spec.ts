@@ -1,6 +1,6 @@
 import { vi } from 'vitest'
 import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
-import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.generator'
+import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.service'
 import { ConflictException } from '@application/exceptions/conflict.exception'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserCreateUseCase } from '@application/use-cases/user/create.use-case'

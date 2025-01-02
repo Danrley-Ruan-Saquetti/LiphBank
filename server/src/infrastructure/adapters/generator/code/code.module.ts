@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.generator'
+import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.service'
 import { CodeGeneratorService } from '@domain/adapters/generator/code/code.service'
 
 @Module({

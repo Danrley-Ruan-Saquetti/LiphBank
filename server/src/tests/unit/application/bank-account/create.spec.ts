@@ -1,4 +1,4 @@
-import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.generator'
+import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.service'
 import { BankAccountCreateUseCase } from '@application/use-cases/bank-account/create.use-case'
 import { BankAccountGenerateCodeUseCase } from '@application/use-cases/bank-account/generate-code.use-case'
 import { BankAccount } from '@domain/entities/bank-account.entity'

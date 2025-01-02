@@ -5,7 +5,7 @@ import { PeopleCreateUseCase } from '@application/use-cases/people/create.use-ca
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
 import { CreatePeopleAndUserUseCase } from '@application/use-cases/shared/create-people-user.use-case'
 import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
-import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.generator'
+import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.service'
 import { People } from '@domain/entities/people.entity'
 import { User, UserType } from '@domain/entities/user.entity'
 import { CodeGeneratorService } from '@domain/adapters/generator/code/code.service'
