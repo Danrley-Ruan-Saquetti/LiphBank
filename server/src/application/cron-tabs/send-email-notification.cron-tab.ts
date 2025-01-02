@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
+import { CronTab } from '@application/cron-tabs/cron-tab'
 import { MailService } from '@domain/adapters/mail/mail.service'
 import { EmailNotification } from '@domain/entities/email-notification.entity'
 import { NotificationSituation } from '@domain/entities/notification.entity'
 import { EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
 
 @Injectable()
-export class SendEmailNotificationCronTab {
+export class SendEmailNotificationCronTab extends CronTab {
 
   constructor(
     private readonly emailNotificationRepository: EmailNotificationRepository,
     private readonly mailService: MailService,
-  ) { }
+  ) {
+    super()
+  }
 
   @Cron(CronExpression.EVERY_10_SECONDS)
   async sendEmailNotification() {
     const notificationInQueue = await this.getEmailNotificationsInQueue()
 
     for (let i = 0; i < notificationInQueue.length; i++) {
-      const isSuccess = await this.sendEmail(notificationInQueue[i])
+      try {
+        const isSuccess = await this.sendEmail(notificationInQueue[i])
 
-      await this.updateSituationNotification(isSuccess, notificationInQueue[i])
+        await this.updateSituationNotification(isSuccess, notificationInQueue[i])
+      } catch (error: any) {
+        await this.erroLogService.save({
+          origin: 'JOB',
+          message: error.message ?? 'Error',
+          details: {
+            ...error.details,
+          }
+        })
+      }
     }
   }
 
