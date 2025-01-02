@@ -8,26 +8,16 @@ export class UseCase<Events extends IEventsType = any> implements OnModuleInit {
   protected validator: ValidatorService
 
   @Inject(ObserverService)
-  protected observer: ObserverService<Events>
+  private _observer: ObserverService<Events>
 
-  subscribe<EventName extends keyof Events>(event: EventName, handler: HandlerListener<Events[EventName]>) {
-    return this.observer.subscribe(event, handler)
-  }
-
-  unsubscribe(id: string) {
-    return this.observer.unsubscribe(id)
-  }
-
-  protected async notify<EventName extends keyof Events>(event: EventName, data: Events[EventName]) {
-    return await this.observer.notify(event, data)
-  }
-
-  getListeners() {
-    return this.observer.getListeners()
-  }
-
-  getListenersByEvent(event: keyof Events) {
-    return this.observer.getListenersByEvent(event)
+  get observer() {
+    return {
+      subscribe: <EventName extends keyof Events>(event: EventName, handler: HandlerListener<Events[EventName]>) => this._observer.subscribe(event, handler),
+      unsubscribe: (id: string) => this._observer.unsubscribe(id),
+      notify: async<EventName extends keyof Events>(event: EventName, data: Events[EventName]) => await this._observer.notify(event, data),
+      getListeners: () => this._observer.getListeners(),
+      getListenersByEvent: (event: keyof Events) => this._observer.getListenersByEvent(event)
+    }
   }
 
   onModuleInit() { }

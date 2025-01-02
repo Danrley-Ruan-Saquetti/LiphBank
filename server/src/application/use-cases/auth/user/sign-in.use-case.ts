@@ -35,7 +35,7 @@ export class AuthUserSignInUseCase extends UseCase<AuthUserSignInEvent> {
     const payload = this.createJWTPayloadUser(user)
     const token = this.generateJWTToken(payload)
 
-    await this.notify('events.auth.user.sign-in', { user })
+    await this.observer.notify('events.auth.user.sign-in', { user })
 
     return { token, payload }
   }

@@ -7,6 +7,9 @@ import { CreatePeopleAndUserDTO } from '@application/dto/shared/create-people-us
 @Injectable()
 export class CreatePeopleAndUserUseCase extends UseCase {
 
+  get observerCreatePeople() { return this.createPeopleUseCase.observer }
+  get observerCreateUser() { return this.createUserUseCase.observer }
+
   constructor(
     private readonly createPeopleUseCase: PeopleCreateUseCase,
     private readonly createUserUseCase: UserCreateUseCase,

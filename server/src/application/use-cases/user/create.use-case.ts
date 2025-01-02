@@ -40,7 +40,7 @@ export class UserCreateUseCase extends UseCase<UserCreateEvent> {
 
     const userCreated = await this.registerUser(user)
 
-    await this.notify('events.user.created', { user, people })
+    await this.observer.notify('events.user.created', { user, people })
 
     return { user: userCreated, people }
   }
