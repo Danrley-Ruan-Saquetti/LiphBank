@@ -1,12 +1,12 @@
-import { UserSignInTemplate, UserSignInTemplateVariables } from '@domain/templates/mail/user-sign-in.template'
+import { UserLoggedInTemplate, UserLoggedInTemplateVariables } from '@domain/templates/mail/user-logged-in.template'
 
 export namespace Templates {
   export type Variables = {
-    'mail/user-sign-in': UserSignInTemplateVariables
+    'mail/user-logged-in': UserLoggedInTemplateVariables
   }
 
   export const Templates: Record<keyof Variables, string> = {
-    'mail/user-sign-in': UserSignInTemplate
+    'mail/user-logged-in': UserLoggedInTemplate
   }
 }
 

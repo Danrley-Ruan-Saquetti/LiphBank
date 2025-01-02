@@ -1,5 +1,6 @@
 export type Environment = {
   ENVIRONMENT: 'DEVELOPMENT' | 'PRODUCTION' | 'TEST'
+  APP_MAIL: string
   SECRET_PEPPER: string
   DATABASE_URL: string
   REDIS_HOST: string
