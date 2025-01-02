@@ -11,6 +11,11 @@ export type Environment = {
   JWT_BANK_ACCOUNT_EXPIRATION: string
   PORT: number
   TZ: string
+  MAIL_HOST: string
+  MAIL_PORT: number
+  MAIL_USER: string
+  MAIL_PASSWORD: string
+  MAIL_DEFAULT_FROM: string
 }
 
 export function env<T extends keyof Environment>(name: T, defaultValue?: Environment[T]) {
