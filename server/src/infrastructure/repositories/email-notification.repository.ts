@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { EmailNotificationMapper } from '@infrastructure/mappers/email-notification.mapper'
+import { NotificationProps } from '@domain/entities/notification.entity'
 import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
 import { EmailNotification, EmailNotificationProps } from '@domain/entities/email-notification.entity'
 import { EmailNotificationQueryArgs, EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
@@ -7,9 +8,10 @@ import { EmailNotificationQueryArgs, EmailNotificationRepository } from '@domain
 @Injectable()
 export class EmailNotificationRepositoryImplementation extends EmailNotificationRepository {
 
-  static QUERY_SCHEMA_FILTER: SchemaFilterQuery<EmailNotificationProps> = {
+  static QUERY_SCHEMA_FILTER: SchemaFilterQuery<EmailNotificationProps & { notification: NotificationProps }> = {
     recipient: 'string',
     sender: 'string',
+    notification: 'object',
     id: 'number',
   }
 
@@ -58,7 +60,7 @@ export class EmailNotificationRepositoryImplementation extends EmailNotification
           sender: emailNotificationModel.sender,
           recipient: emailNotificationModel.recipient,
           notification: {
-            create: {
+            update: {
               body: emailNotificationModel.notification.body,
               subject: emailNotificationModel.notification.subject,
               type: emailNotificationModel.notification.type,
