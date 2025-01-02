@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { CodeGenerationFailedException } from '@application/exceptions/code-generation-failed.exception'
 import { UserGenerateCodeDTO, userGenerateCodeSchema } from '@application/dto/user/generate-code.dto'
-import { CodeGeneratorService } from '@domain/adapters/generator/code/code.service'
 import { UserRepository } from '@domain/repositories/user.repository'
+import { CodeGeneratorService } from '@domain/adapters/generator/code/code.service'
 
 @Injectable()
 export class UserGenerateCodeUseCase extends UseCase {
@@ -30,13 +30,17 @@ export class UserGenerateCodeUseCase extends UseCase {
     for (let i = 0; i < attempts; i++) {
       const code = this.codeGenerator.generate()
 
-      const userWithSameCode = await this.userRepository.findByCode(code)
+      const isCodeAlreadyExists = await this.codeAlreadyExists(code)
 
-      if (!userWithSameCode) {
+      if (!isCodeAlreadyExists) {
         return code
       }
     }
 
     throw new CodeGenerationFailedException('user')
+  }
+
+  private async codeAlreadyExists(code: string) {
+    return !(await this.userRepository.findByCode(code))
   }
 }
