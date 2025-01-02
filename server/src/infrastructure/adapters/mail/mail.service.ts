@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { MailerService } from '@nestjs-modules/mailer'
 import { SendMailException } from '@infrastructure/adapters/mail/mail.exception'
-import { MailService, MailSendOptions } from '@domain/adapters/mail/mail'
+import { MailService, MailSendOptions } from '@domain/adapters/mail/mail.service'
 
 @Injectable()
 export class MailServiceImplementation extends MailService {
