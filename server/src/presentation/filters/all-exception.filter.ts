@@ -1,19 +1,31 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common'
 import { HttpAdapterHost } from '@nestjs/core'
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common'
 import { env } from '@shared/env'
 import { Result } from '@presentation/util/result'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
+import { ErrorLogService } from '@domain/adapters/error-log/error-log.service'
 import { CriticalException, RuntimeException } from '@shared/exceptions'
 
 @Catch()
 export class CatchAllExceptionFilter implements ExceptionFilter {
-  constructor(private readonly httpAdapterHost: HttpAdapterHost) { }
+  constructor(
+    private readonly httpAdapterHost: HttpAdapterHost,
+    private readonly errorLogService: ErrorLogService
+  ) { }
 
-  catch(exception: unknown, host: ArgumentsHost): void {
+  async catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
 
     const httpStatus = CatchAllExceptionFilter.getStatusCode(exception)
     const responseBody = CatchAllExceptionFilter.getResponseException(exception).toJSON()
+
+    await this.saveErrorLog(exception, {
+      method: ctx.getRequest().method,
+      router: ctx.getRequest().url,
+      statusCode: httpStatus,
+      params: ctx.getRequest().params,
+      body: ctx.getRequest().body,
+    })
 
     this.httpAdapterHost.httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus)
   }
@@ -46,5 +58,16 @@ export class CatchAllExceptionFilter implements ExceptionFilter {
     if (exception instanceof HttpException) return exception.getStatus()
 
     return HttpStatus.INTERNAL_SERVER_ERROR
+  }
+
+  async saveErrorLog(exception: any, context: { method: string, router: string, statusCode: number, params?: Record<string, any>, body?: Record<string, any> }) {
+    await this.errorLogService.save({
+      origin: 'HTTP',
+      message: exception.message ?? 'Error',
+      details: {
+        error: exception.details,
+        HTTP: context
+      }
+    })
   }
 }
