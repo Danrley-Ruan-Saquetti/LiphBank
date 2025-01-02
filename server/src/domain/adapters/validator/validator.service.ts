@@ -4,7 +4,7 @@ export type ValidatorOptions = {
   debugLogError?: boolean
 }
 
-export abstract class Validator {
+export abstract class ValidatorService {
 
   abstract validate<Schema extends z.ZodSchema>(schema: Schema, args: unknown, options?: ValidatorOptions): z.output<Schema>
 }

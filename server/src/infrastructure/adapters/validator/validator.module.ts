@@ -1,20 +1,18 @@
 import { Global, Module } from '@nestjs/common'
-import { ZodValidatorAdapterImplementation } from '@infrastructure/adapters/validator/zod.validator'
-import { Validator } from '@domain/adapters/validator'
+import { ZodValidatorServiceImplementation } from '@infrastructure/adapters/validator/zod.validator.service'
+import { ValidatorService } from '@domain/adapters/validator/validator.service'
 
 @Module({
   providers: [
-    ZodValidatorAdapterImplementation,
     {
-      provide: Validator,
-      useClass: ZodValidatorAdapterImplementation
+      provide: ValidatorService,
+      useClass: ZodValidatorServiceImplementation
     },
   ],
   exports: [
-    ZodValidatorAdapterImplementation,
     {
-      provide: Validator,
-      useClass: ZodValidatorAdapterImplementation
+      provide: ValidatorService,
+      useClass: ZodValidatorServiceImplementation
     },
   ]
 })

@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common'
 import { z } from 'zod'
 import { CriticalException } from '@shared/exceptions'
 import { ValidatorException } from '@infrastructure/adapters/validator/exception.validator'
-import { Validator, ValidatorOptions } from '@domain/adapters/validator'
+import { ValidatorService, ValidatorOptions } from '@domain/adapters/validator/validator.service'
 
 @Injectable()
-export class ZodValidatorAdapterImplementation extends Validator {
+export class ZodValidatorServiceImplementation extends ValidatorService {
 
   validate<Schema extends z.ZodSchema>(schema: Schema, args: unknown, options?: ValidatorOptions): z.output<Schema> {
     const { success, data, error } = schema.safeParse(args)
