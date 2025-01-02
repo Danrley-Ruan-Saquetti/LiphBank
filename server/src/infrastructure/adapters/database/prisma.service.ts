@@ -1,5 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
+import { QueryFilterBuilder } from '@infrastructure/adapters/database/query-filter-builder'
 import { DatabaseServerException } from '@infrastructure/adapters/database/exceptions/server.exception'
 import { DatabaseClientException } from '@infrastructure/adapters/database/exceptions/client.exception'
 import { PRISMA_CLIENT_ERRORS_CODE } from '@infrastructure/adapters/database/errors.code'
@@ -7,8 +8,6 @@ import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.se
 
 @Injectable()
 export class PrismaDatabaseService extends DatabaseService implements OnModuleInit {
-
-  private queryFilterSchema: SchemaFilterQuery = {}
 
   constructor() {
     super({ log: ['error', 'warn'] })
@@ -46,103 +45,13 @@ export class PrismaDatabaseService extends DatabaseService implements OnModuleIn
     throw new DatabaseServerException('Operation database failed. Error: ' + error.message || '')
   }
 
-  setSchemaFilter<T = any>(schema: SchemaFilterQuery<T>): void {
-    this.queryFilterSchema = schema
-  }
+  pipeWhere(whereConditions: Record<string, Record<string, any>> = {}, queryFilterSchema: SchemaFilterQuery<any> = {}, options: { debugFilter?: boolean } = {}) {
+    const conditions = new QueryFilterBuilder(queryFilterSchema).build(whereConditions)
 
-  pipeWhere(whereConditions: Record<string, Record<string, any>>) {
-    return new QueryFilterBuilder(this.queryFilterSchema).build(whereConditions)
-  }
-}
-
-class QueryFilterBuilder {
-
-  private filters: Record<string, any> = {}
-
-  constructor(
-    private readonly queryFilterSchema: SchemaFilterQuery = {}
-  ) { }
-
-  build(whereConditions: Record<string, Record<string, any>>) {
-    for (const field in whereConditions) {
-      const operators = whereConditions[field]
-
-      for (const operator in operators) {
-        const value = operators[operator]
-
-        this.parseOperatorField(field, operator, value)
-      }
+    if (options.debugFilter) {
+      console.log(JSON.stringify(conditions, null, 2))
     }
 
-    return this.filters
-  }
-
-  private parseOperatorField(field: string, operator: string, value: any) {
-    const type = this.queryFilterSchema[field]
-
-    if (!type) return
-
-    const SCHEMA_TYPE: Record<string, Record<string, () => { filters?: any, superFilters?: { BASE?: any, NOT?: any } }>> = {
-      string: {
-        notContains: () => ({ superFilters: { NOT: { contains: value } } }),
-        fil: () => ({}),
-      },
-      number: {
-        fil: () => ({}),
-      },
-      boolean: {
-        fil: () => ({}),
-      },
-      date: {
-        between: () => ({ filters: { lte: value[0], gte: value[1] } }),
-        notBetween: () => ({ superFilters: { NOT: { lte: value[0], gte: value[1] } } }),
-        fil: () => ({}),
-      },
-      json: {
-        fil: () => ({}),
-      },
-      enum: {
-        fil: () => ({}),
-      }
-    }
-
-    const schemaType = SCHEMA_TYPE[type]
-
-    if (!schemaType) return
-
-    const schemaOperator = schemaType[operator] || (() => ({
-      filters: { [operator]: value }
-    }))
-
-    const { filters, superFilters } = schemaOperator()
-
-    this.addFilter(field, { filters, superFilters })
-  }
-
-  private addFilter(field: string, { filters, superFilters }: { filters?: any, superFilters?: { NOT?: any, BASE?: any } }) {
-    if (filters) {
-      this.filters[field] = { ...this.filters[field], ...filters }
-    }
-
-    if (superFilters) {
-      if (superFilters.NOT) {
-        this.filters.NOT = {
-          ...this.filters?.NOT,
-          [field]: {
-            ...this.filters?.NOT?.[field],
-            ...superFilters.NOT,
-          }
-        }
-      }
-
-      if (superFilters.BASE) {
-        this.filters = {
-          ...this.filters,
-          ...superFilters.BASE,
-          AND: [...(this.filters.AND ?? []), ...(superFilters.BASE.AND ?? [])],
-          OR: [...(this.filters.OR ?? []), ...(superFilters.BASE.OR ?? [])],
-        }
-      }
-    }
+    return conditions
   }
 }
