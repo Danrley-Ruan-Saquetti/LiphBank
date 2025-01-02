@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { BullModule } from '@nestjs/bull'
-import { MailModule } from '@infrastructure/adapters/mail/mail.module'
+import { InfrastructureMailModule } from '@infrastructure/adapters/mail/mail.module'
 import { InfrastructureGeneratorTemplateModule } from '@infrastructure/adapters/generator/template/template.module'
 import { EmailNotificationConsumer } from '@application/jobs/consumers/email.notification.consumer'
 import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
@@ -10,7 +10,7 @@ import { InfrastructureRepositoryModule } from '@infrastructure/repositories/rep
     BullModule.registerQueue({
       name: 'queue.email-notification',
     }),
-    MailModule,
+    InfrastructureMailModule,
     InfrastructureGeneratorTemplateModule,
     InfrastructureRepositoryModule,
   ],

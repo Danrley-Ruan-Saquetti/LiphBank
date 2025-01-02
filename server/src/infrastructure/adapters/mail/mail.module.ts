@@ -38,4 +38,4 @@ import { env } from '@shared/env'
     },
   ]
 })
-export class MailModule { }
+export class InfrastructureMailModule { }
