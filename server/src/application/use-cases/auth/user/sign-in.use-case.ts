@@ -5,11 +5,12 @@ import { AuthUserSignInEvent } from '@application/observer/events/auth/user/sign
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
 import { SignInCredentialInvalidException } from '@application/exceptions/sign-in-credential-invalid.exception'
 import { AuthUserSignInDTO, authUserSignInSchema } from '@application/dto/auth/user/sign-in.dto'
-import { User, UserType } from '@domain/entities/user.entity'
 import { JWTService } from '@domain/adapters/jwt/jwt.service'
 import { HashService } from '@domain/adapters/crypto/hash.service'
 import { UserRepository } from '@domain/repositories/user.repository'
+import { User, UserType } from '@domain/entities/user.entity'
 import { env } from '@shared/env'
+import { extractDigits } from '@shared/utils/string'
 
 @Injectable()
 export class AuthUserSignInUseCase extends UseCase<AuthUserSignInEvent> {
@@ -46,6 +47,7 @@ export class AuthUserSignInUseCase extends UseCase<AuthUserSignInEvent> {
         OR: [
           { login: value },
           { code: value },
+          { people: { cpfCnpj: extractDigits(value) } }
         ]
       },
       take: 1,
