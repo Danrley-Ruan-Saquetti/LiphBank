@@ -9,8 +9,10 @@ import { SendEmailNotificationCronTab } from '@application/cron-tabs/send-email-
     InfrastructureRepositoryModule,
   ],
   providers: [
+    SendEmailNotificationCronTab,
   ],
   exports: [
+    SendEmailNotificationCronTab,
   ]
 })
 export class CronTabModule { }
