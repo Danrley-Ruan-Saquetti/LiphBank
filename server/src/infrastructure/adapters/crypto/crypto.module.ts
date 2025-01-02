@@ -1,19 +1,16 @@
-import { Module } from '@nestjs/common'
+import { Module, Provider } from '@nestjs/common'
 import { HashServiceImplementation } from '@infrastructure/adapters/crypto/hash.service'
 import { HashService } from '@domain/adapters/crypto/hash.service'
 
+const providers: Provider[] = [
+  {
+    provide: HashService,
+    useClass: HashServiceImplementation
+  }
+]
+
 @Module({
-  providers: [
-    {
-      provide: HashService,
-      useClass: HashServiceImplementation
-    }
-  ],
-  exports: [
-    {
-      provide: HashService,
-      useClass: HashServiceImplementation
-    }
-  ]
+  providers: [...providers],
+  exports: [...providers]
 })
 export class InfrastructureHashModule { }

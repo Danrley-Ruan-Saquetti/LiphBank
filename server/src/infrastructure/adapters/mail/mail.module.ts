@@ -1,8 +1,15 @@
-import { Module } from '@nestjs/common'
+import { Module, Provider } from '@nestjs/common'
 import { MailerModule } from '@nestjs-modules/mailer'
 import { MailServiceImplementation } from '@infrastructure/adapters/mail/mail.service'
 import { MailService } from '@domain/adapters/mail/mail.service'
 import { env } from '@shared/env'
+
+const providers: Provider[] = [
+  {
+    provide: MailService,
+    useClass: MailServiceImplementation
+  },
+]
 
 @Module({
   imports: [
@@ -18,24 +25,9 @@ import { env } from '@shared/env'
       defaults: {
         from: env('MAIL_DEFAULT_FROM'),
       },
-      template: {
-        options: {
-          strict: true,
-        },
-      },
     }),
   ],
-  providers: [
-    {
-      provide: MailService,
-      useClass: MailServiceImplementation
-    },
-  ],
-  exports: [
-    {
-      provide: MailService,
-      useClass: MailServiceImplementation
-    },
-  ]
+  providers: [...providers],
+  exports: [...providers]
 })
 export class InfrastructureMailModule { }

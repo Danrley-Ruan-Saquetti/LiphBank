@@ -13,8 +13,7 @@ import { InfrastructureRepositoryModule } from '@infrastructure/repositories/rep
     InfrastructureGeneratorTemplateModule,
     InfrastructureRepositoryModule,
   ],
-  providers: [
-  ],
+  providers: [],
   exports: [
     BullModule,
   ],

@@ -47,6 +47,4 @@ const providers: Provider[] = [
   providers: [...providers],
   exports: [...providers]
 })
-export class InfrastructureRepositoryModule {
-
-}
+export class InfrastructureRepositoryModule { }

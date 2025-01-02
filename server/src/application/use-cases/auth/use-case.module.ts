@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Module, Provider } from '@nestjs/common'
 import { InfrastructureJWTModule } from '@infrastructure/adapters/jwt/jwt.module'
 import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
 import { InfrastructureObserverModule } from '@infrastructure/adapters/observer/observer.module'
@@ -10,6 +10,13 @@ import { AuthUserAuthorizationUseCase } from '@application/use-cases/auth/user/a
 import { AuthBankAccountSignInUseCase } from '@application/use-cases/auth/bank-account/sign-in.use-case'
 import { AuthBankAccountAuthorizationUseCase } from '@application/use-cases/auth/bank-account/authorization.use-case'
 
+const providers: Provider[] = [
+  AuthUserSignInUseCase,
+  AuthUserAuthorizationUseCase,
+  AuthBankAccountAuthorizationUseCase,
+  AuthBankAccountSignInUseCase,
+]
+
 @Module({
   imports: [
     InfrastructureValidatorModule,
@@ -19,17 +26,7 @@ import { AuthBankAccountAuthorizationUseCase } from '@application/use-cases/auth
     InfrastructureObserverModule,
     ConsumerModule,
   ],
-  providers: [
-    AuthUserSignInUseCase,
-    AuthUserAuthorizationUseCase,
-    AuthBankAccountAuthorizationUseCase,
-    AuthBankAccountSignInUseCase,
-  ],
-  exports: [
-    AuthUserSignInUseCase,
-    AuthUserAuthorizationUseCase,
-    AuthBankAccountAuthorizationUseCase,
-    AuthBankAccountSignInUseCase,
-  ]
+  providers: [...providers],
+  exports: [...providers]
 })
 export class AuthUseCaseModule { }
