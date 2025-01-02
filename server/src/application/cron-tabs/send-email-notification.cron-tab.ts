@@ -26,7 +26,7 @@ export class SendEmailNotificationCronTab {
 
   private async getEmailNotificationsInQueue() {
     return await this.emailNotificationRepository.findMany({
-      where: { situation: NotificationSituation.IN_QUEUE },
+      where: { notification: { situation: NotificationSituation.IN_QUEUE } },
       orderBy: { id: 'asc' },
       take: 100
     })
