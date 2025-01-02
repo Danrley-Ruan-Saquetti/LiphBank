@@ -17,11 +17,7 @@ export class PeopleCreateUseCase extends UseCase {
   async perform(args: PeopleCreateDTO) {
     const { cpfCnpj, name, dateOfBirth, gender, type } = this.validator.validate(peopleCreateSchema, args)
 
-    const peopleWithSameCpfCnpj = await this.peopleRepository.findByCpfCnpj(cpfCnpj)
-
-    if (peopleWithSameCpfCnpj) {
-      throw new ConflictException('People', cpfCnpj, { conflict: ['cpfCnpj'] })
-    }
+    await this.validatePeopleWithSameCpfCnpj(cpfCnpj)
 
     const people = People.load({
       name,
@@ -31,8 +27,20 @@ export class PeopleCreateUseCase extends UseCase {
       type,
     })
 
-    const peopleCreated = await this.peopleRepository.create(people)
+    const peopleCreated = await this.registerPeople(people)
 
     return { people: peopleCreated }
+  }
+
+  private async validatePeopleWithSameCpfCnpj(cpfCnpj: string) {
+    const peopleWithSameCpfCnpj = await this.peopleRepository.findByCpfCnpj(cpfCnpj)
+
+    if (peopleWithSameCpfCnpj) {
+      throw new ConflictException('People', cpfCnpj, { conflict: ['cpfCnpj'] })
+    }
+  }
+
+  private async registerPeople(people: People) {
+    return await this.peopleRepository.create(people)
   }
 }
