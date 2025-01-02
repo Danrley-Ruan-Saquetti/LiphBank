@@ -9,6 +9,12 @@ export const emailNotificationCreateSchema = z.object({
   body: z
     .string({ 'required_error': EmailNotificationMessage.body.required })
     .min(1, EmailNotificationMessage.body.required),
+  recipient: z
+    .string({ 'required_error': EmailNotificationMessage.recipient.required })
+    .min(1, EmailNotificationMessage.recipient.required),
+  sender: z
+    .string({ 'required_error': EmailNotificationMessage.sender.required })
+    .min(1, EmailNotificationMessage.sender.required),
   type: z
     .union([
       z.array(

@@ -1,31 +1,33 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { EmailNotificationCreateDTO, emailNotificationCreateSchema } from '@application/dto/email-notification/create.dto'
-import { Notification } from '@domain/entities/notification.entity'
-import { NotificationRepository } from '@domain/repositories/notification.repository'
+import { EmailNotification } from '@domain/entities/email-notification.entity'
+import { EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
 
 @Injectable()
 export class EmailNotificationCreateUseCase extends UseCase {
 
   constructor(
-    private readonly notificationRepository: NotificationRepository
+    private readonly emailNotificationRepository: EmailNotificationRepository
   ) {
     super()
   }
 
   async perform(args: EmailNotificationCreateDTO) {
-    const { body, subject, type } = this.validator.validate(emailNotificationCreateSchema, args)
+    const { body, subject, type, sender, recipient } = this.validator.validate(emailNotificationCreateSchema, args)
 
-    const notifications: Notification[] = []
+    const notifications: EmailNotification[] = []
 
     for (let i = 0; i < type.length; i++) {
-      const notification = Notification.load({
+      const notification = EmailNotification.load({
         body,
         subject,
-        type: type[i]
+        sender,
+        recipient,
+        type: type[i],
       })
 
-      const notificationCreated = await this.notificationRepository.create(notification)
+      const notificationCreated = await this.emailNotificationRepository.create(notification)
 
       notifications.push(notificationCreated)
     }
