@@ -171,3 +171,13 @@ model Email {
 
   @@map("emails")
 }
+
+model ErrorLog {
+  id        String   @id @default(uuid())
+  origin    String
+  message   String
+  details   Json?
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@map("error_logs")
+}
