@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { MailService } from '@domain/adapters/mail/mail.service'
+import { EmailNotification } from '@domain/entities/email-notification.entity'
 import { NotificationSituation } from '@domain/entities/notification.entity'
 import { EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
-import { EmailNotification } from '@domain/entities/email-notification.entity'
 
 @Injectable()
 export class SendEmailNotificationCronTab {
@@ -43,7 +43,7 @@ export class SendEmailNotificationCronTab {
   }
 
   private async updateSituationNotification(isSuccess: boolean, emailNotification: EmailNotification) {
-    if (isSuccess) emailNotification = await this.updateStateErrorSendNotification(emailNotification)
+    if (!isSuccess) emailNotification = await this.updateStateErrorSendNotification(emailNotification)
     else emailNotification = await this.updateStateSuccessSendNotification(emailNotification)
 
     await this.emailNotificationRepository.update(emailNotification.id, emailNotification)
