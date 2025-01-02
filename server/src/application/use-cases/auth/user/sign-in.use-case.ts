@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { InjectQueue } from '@nestjs/bull'
-import { Queue } from 'bull'
 import { UseCase } from '@application/use-cases/use-case'
 import { UserJWTPayload } from '@application/types/user-jwt-payload.type'
+import { AuthUserSignInEvent } from '@application/events/auth/user/sign-in.event'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
-import { SendEmailNotificationJob } from '@application/jobs/email-notification/send-email-notification.job'
 import { SignInCredentialInvalidException } from '@application/exceptions/sign-in-credential-invalid.exception'
 import { AuthUserSignInDTO, authUserSignInSchema } from '@application/dto/auth/user/sign-in.dto'
 import { JWTService } from '@domain/adapters/jwt/jwt.service'
@@ -13,13 +11,12 @@ import { UserRepository } from '@domain/repositories/user.repository'
 import { env } from '@shared/env'
 
 @Injectable()
-export class AuthUserSignInUseCase extends UseCase {
+export class AuthUserSignInUseCase extends UseCase<AuthUserSignInEvent> {
 
   constructor(
     private readonly userRepository: UserRepository,
     private readonly hash: HashService,
     private readonly jwt: JWTService,
-    @InjectQueue('queue.email-notification') private readonly sendEmailNotificationQueue: Queue
   ) {
     super()
   }
@@ -58,7 +55,7 @@ export class AuthUserSignInUseCase extends UseCase {
       exp: env('JWT_USER_EXPIRATION'),
     })
 
-    await this.sendEmailNotificationQueue.add(SendEmailNotificationJob.KEY_JOB, new SendEmailNotificationJob(user).getData())
+    await this.notify('events.auth.user.sign-in', { user })
 
     return { token, payload }
   }
