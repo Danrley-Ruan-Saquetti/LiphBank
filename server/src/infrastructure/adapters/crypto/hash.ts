@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common'
 import * as bcrypt from 'bcrypt'
-import { Hash } from '@domain/adapters/crypto/hash'
+import { HashService } from '@domain/adapters/crypto/hash.service'
 
 @Injectable()
-export class HashImplementation extends Hash {
+export class HashImplementation extends HashService {
 
   async hash(value: string) {
     return await bcrypt.hash(value, 10)

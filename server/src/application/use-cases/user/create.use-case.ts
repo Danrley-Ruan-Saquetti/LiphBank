@@ -6,7 +6,7 @@ import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
 import { UserCreateDTO, userCreateSchema } from '@application/dto/user/create.dto'
 import { User } from '@domain/entities/user.entity'
-import { Hash } from '@domain/adapters/crypto/hash'
+import { HashService } from '@domain/adapters/crypto/hash.service'
 import { People } from '@domain/entities/people.entity'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { PeopleRepository } from '@domain/repositories/people.repository'
@@ -18,7 +18,7 @@ export class UserCreateUseCase extends UseCase {
     private readonly userRepository: UserRepository,
     private readonly peopleRepository: PeopleRepository,
     private readonly userGenerateCodeUseCase: UserGenerateCodeUseCase,
-    private readonly hash: Hash
+    private readonly hash: HashService
   ) {
     super()
   }

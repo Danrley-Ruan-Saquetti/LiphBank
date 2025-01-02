@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common'
 import { HashImplementation } from '@infrastructure/adapters/crypto/hash'
-import { Hash } from '@domain/adapters/crypto/hash'
+import { HashService } from '@domain/adapters/crypto/hash.service'
 
 @Module({
   providers: [
     {
-      provide: Hash,
+      provide: HashService,
       useClass: HashImplementation
     }
   ],
   exports: [
     {
-      provide: Hash,
+      provide: HashService,
       useClass: HashImplementation
     }
   ]

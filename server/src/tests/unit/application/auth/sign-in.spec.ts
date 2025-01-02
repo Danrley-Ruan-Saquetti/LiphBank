@@ -4,14 +4,14 @@ import { InfrastructureJWTModule } from '@infrastructure/adapters/jwt/jwt.module
 import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
 import { AuthUserSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
 import { SignInCredentialInvalidException } from '@application/exceptions/sign-in-credential-invalid.exception'
-import { Hash } from '@domain/adapters/crypto/hash'
+import { HashService } from '@domain/adapters/crypto/hash.service'
 import { User, UserType } from '@domain/entities/user.entity'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { UserRepositoryMock } from '@tests/unit/shared/mocks/user/repository.mock'
 import { createApplicationMock } from '@tests/unit/shared/mocks/module.mock'
 
 describe('Application - Auth - UseCase - SignIn', () => {
-  let hash: Hash
+  let hash: HashService
   let authUserSignInUseCase: AuthUserSignInUseCase
   let userRepositoryMock: UserRepositoryMock
 
@@ -34,7 +34,7 @@ describe('Application - Auth - UseCase - SignIn', () => {
     })
 
     authUserSignInUseCase = module.get(AuthUserSignInUseCase)
-    hash = module.get(Hash)
+    hash = module.get(HashService)
   })
 
   test('Should be a sign-in', async () => {
