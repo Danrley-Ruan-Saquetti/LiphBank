@@ -5,10 +5,10 @@ import { PeopleCreateUseCase } from '@application/use-cases/people/create.use-ca
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
 import { CreatePeopleAndUserUseCase } from '@application/use-cases/shared/create-people-user.use-case'
 import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
-import { CodeGeneratorImplementation } from '@infrastructure/adapters/generator/code/code.generator'
+import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.generator'
 import { People } from '@domain/entities/people.entity'
 import { User, UserType } from '@domain/entities/user.entity'
-import { CodeGenerator } from '@domain/adapters/generator/code/code.service'
+import { CodeGeneratorService } from '@domain/adapters/generator/code/code.service'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { PeopleRepository } from '@domain/repositories/people.repository'
 import { UserRepositoryMock } from '@tests/unit/shared/mocks/user/repository.mock'
@@ -19,12 +19,12 @@ describe('Application - Shared - UseCase - Create People and User', () => {
   let createPeopleAndUserUseCase: CreatePeopleAndUserUseCase
   let peopleRepository: PeopleRepositoryMock
   let userRepository: UserRepositoryMock
-  let codeGenerator: CodeGeneratorImplementation
+  let codeGenerator: CodeGeneratorServiceImplementation
 
   beforeEach(async () => {
     userRepository = new UserRepositoryMock()
     peopleRepository = new PeopleRepositoryMock()
-    codeGenerator = new CodeGeneratorImplementation()
+    codeGenerator = new CodeGeneratorServiceImplementation()
 
     const module = await createApplicationMock({
       imports: [
@@ -44,7 +44,7 @@ describe('Application - Shared - UseCase - Create People and User', () => {
           useValue: peopleRepository,
         },
         {
-          provide: CodeGenerator,
+          provide: CodeGeneratorService,
           useValue: codeGenerator,
         },
       ],

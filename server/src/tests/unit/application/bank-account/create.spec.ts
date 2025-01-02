@@ -1,8 +1,8 @@
-import { CodeGeneratorImplementation } from '@infrastructure/adapters/generator/code/code.generator'
+import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.generator'
 import { BankAccountCreateUseCase } from '@application/use-cases/bank-account/create.use-case'
 import { BankAccountGenerateCodeUseCase } from '@application/use-cases/bank-account/generate-code.use-case'
 import { BankAccount } from '@domain/entities/bank-account.entity'
-import { CodeGenerator } from '@domain/adapters/generator/code/code.service'
+import { CodeGeneratorService } from '@domain/adapters/generator/code/code.service'
 import { BankAccountRepository } from '@domain/repositories/bank-account.repository'
 import { PeopleRepositoryMock } from '@tests/unit/shared/mocks/people/repository.mock'
 import { createApplicationMock } from '@tests/unit/shared/mocks/module.mock'
@@ -12,12 +12,12 @@ describe('Application - BankAccount - UseCase - Create', () => {
   let bankAccountCreateUseCase: BankAccountCreateUseCase
   let bankAccountRepositoryMock: BankAccountRepositoryMock
   let peopleRepositoryMock: PeopleRepositoryMock
-  let codeGenerator: CodeGeneratorImplementation
+  let codeGenerator: CodeGeneratorServiceImplementation
 
   beforeEach(async () => {
     bankAccountRepositoryMock = new BankAccountRepositoryMock()
     peopleRepositoryMock = new PeopleRepositoryMock()
-    codeGenerator = new CodeGeneratorImplementation()
+    codeGenerator = new CodeGeneratorServiceImplementation()
 
     const module = await createApplicationMock({
       providers: [
@@ -28,7 +28,7 @@ describe('Application - BankAccount - UseCase - Create', () => {
           useValue: bankAccountRepositoryMock
         },
         {
-          provide: CodeGenerator,
+          provide: CodeGeneratorService,
           useValue: codeGenerator,
         }
       ]

@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common'
-import { CodeGeneratorImplementation } from '@infrastructure/adapters/generator/code/code.generator'
-import { CodeGenerator } from '@domain/adapters/generator/code/code.service'
+import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.generator'
+import { CodeGeneratorService } from '@domain/adapters/generator/code/code.service'
 
 @Module({
   providers: [
     {
-      provide: CodeGenerator,
-      useClass: CodeGeneratorImplementation
+      provide: CodeGeneratorService,
+      useClass: CodeGeneratorServiceImplementation
     }
   ],
   exports: [
     {
-      provide: CodeGenerator,
-      useClass: CodeGeneratorImplementation
+      provide: CodeGeneratorService,
+      useClass: CodeGeneratorServiceImplementation
     }
   ]
 })

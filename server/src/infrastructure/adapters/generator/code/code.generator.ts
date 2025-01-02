@@ -1,8 +1,8 @@
-import { CodeGenerator, CodeGeneratorOptions } from '@domain/adapters/generator/code/code.service'
+import { CodeGeneratorService, CodeGeneratorOptions } from '@domain/adapters/generator/code/code.service'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
-export class CodeGeneratorImplementation extends CodeGenerator {
+export class CodeGeneratorServiceImplementation extends CodeGeneratorService {
 
   private options: CodeGeneratorOptions = {
     prefix: '',

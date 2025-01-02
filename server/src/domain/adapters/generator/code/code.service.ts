@@ -5,7 +5,7 @@ export type CodeGeneratorOptions = {
   charset: string
 }
 
-export abstract class CodeGenerator {
+export abstract class CodeGeneratorService {
 
   abstract generate(): string
   abstract setPrefix(prefix: string): void
