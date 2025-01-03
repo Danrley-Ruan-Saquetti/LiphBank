@@ -9,12 +9,30 @@ import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.se
 @Injectable()
 export class PrismaDatabaseService extends DatabaseService implements OnModuleInit {
 
-  constructor() {
-    super({ log: ['error', 'warn'] })
+  constructor(
+  ) {
+    super({ log: [{ level: 'error', emit: 'event' }] })
   }
 
   async onModuleInit() {
     await this.$connect()
+
+    // @ts-expect-error
+    this.$on('error', async error => await this.onError(error))
+
+    await this.user.create({
+      data: { login: '' } as any
+    })
+  }
+
+  private async onError(error: any) {
+    await this.errorLog.create({
+      data: {
+        type: 'DATABASE',
+        origin: `database.${error.target ?? 'unknown'}`,
+        message: error.message ?? 'Error',
+      }
+    })
   }
 
   resolveError(error: any, options?: { debugLogError?: boolean }): never {
