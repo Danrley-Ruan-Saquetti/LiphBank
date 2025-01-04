@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
-import { CronTab } from '@application/jobs/cron-tabs/cron-tab'
+import { CronJob } from '@application/jobs/cron-jobs/cron-job'
 import { MailService } from '@domain/adapters/mail/mail.service'
 import { EmailNotification } from '@domain/entities/email-notification.entity'
 import { NotificationSituation } from '@domain/entities/notification.entity'
 import { EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
 
 @Injectable()
-export class SendEmailNotificationCronTab extends CronTab {
+export class SendEmailNotificationCronJob extends CronJob {
 
   constructor(
     private readonly emailNotificationRepository: EmailNotificationRepository,
@@ -28,7 +28,7 @@ export class SendEmailNotificationCronTab extends CronTab {
       } catch (error: any) {
         await this.erroLogService.save({
           type: 'JOB',
-          origin: 'cron-tab.send-email-notification.send',
+          origin: 'cron-job.send-email-notification.send',
           message: error.message ?? 'Error',
           details: {
             ...error.details,
