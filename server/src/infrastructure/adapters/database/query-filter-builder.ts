@@ -1,4 +1,4 @@
-import { SchemaFilterQuery } from '@domain/database/database.service'
+import { SchemaFilterQuery } from '@domain/adapters/database/database.service'
 
 export type WhereCondition = Record<string, Record<string, any> | Record<string, any>[]>
 

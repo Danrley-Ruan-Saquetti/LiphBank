@@ -1,6 +1,6 @@
 import { Module, Provider } from '@nestjs/common'
 import { PrismaDatabaseService } from '@infrastructure/adapters/database/prisma.service'
-import { DatabaseService } from '@domain/database/database.service'
+import { DatabaseService } from '@domain/adapters/database/database.service'
 
 const providers: Provider[] = [
   {

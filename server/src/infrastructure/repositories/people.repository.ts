@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PeopleMapper } from '@infrastructure/mappers/people.mapper'
 import { People, PeopleProps } from '@domain/entities/people.entity'
-import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/adapters/database/database.service'
 import { PeopleQueryArgs, PeopleRepository } from '@domain/repositories/people.repository'
 
 @Injectable()

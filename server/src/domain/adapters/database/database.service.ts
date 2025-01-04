@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { FilterSchema } from '@domain/database/filters'
+import { FilterSchema } from '@domain/adapters/database/filters'
 
 export type SchemaFilterQuery<T = Record<string, any>> = {
   [x in keyof T]: 'string' | 'number' | 'boolean' | 'date' | 'json' | 'enum' | 'object'

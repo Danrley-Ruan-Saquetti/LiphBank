@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { EmailNotificationMapper } from '@infrastructure/mappers/email-notification.mapper'
 import { NotificationProps } from '@domain/entities/notification.entity'
-import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/adapters/database/database.service'
 import { EmailNotification, EmailNotificationProps } from '@domain/entities/email-notification.entity'
 import { EmailNotificationQueryArgs, EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
 

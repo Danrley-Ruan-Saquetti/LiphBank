@@ -3,7 +3,7 @@ import { UserMapper } from '@infrastructure/mappers/user.mapper'
 import { PeopleProps } from '@domain/entities/people.entity'
 import { User, UserType, UserProps } from '@domain/entities/user.entity'
 import { UserQueryArgs, UserRepository } from '@domain/repositories/user.repository'
-import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/adapters/database/database.service'
 
 @Injectable()
 export class UserRepositoryImplementation extends UserRepository {

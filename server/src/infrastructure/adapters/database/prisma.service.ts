@@ -4,7 +4,7 @@ import { QueryFilterBuilder } from '@infrastructure/adapters/database/query-filt
 import { DatabaseServerException } from '@infrastructure/adapters/database/exceptions/server.exception'
 import { DatabaseClientException } from '@infrastructure/adapters/database/exceptions/client.exception'
 import { PRISMA_CLIENT_ERRORS_CODE } from '@infrastructure/adapters/database/errors.code'
-import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/adapters/database/database.service'
 
 @Injectable()
 export class PrismaDatabaseService extends DatabaseService implements OnModuleInit {
@@ -19,10 +19,6 @@ export class PrismaDatabaseService extends DatabaseService implements OnModuleIn
 
     // @ts-expect-error
     this.$on('error', async error => await this.onError(error))
-
-    await this.user.create({
-      data: { login: '' } as any
-    })
   }
 
   private async onError(error: any) {

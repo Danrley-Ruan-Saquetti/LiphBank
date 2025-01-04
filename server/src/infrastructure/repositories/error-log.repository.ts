@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { ErrorLogMapper } from '@infrastructure/mappers/error-log.mapper'
 import { ErrorLog, ErrorLogProps } from '@domain/entities/error-log.entity'
-import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/adapters/database/database.service'
 import { ErrorLogQueryArgs, ErrorLogRepository } from '@domain/repositories/error-log.repository'
 import { Prisma } from '@prisma/client'
 

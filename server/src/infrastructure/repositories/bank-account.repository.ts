@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { BankAccountMapper } from '@infrastructure/mappers/bank-account.mapper'
-import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/adapters/database/database.service'
 import { BankAccount, BankAccountProps } from '@domain/entities/bank-account.entity'
 import { BankAccountQueryArgs, BankAccountRepository } from '@domain/repositories/bank-account.repository'
 

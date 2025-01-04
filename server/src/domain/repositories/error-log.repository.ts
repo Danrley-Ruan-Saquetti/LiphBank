@@ -1,5 +1,5 @@
 import { ErrorLog, ErrorLogProps } from '@domain/entities/error-log.entity'
-import { FilterSchema, QuerySchema } from '@domain/database/filters'
+import { FilterSchema, QuerySchema } from '@domain/adapters/database/filters'
 
 type ErrorLogFiltersArgs = ErrorLogProps
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 import { FinancialTransactionMapper } from '@infrastructure/mappers/financial-transaction.mapper'
-import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/adapters/database/database.service'
 import { FinancialTransaction, FinancialTransactionProps } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionQueryArgs, FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
 

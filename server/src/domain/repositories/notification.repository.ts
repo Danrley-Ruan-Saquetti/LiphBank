@@ -1,4 +1,4 @@
-import { FilterSchema, QuerySchema } from '@domain/database/filters'
+import { FilterSchema, QuerySchema } from '@domain/adapters/database/filters'
 import { Notification, NotificationProps } from '@domain/entities/notification.entity'
 
 type NotificationFilterArgs = NotificationProps

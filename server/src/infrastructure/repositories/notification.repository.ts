@@ -1,6 +1,6 @@
 import { NotificationMapper } from '@infrastructure/mappers/notification.mapper'
 import { Notification, NotificationProps } from '@domain/entities/notification.entity'
-import { DatabaseService, SchemaFilterQuery } from '@domain/database/database.service'
+import { DatabaseService, SchemaFilterQuery } from '@domain/adapters/database/database.service'
 import { NotificationQueryArgs, NotificationRepository } from '@domain/repositories/notification.repository'
 import { Injectable } from '@nestjs/common'
 

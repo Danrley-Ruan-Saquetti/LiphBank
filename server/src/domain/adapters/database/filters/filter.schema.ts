@@ -5,7 +5,7 @@ import {
   JSONFilterOperators,
   NumberFilterOperators,
   StringFilterOperators
-} from '@domain/database/filters/filter.operators'
+} from '@domain/adapters/database/filters/filter.operators'
 
 type GlobalFilter<Schema extends object> = {
   NOT?: FilterSchema<Schema>
