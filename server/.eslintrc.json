@@ -1,7 +1,7 @@
 {
   "env": {
     "node": true,
-    "jest": true,
+    "vitest": true,
     "es2021": true
   },
   "extends": [
