@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
-import { CronTab } from '@application/cron-tabs/cron-tab'
+import { CronTab } from '@application/jobs/cron-tabs/cron-tab'
 import { MailService } from '@domain/adapters/mail/mail.service'
 import { EmailNotification } from '@domain/entities/email-notification.entity'
 import { NotificationSituation } from '@domain/entities/notification.entity'

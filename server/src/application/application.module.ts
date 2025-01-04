@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
-import { CronTabModule } from '@application/cron-tabs/cron-tab.module'
-import { ConsumerModule } from '@application/jobs/consumer.module'
+import { CronTabModule } from '@application/jobs/cron-tabs/cron-tab.module'
+import { ConsumerModule } from '@application/jobs/queues/consumer.module'
 
 @Module({
   imports: [
