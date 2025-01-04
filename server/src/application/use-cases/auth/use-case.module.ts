@@ -4,7 +4,7 @@ import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto
 import { InfrastructureObserverModule } from '@infrastructure/adapters/observer/observer.module'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
-import { ConsumerModule } from '@application/jobs/consumer.module'
+import { ConsumerModule } from '@application/jobs/queues/consumer.module'
 import { AuthUserSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
 import { AuthUserAuthorizationUseCase } from '@application/use-cases/auth/user/authorization.use-case'
 import { AuthBankAccountSignInUseCase } from '@application/use-cases/auth/bank-account/sign-in.use-case'
