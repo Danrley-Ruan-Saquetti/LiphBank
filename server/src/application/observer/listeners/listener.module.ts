@@ -4,10 +4,12 @@ import { InfrastructureGeneratorTemplateModule } from '@infrastructure/adapters/
 import { EmailNotificationUseCaseModule } from '@application/use-cases/email-notification/use-case.module'
 import { SendEmailNotificationUserCreatedListener } from '@application/observer/listeners/send-email-notification-user-created.listener'
 import { SendEmailNotificationUserLoggedInListener } from '@application/observer/listeners/send-email-notification-user-logged-in.listener'
+import { SendEmailNotificationBankAccountCreatedListener } from '@application/observer/listeners/send-email-notification-bank-account-created.listener'
 
 const providers: Provider[] = [
   SendEmailNotificationUserLoggedInListener,
   SendEmailNotificationUserCreatedListener,
+  SendEmailNotificationBankAccountCreatedListener,
 ]
 
 @Module({

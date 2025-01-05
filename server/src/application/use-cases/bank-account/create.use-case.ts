@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
+import { BankAccountCreateEvent } from '@application/observer/events/bank-account/create.event'
+import { BankAccountGenerateCodeUseCase } from '@application/use-cases/bank-account/generate-code.use-case'
 import { BankAccountCreateDTO, bankAccountSchemaCreate } from '@application/dto/bank-account/create.dto'
 import { BankAccount } from '@domain/entities/bank-account.entity'
 import { BankAccountRepository } from '@domain/repositories/bank-account.repository'
-import { BankAccountGenerateCodeUseCase } from '@application/use-cases/bank-account/generate-code.use-case'
 
 @Injectable()
-export class BankAccountCreateUseCase extends UseCase {
+export class BankAccountCreateUseCase extends UseCase<BankAccountCreateEvent> {
 
   constructor(
     private readonly bankAccountRepository: BankAccountRepository,
