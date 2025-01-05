@@ -3,13 +3,14 @@ import { UseCase } from '@application/use-cases/use-case'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
 import { BankAccountJWTPayload } from '@application/types/bank-account-jwt-payload.type'
+import { AuthBankAccountSignInEvent } from '@application/observer/events/auth/bank-account/sign-in.event'
 import { AuthBankAccountSignInDTO, authBankAccountSignInSchema } from '@application/dto/auth/bank-account/sign-in.dto'
 import { JWTService } from '@domain/adapters/jwt/jwt.service'
 import { BankAccountRepository } from '@domain/repositories/bank-account.repository'
 import { env } from '@shared/env'
 
 @Injectable()
-export class AuthBankAccountSignInUseCase extends UseCase {
+export class AuthBankAccountSignInUseCase extends UseCase<AuthBankAccountSignInEvent> {
 
   constructor(
     private readonly bankAccountRepository: BankAccountRepository,
@@ -44,6 +45,8 @@ export class AuthBankAccountSignInUseCase extends UseCase {
       exp: env('JWT_BANK_ACCOUNT_EXPIRATION'),
       secret: env('JWT_BANK_ACCOUNT_SECRET'),
     })
+
+    await this.observer.notify('events.auth.bank-account.sign-in', { bankAccount })
 
     return { token, payload }
   }

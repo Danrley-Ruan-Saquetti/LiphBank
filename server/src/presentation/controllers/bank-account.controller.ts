@@ -26,7 +26,10 @@ export class BankAccountController {
   @UseGuards(AuthUserGuard)
   @Post('/create')
   async create(@Body() body: any, @User() user: UserSession) {
-    this.bankAccountCreateUseCase.observer.subscribe('events.bank-account.created', async data => await this.sendEmailNotificationBankAccountCreatedListener.perform(data))
+    this.bankAccountCreateUseCase.observer.subscribe(
+      'events.bank-account.created',
+      async data => await this.sendEmailNotificationBankAccountCreatedListener.perform(data)
+    )
 
     await this.bankAccountCreateUseCase.perform({ ...body, peopleId: user.peopleId })
 
