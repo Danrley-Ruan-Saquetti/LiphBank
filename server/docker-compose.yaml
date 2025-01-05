@@ -1,6 +1,16 @@
 name: liph-bank-services
 
 services:
+  liph-bank.api:
+    build: .
+    container_name: liph-bank.api
+    ports:
+      - '8080:8080'
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
   liph-bank.service.database:
     image: postgres:latest
     container_name: liph-bank.service.database
