@@ -18,11 +18,11 @@ Este é o projeto BackEnd do sistema LiphBank construído para fornecer uma API 
 
 ## Stack Utilizada
 
-- **Linguagem de Programação**: Javascript/Typescript, NodeJS
-- **Frameworks**: NestJS
-- **Banco de Dados**: PostgreSQL, Redis
-- **Ferramentas de Desenvolvimento**: Docker, Postman
-- **ORM's**: Prisma
+- **Linguagem de Programação**: Javascript/Typescript, [NodeJS](https://nodejs.org/pt)
+- **Frameworks**: [NestJS](https://nestjs.com/)
+- **Banco de Dados**: [PostgreSQL](https://www.postgresql.org/), [Redis](https://redis.io/)
+- **Ferramentas de Desenvolvimento**: [Docker](https://www.docker.com/), [Postman](https://www.postman.com/)
+- **ORM's**: [Prisma](https://www.prisma.io/)
 
 <div align="right">
 
@@ -40,12 +40,12 @@ src/
 │   ├── dto/ # Objetos de Transferência de Dados que fornecem um contrato de entrada para os Casos de Uso
 │   ├── exceptions/ # Exceções personalizadas utilizada na camada de aplicação
 │   ├── jobs/ # Serviços que executam tarefas agendados que utilizam filas (queues) ou são executadas periodicamente (cron jobs)
-│       ├── queues/ # Serviços que executam tarefas em filas
-│       └── cron-tabs/ # Serviços de execução periódicas
+│   │   ├── queues/ # Serviços que executam tarefas em filas
+│   │   └── cron-tabs/ # Serviços de execução periódicas
 │   ├── messages/ # Objetos que centralizam as mensagens referentes às entidades do domínio
 │   ├── observer/ # Organiza os eventos (events) e os ouvintes (listeners) destes eventos
-│       ├── events/ # Definição dos eventos
-│       └── listeners/ # Listeners dos eventos
+│   │   ├── events/ # Definição dos eventos
+│   │   └── listeners/ # Listeners dos eventos
 │   ├── types/ # Definição das tipagens reutilizáveis dentro da camada de aplicação
 │   └── use-case/ # Implementação dos casos de uso
 ├── domain/ # Define as abstrações e entidades da aplicação
@@ -73,7 +73,8 @@ src/
 │   ├── formatters/ # Formatadores globais
 │   ├── utils/ # Funções úteis e genéricas
 │   └── validators/ # Validadores globais
-└── tests/ # 
+└── tests/ # Stack de testes da aplicação
+    └── unit/ # Testes unitários automatizados
 ```
 
 <div align="right">
@@ -82,6 +83,26 @@ src/
 </div>
 
 ## Instruções para Execução
+
+- Pré-requisitos:
+  - Possuir a CLI do NestJS para rodar o projeto. Para instalá-lo, basta rodar o comando:
+    ```bash
+    npm i -g @nestjs/cli
+    ```
+
+Antes de executar a aplicação, é necessário realizar a cópia do arquivo `.env.example` para `.env` (ou apenas renomeá-lo) e preencher cada variável conforme o que se pede.
+
+Nesta aplicação é utilizado dois serviços externos: Redis e PostgreSQL. Para usá-los nesta aplicação, é possível utiliza-los via Docker rodando o seguinte comando:
+
+```bash
+docker compose up -d
+```
+
+Após rodar os serviços, pode-se executar a aplicação rodando o comando:
+
+```bash
+npm run start:dev
+```
 
 <div align="right">
 
