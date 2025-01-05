@@ -7,6 +7,7 @@ import { ResultInterceptor } from '@presentation/interceptors/result.interceptor
 import { PresentationModule } from '@presentation/presentation.module'
 import { CatchAllExceptionFilter } from '@presentation/filters/all-exception.filter'
 import { InfrastructureModule } from '@infrastructure/infrastructure.module'
+import { InfrastructureErrorLogModule } from '@infrastructure/adapters/error-log/error-log.module'
 import { ApplicationModule } from '@application/application.module'
 import { env } from '@shared/env'
 
@@ -27,6 +28,7 @@ import { env } from '@shared/env'
     InfrastructureModule,
     ApplicationModule,
     PresentationModule,
+    InfrastructureErrorLogModule,
   ],
   controllers: [],
   providers: [

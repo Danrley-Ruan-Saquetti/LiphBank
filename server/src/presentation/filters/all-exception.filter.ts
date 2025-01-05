@@ -1,13 +1,14 @@
 import { HttpAdapterHost } from '@nestjs/core'
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common'
-import { env } from '@shared/env'
 import { Result } from '@presentation/util/result'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
 import { ErrorLogService } from '@domain/adapters/error-log/error-log.service'
+import { env } from '@shared/env'
 import { CriticalException, RuntimeException } from '@shared/exceptions'
 
 @Catch()
 export class CatchAllExceptionFilter implements ExceptionFilter {
+
   constructor(
     private readonly httpAdapterHost: HttpAdapterHost,
     private readonly errorLogService: ErrorLogService
