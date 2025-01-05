@@ -21,10 +21,12 @@ export class SendEmailNotificationCronJob extends CronJob {
     const notificationInQueue = await this.getEmailNotificationsInQueue()
 
     for (let i = 0; i < notificationInQueue.length; i++) {
-      try {
-        const isSuccess = await this.sendEmail(notificationInQueue[i])
+      const { sender, recipient, body, subject } = notificationInQueue[i]
 
-        await this.updateSituationNotification(isSuccess, notificationInQueue[i])
+      try {
+        await this.mailService.send({ from: sender, to: recipient, subject, body })
+
+        await this.updateSituationNotification(true, notificationInQueue[i])
       } catch (error: any) {
         await this.erroLogService.save({
           type: 'JOB',
@@ -34,6 +36,8 @@ export class SendEmailNotificationCronJob extends CronJob {
             ...error.details,
           }
         })
+
+        await this.updateSituationNotification(false, notificationInQueue[i])
       }
     }
   }
@@ -47,13 +51,7 @@ export class SendEmailNotificationCronJob extends CronJob {
   }
 
   private async sendEmail({ sender, recipient, body, subject }: EmailNotification) {
-    try {
-      await this.mailService.send({ from: sender, to: recipient, subject, body })
-
-      return true
-    } catch (error: any) {
-      return false
-    }
+    await this.mailService.send({ from: sender, to: recipient, subject, body })
   }
 
   private async updateSituationNotification(isSuccess: boolean, emailNotification: EmailNotification) {
