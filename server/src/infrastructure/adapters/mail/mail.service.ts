@@ -14,8 +14,6 @@ export class MailServiceImplementation extends MailService {
 
   async send({ from, to, subject, body }: MailSendOptions) {
     try {
-      return
-
       await this.mailerService.sendMail({
         from,
         to,
