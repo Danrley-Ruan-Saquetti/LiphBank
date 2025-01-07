@@ -4,7 +4,8 @@ import {
   EnumFilterOperators,
   JSONFilterOperators,
   NumberFilterOperators,
-  StringFilterOperators
+  StringFilterOperators,
+  ArrayFilterOperators
 } from '@domain/adapters/database/filters/filter.operators'
 
 type GlobalFilter<Schema extends object> = {
@@ -26,6 +27,8 @@ export type FilterSchema<Schema extends object> = GlobalFilter<Schema> & {
   ? BooleanFilterOperators
   : NonNullable<Schema[x]> extends Date
   ? DateFilterOperators
+  : NonNullable<Schema[x]> extends Array<any>
+  ? ArrayFilterOperators<NonNullable<Schema[x]>>
   : NonNullable<Schema[x]> extends object
   ? FilterSchema<NonNullable<Schema[x]>>
   : NonNullable<Schema[x]>
