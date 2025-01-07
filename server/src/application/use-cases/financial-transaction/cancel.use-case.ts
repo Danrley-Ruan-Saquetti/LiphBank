@@ -2,12 +2,13 @@ import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
+import { FinancialTransactionCancelEvent } from '@application/observer/events/financial-transaction/cancel.event'
 import { FinancialTransactionCancelDTO, financialTransactionCancelSchema } from '@application/dto/financial-transaction/cancel.dto'
 import { FinancialTransactionSituation } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
 
 @Injectable()
-export class FinancialTransactionCancelUseCase extends UseCase {
+export class FinancialTransactionCancelUseCase extends UseCase<FinancialTransactionCancelEvent> {
 
   constructor(
     private readonly financialTransactionRepository: FinancialTransactionRepository
@@ -23,6 +24,8 @@ export class FinancialTransactionCancelUseCase extends UseCase {
     financialTransaction.situation = FinancialTransactionSituation.CANCELED
 
     const financialTransactionUpdated = await this.financialTransactionRepository.update(financialTransaction.id, financialTransaction)
+
+    await this.observer.notify('events.financial-transaction.cancel', { financialTransaction })
 
     return { financialTransaction: financialTransactionUpdated }
   }
