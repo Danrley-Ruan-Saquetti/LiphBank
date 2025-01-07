@@ -1,4 +1,7 @@
 export const FinancialTransactionMessage = {
+  id: {
+    required: 'ID Financial Transaction is required',
+  },
   bankAccountId: {
     required: 'ID Bank Account is required',
   },
