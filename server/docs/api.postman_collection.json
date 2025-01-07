@@ -125,7 +125,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"code\": \"USR-V54SF72BGD8\"\r\n}",
+									"raw": "{\r\n    \"code\": \"BAK-9MVSW0V45BH\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -156,6 +156,83 @@
 				{
 					"name": "/financial-transactions",
 					"item": [
+						{
+							"name": "/:id",
+							"item": [
+								{
+									"name": "/cancel",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "AuthorizationBankAccount",
+												"value": "Bearer {{tokenBankAccount}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/bank-accounts/financial-transactions/1/cancel",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"bank-accounts",
+												"financial-transactions",
+												"1",
+												"cancel"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/completed",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "AuthorizationBankAccount",
+												"value": "Bearer {{tokenBankAccount}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/bank-accounts/financial-transactions/1/conclude",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"bank-accounts",
+												"financial-transactions",
+												"1",
+												"conclude"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
 						{
 							"name": "/create",
 							"request": {
@@ -280,7 +357,7 @@
 					"response": []
 				},
 				{
-					"name": "/bank-accounts",
+					"name": "/",
 					"request": {
 						"auth": {
 							"type": "bearer",
