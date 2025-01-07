@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { CronJob } from '@application/jobs/cron-jobs/cron-job'
-import { EmailNotificationSendEmailInQueue } from '@application/use-cases/email-notification/send-email-in-queue.use-case'
+import { EmailNotificationSendEmailInQueueUseCase } from '@application/use-cases/email-notification/send-email-in-queue.use-case'
 
 @Injectable()
 export class SendEmailNotificationCronJob extends CronJob {
 
   constructor(
-    private readonly emailNotificationSendEmailInQueue: EmailNotificationSendEmailInQueue
+    private readonly emailNotificationSendEmailInQueueUseCase: EmailNotificationSendEmailInQueueUseCase
   ) {
     super()
   }
 
   @Cron(CronExpression.EVERY_10_SECONDS)
   async sendEmailNotification() {
-    this.emailNotificationSendEmailInQueue.observer.subscribe(
+    this.emailNotificationSendEmailInQueueUseCase.observer.subscribe(
       'events.email-notification.send.error',
       async ({ error }) => await this.errorLogService.save({
         type: 'JOB',
@@ -26,6 +26,6 @@ export class SendEmailNotificationCronJob extends CronJob {
       })
     )
 
-    await this.emailNotificationSendEmailInQueue.perform({ limit: 100 })
+    await this.emailNotificationSendEmailInQueueUseCase.perform({ limit: 100 })
   }
 }

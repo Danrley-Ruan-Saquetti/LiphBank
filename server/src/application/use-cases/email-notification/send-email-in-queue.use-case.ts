@@ -8,7 +8,7 @@ import { NotificationSituation } from "@domain/entities/notification.entity";
 import { EmailNotificationRepository } from "@domain/repositories/email-notification.repository";
 
 @Injectable()
-export class EmailNotificationSendEmailInQueue extends UseCase<EmailNotificationSendEmailEvent> {
+export class EmailNotificationSendEmailInQueueUseCase extends UseCase<EmailNotificationSendEmailEvent> {
 
   constructor(
     private readonly emailNotificationRepository: EmailNotificationRepository,
