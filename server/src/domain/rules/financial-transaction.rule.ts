@@ -12,7 +12,7 @@ export const FinancialTransactionRule = {
     default: false,
   },
   situation: {
-    enum: [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.LATE, FinancialTransactionSituation.PAID_OUT, FinancialTransactionSituation.PARTIALLY_PAID, FinancialTransactionSituation.PARTIALLY_RECEIVED, FinancialTransactionSituation.PENDING, FinancialTransactionSituation.RECEIVED] as const,
+    enum: [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.LATE, FinancialTransactionSituation.PAID_OUT, FinancialTransactionSituation.PENDING, FinancialTransactionSituation.RECEIVED] as const,
   },
   type: {
     enum: [FinancialTransactionType.EXPENSE, FinancialTransactionType.INCOME] as const,
