@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
+import { BankAccountUpdateBalanceEvent } from '@application/observer/events/bank-account/update-balance.event'
 import { BankAccountUpdateBalanceDTO, bankAccountUpdateBalanceSchema } from '@application/dto/bank-account/update-balance.dto'
 import { BankAccount } from '@domain/entities/bank-account.entity'
 import { BankAccountRepository } from '@domain/repositories/bank-account.repository'
 
 @Injectable()
-export class BankAccountUpdateBalanceUseCase extends UseCase {
+export class BankAccountUpdateBalanceUseCase extends UseCase<BankAccountUpdateBalanceEvent> {
 
   constructor(
     private readonly bankAccountRepository: BankAccountRepository
@@ -21,6 +22,7 @@ export class BankAccountUpdateBalanceUseCase extends UseCase {
     this.updateBalance(bankAccount, type, value)
 
     const bankAccountUpdated = await this.bankAccountRepository.update(bankAccount.id, bankAccount)
+    await this.observer.notify('events.bank-account.balance-changed', { bankAccount: bankAccountUpdated, type, value })
 
     return { bankAccount: bankAccountUpdated }
   }
