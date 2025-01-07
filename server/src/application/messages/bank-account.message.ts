@@ -1,4 +1,7 @@
 export const BankAccountMessage = {
+  id: {
+    required: 'ID Bank Account is required',
+  },
   peopleId: {
     required: 'ID People is required',
   },

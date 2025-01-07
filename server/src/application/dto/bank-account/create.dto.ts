@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { BankAccountMessage } from '@application/messages/bank-account.message'
 import { BankAccountRule } from '@domain/rules/bank-account.rule'
 
-export const bankAccountSchemaCreate = z.object({
+export const bankAccountCreateSchema = z.object({
   peopleId: z
     .coerce
     .number({ 'required_error': BankAccountMessage.peopleId.required })
@@ -14,4 +14,4 @@ export const bankAccountSchemaCreate = z.object({
     .max(BankAccountRule.maxCharacters, { message: BankAccountMessage.name.rangeCharacters }),
 })
 
-export type BankAccountCreateDTO = z.input<typeof bankAccountSchemaCreate>
+export type BankAccountCreateDTO = z.input<typeof bankAccountCreateSchema>
