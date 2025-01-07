@@ -1,13 +1,6 @@
 import { z } from 'zod'
-import { FinancialTransactionMessage } from '@application/messages/financial-transaction.message'
+import { financialTransactionUpdateSituationSchema } from '@application/dto/financial-transaction/base-update-situation.dto'
 
-export const financialTransactionCancelSchema = z.object({
-  bankAccountId: z
-    .coerce
-    .number({ 'required_error': FinancialTransactionMessage.bankAccountId.required }),
-  financialTransactionId: z
-    .coerce
-    .number({ 'required_error': FinancialTransactionMessage.id.required }),
-})
+export const financialTransactionCancelSchema = financialTransactionUpdateSituationSchema.extend({})
 
 export type FinancialTransactionCancelDTO = z.input<typeof financialTransactionCancelSchema>
