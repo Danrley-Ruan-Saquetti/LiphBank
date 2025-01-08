@@ -1,6 +1,6 @@
 import { FilterSchema } from '@domain/adapters/database/filters/filter.schema'
 
-export type UpdateSchema<Schema extends object> = {
-  where?: FilterSchema<Schema>
-  data: Partial<Schema>
+export type UpdateSchema<SchemaFilter extends object, SchemaData extends object> = {
+  where?: FilterSchema<SchemaFilter>
+  data: Partial<SchemaData>
 }

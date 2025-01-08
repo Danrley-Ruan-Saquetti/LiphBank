@@ -11,7 +11,7 @@ interface FinancialTransactionFilterArgs extends Omit<FinancialTransactionProps,
 
 export type FinancialTransactionFilter = FilterSchema<FinancialTransactionFilterArgs>
 export type FinancialTransactionQueryArgs = QuerySchema<FinancialTransactionFilterArgs>
-export type FinancialTransactionUpdateArgs = UpdateSchema<FinancialTransactionFilterArgs>
+export type FinancialTransactionUpdateArgs = UpdateSchema<FinancialTransactionFilterArgs, FinancialTransactionProps>
 
 export abstract class FinancialTransactionRepository {
 
