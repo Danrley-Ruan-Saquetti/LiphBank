@@ -38,6 +38,10 @@ export type EnumFilterOperators = string | GlobalFilterOperators<string> & {
   notIn?: string[]
 }
 
+export type ArrayFilterOperators<T extends Array<any> = any> = Omit<GlobalFilterOperators<T[number]>, 'equals' | 'not'> & {
+  [x in 'some' | 'every' | 'none']?: FilterSchema<T[number]>
+}
+
 export type JSONFilterOperators = object | GlobalFilterOperators<object> & {
   contains?: Record<string, unknown>
   matches?: object
