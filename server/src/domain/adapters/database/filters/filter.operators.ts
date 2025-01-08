@@ -1,3 +1,5 @@
+import { FilterSchema } from '@domain/adapters/database/filters/filter.schema'
+
 type GlobalFilterOperators<Type = any> = {
   equals?: Type
   not?: Type
