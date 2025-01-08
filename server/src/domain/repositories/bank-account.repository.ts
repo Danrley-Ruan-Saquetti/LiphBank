@@ -1,5 +1,6 @@
 import { PeopleProps } from '@domain/entities/people.entity'
-import { FilterSchema, QuerySchema } from '@domain/adapters/database/filters'
+import { QuerySchema } from '@domain/adapters/database/operations'
+import { FilterSchema } from '@domain/adapters/database/filters'
 import { BankAccount, BankAccountProps } from '@domain/entities/bank-account.entity'
 
 interface BankAccountFilterArgs extends BankAccountProps {

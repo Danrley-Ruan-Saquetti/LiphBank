@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common'
-import { Prisma } from '@prisma/client'
+import { FinancialTransactionSituation, FinancialTransactionType, Prisma } from '@prisma/client'
 import { FinancialTransactionMapper } from '@infrastructure/mappers/financial-transaction.mapper'
 import { DatabaseService, SchemaFilterQuery } from '@domain/adapters/database/database.service'
 import { FinancialTransaction, FinancialTransactionProps } from '@domain/entities/financial-transaction.entity'
-import { FinancialTransactionQueryArgs, FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
+import { FinancialTransactionQueryArgs, FinancialTransactionRepository, FinancialTransactionUpdateArgs } from '@domain/repositories/financial-transaction.repository'
 
 @Injectable()
 export class FinancialTransactionRepositoryImplementation extends FinancialTransactionRepository {
@@ -76,6 +76,28 @@ export class FinancialTransactionRepositoryImplementation extends FinancialTrans
       })
 
       return FinancialTransactionMapper.databaseToEntity(financialTransactionDatabase)
+    } catch (error: any) {
+      this.database.resolveError(error)
+    }
+  }
+
+  async updateMany(args: FinancialTransactionUpdateArgs) {
+    try {
+      await this.database.financialTransaction.updateMany({
+        where: { ...this.database.pipeWhere(args.where, FinancialTransactionRepositoryImplementation.QUERY_SCHEMA_FILTER) },
+        data: {
+          senderRecipient: args.data.senderRecipient,
+          title: args.data.title,
+          type: args.data.type as FinancialTransactionType,
+          value: args.data.value,
+          bankAccountId: args.data.bankAccountId,
+          dateTimeCompetence: args.data.dateTimeCompetence,
+          description: args.data.description,
+          expiresIn: args.data.expiresIn,
+          settings: args.data.settings as Prisma.InputJsonObject,
+          situation: args.data.situation as FinancialTransactionSituation,
+        }
+      })
     } catch (error: any) {
       this.database.resolveError(error)
     }

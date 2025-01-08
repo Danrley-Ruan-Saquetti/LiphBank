@@ -1,5 +1,6 @@
+import { QuerySchema } from '@domain/adapters/database/operations'
+import { FilterSchema } from '@domain/adapters/database/filters'
 import { ErrorLog, ErrorLogProps } from '@domain/entities/error-log.entity'
-import { FilterSchema, QuerySchema } from '@domain/adapters/database/filters'
 
 type ErrorLogFiltersArgs = ErrorLogProps
 

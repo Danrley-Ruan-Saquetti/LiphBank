@@ -1,5 +1,6 @@
 import { NotificationProps } from '@domain/entities/notification.entity'
-import { FilterSchema, QuerySchema } from '@domain/adapters/database/filters'
+import { QuerySchema } from '@domain/adapters/database/operations'
+import { FilterSchema } from '@domain/adapters/database/filters'
 import { EmailNotification, EmailNotificationProps } from '@domain/entities/email-notification.entity'
 
 interface EmailNotificationFilterArgs extends EmailNotificationProps {

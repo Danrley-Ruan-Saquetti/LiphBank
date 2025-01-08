@@ -1,5 +1,6 @@
+import { QuerySchema } from '@domain/adapters/database/operations'
+import { FilterSchema } from '@domain/adapters/database/filters'
 import { People, PeopleProps } from '@domain/entities/people.entity'
-import { FilterSchema, QuerySchema } from '@domain/adapters/database/filters'
 
 type PeopleFiltersArgs = PeopleProps
 
