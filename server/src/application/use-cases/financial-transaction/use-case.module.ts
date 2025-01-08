@@ -4,6 +4,7 @@ import { FinancialTransactionCancelUseCase } from '@application/use-cases/financ
 import { FinancialTransactionUpdateUseCase } from '@application/use-cases/financial-transaction/update.use-case'
 import { FinancialTransactionCreateUseCase } from '@application/use-cases/financial-transaction/create.use-case'
 import { FinancialTransactionConcludeUseCase } from '@application/use-cases/financial-transaction/conclude.use-case'
+import { FinancialTransactionUpdateDelayedUseCase } from '@application/use-cases/financial-transaction/update-delayed.use-case'
 import { InfrastructureObserverModule } from '@infrastructure/adapters/observer/observer.module'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
@@ -14,6 +15,7 @@ const providers: Provider[] = [
   FinancialTransactionCancelUseCase,
   FinancialTransactionConcludeUseCase,
   FinancialTransactionUpdateUseCase,
+  FinancialTransactionUpdateDelayedUseCase,
 ]
 
 @Module({
