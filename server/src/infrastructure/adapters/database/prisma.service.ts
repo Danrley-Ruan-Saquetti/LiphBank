@@ -19,6 +19,11 @@ export class PrismaDatabaseService extends DatabaseService implements OnModuleIn
 
     // @ts-expect-error
     this.$on('error', async error => await this.onError(error))
+
+    // @ts-expect-error
+    this.$on('query', ({ query, params }) => {
+      console.log(query, params)
+    })
   }
 
   private async onError(error: any) {
