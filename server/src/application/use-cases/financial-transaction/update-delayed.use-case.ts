@@ -27,9 +27,10 @@ export class FinancialTransactionUpdateDelayedUseCase extends UseCase {
   private async getFinancialTransactionsDelayed(limit?: number) {
     return await this.financialTransactionRepository.findMany({
       where: {
+        situation: { not: FinancialTransactionSituation.PENDING },
         expiresIn: {
           not: null as any,
-          gt: new Date(Date.now())
+          lt: new Date(Date.now())
         }
       },
       orderBy: { id: 'asc' },

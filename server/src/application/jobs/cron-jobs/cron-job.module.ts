@@ -4,6 +4,7 @@ import { InfrastructureErrorLogModule } from '@infrastructure/adapters/error-log
 import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
 import { SendEmailNotificationCronJob } from '@application/jobs/cron-jobs/send-email-notification.cron-job'
 import { EmailNotificationUseCaseModule } from '@application/use-cases/email-notification/use-case.module'
+import { FinancialTransactionUseCaseModule } from '@application/use-cases/financial-transaction/use-case.module'
 import { UpdateSituationFinancialTransactionCronJob } from '@application/jobs/cron-jobs/update-situation-financial-transaction.cron-job'
 
 const providers: Provider[] = [
@@ -16,7 +17,8 @@ const providers: Provider[] = [
     InfrastructureMailModule,
     InfrastructureRepositoryModule,
     InfrastructureErrorLogModule,
-    EmailNotificationUseCaseModule
+    EmailNotificationUseCaseModule,
+    FinancialTransactionUseCaseModule,
   ],
   providers: [...providers],
   exports: [...providers]
