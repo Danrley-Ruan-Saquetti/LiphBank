@@ -7,6 +7,7 @@ import { UpdateBalanceBankAccountListener } from '@application/observer/listener
 import { FinancialTransactionQueryUseCase } from '@application/use-cases/financial-transaction/query.use-case'
 import { FinancialTransactionCancelUseCase } from '@application/use-cases/financial-transaction/cancel.use-case'
 import { FinancialTransactionCreateUseCase } from '@application/use-cases/financial-transaction/create.use-case'
+import { FinancialTransactionUpdateUseCase } from '@application/use-cases/financial-transaction/update.use-case'
 import { FinancialTransactionConcludeUseCase } from '@application/use-cases/financial-transaction/conclude.use-case'
 
 @Controller('/bank-accounts/financial-transactions')
@@ -17,6 +18,7 @@ export class FinancialTransactionController {
     private readonly financialTransactionQueryUseCase: FinancialTransactionQueryUseCase,
     private readonly financialTransactionConcludeUseCase: FinancialTransactionConcludeUseCase,
     private readonly financialTransactionCancelUseCase: FinancialTransactionCancelUseCase,
+    private readonly financialTransactionUpdateUseCase: FinancialTransactionUpdateUseCase,
     private readonly updateBalanceBankAccountListener: UpdateBalanceBankAccountListener,
   ) { }
 
@@ -41,6 +43,15 @@ export class FinancialTransactionController {
 
   @UseGuards(AuthUserGuard)
   @UseGuards(AuthBankAccountGuard)
+  @Post('/:id/update')
+  async update(@Body() body: any, @BankAccount() bankAccount: BankAccountSession, @Param('id') financialTransactionId: number) {
+    await this.financialTransactionUpdateUseCase.perform({ ...body, financialTransactionId, bankAccountId: bankAccount.id })
+
+    return { message: 'Financial Transaction successfully updated' }
+  }
+
+  @UseGuards(AuthUserGuard)
+  @UseGuards(AuthBankAccountGuard)
   @Post('/:id/conclude')
   async conclude(@BankAccount() bankAccount: BankAccountSession, @Param('id') financialTransactionId: number) {
     this.financialTransactionConcludeUseCase.observer.subscribe(
@@ -48,7 +59,7 @@ export class FinancialTransactionController {
       async data => await this.updateBalanceBankAccountListener.perform(data)
     )
 
-    await this.financialTransactionConcludeUseCase.perform({ bankAccountId: bankAccount.id, financialTransactionId })
+    await this.financialTransactionConcludeUseCase.perform({ financialTransactionId, bankAccountId: bankAccount.id })
 
     return { message: 'Financial Transaction successfully completed' }
   }
