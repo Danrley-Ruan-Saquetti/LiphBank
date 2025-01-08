@@ -1,20 +1,18 @@
-import { HandlerListener, IEventsType, Listener, ObserverService } from '@domain/adapters/observer/observer.service'
-import { uuidV4 } from '@shared/utils/uuid'
+import { Listener } from '@domain/adapters/observer/listener'
+import { IEventsType, ObserverService } from '@domain/adapters/observer/observer.service'
 
 export class ObserverListenerImplementation<Events extends IEventsType = any> extends ObserverService<Events> {
 
   private readonly Listeners = new Map<keyof Events, Listener[]>()
 
-  subscribe<EventName extends keyof Events>(event: EventName, handler: HandlerListener<any>) {
+  subscribe<EventName extends keyof Events>(event: EventName, listener: Listener<Events[EventName]>) {
     const listeners = this.getListenersByEvent(event)
 
-    const id = uuidV4()
-
-    listeners.push({ id, event: event as string, handler })
+    listeners.push(listener)
 
     this.Listeners.set(event, listeners)
 
-    return id
+    return listener
   }
 
   unsubscribe(id: string) {
@@ -35,7 +33,7 @@ export class ObserverListenerImplementation<Events extends IEventsType = any> ex
     const listeners = this.getListenersByEvent(event)
 
     for (let i = 0; i < listeners.length; i++) {
-      await listeners[i].handler(data)
+      await listeners[i].perform(data)
     }
   }
 
