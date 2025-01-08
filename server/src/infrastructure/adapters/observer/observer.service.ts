@@ -1,11 +1,14 @@
+import { ListenerHandle } from '@infrastructure/adapters/observer/listener-handle'
 import { Listener } from '@domain/adapters/observer/listener'
-import { IEventsType, ObserverService } from '@domain/adapters/observer/observer.service'
+import { IEventsType, ObserverService, SubscriberListener } from '@domain/adapters/observer/observer.service'
 
 export class ObserverListenerImplementation<Events extends IEventsType = any> extends ObserverService<Events> {
 
   private readonly Listeners = new Map<keyof Events, Listener[]>()
 
-  subscribe<EventName extends keyof Events>(event: EventName, listener: Listener<Events[EventName]>) {
+  subscribe<EventName extends keyof Events>(event: EventName, listenerHandle: SubscriberListener<Events[EventName]>) {
+    const listener = this.createListener(listenerHandle)
+
     const listeners = this.getListenersByEvent(event)
 
     listeners.push(listener)
@@ -15,9 +18,9 @@ export class ObserverListenerImplementation<Events extends IEventsType = any> ex
     return listener
   }
 
-  unsubscribe(id: string) {
+  unsubscribe(listener: Listener) {
     for (const [key, value] of this.Listeners.entries()) {
-      const filteredArray = value.filter(item => item.id !== id)
+      const filteredArray = value.filter(item => item.id !== listener.id)
 
       if (filteredArray.length !== value.length) {
         this.Listeners.set(key, filteredArray)
@@ -45,5 +48,17 @@ export class ObserverListenerImplementation<Events extends IEventsType = any> ex
 
   getListenersByEvent(event: keyof Events) {
     return this.Listeners.get(event) ?? []
+  }
+
+  private createListener(baseListener: SubscriberListener): Listener {
+    if (baseListener instanceof Listener) {
+      return baseListener
+    }
+
+    if (typeof baseListener == 'function') {
+      return new ListenerHandle(baseListener)
+    }
+
+    return new ListenerHandle(async (data) => await baseListener.perform(data))
   }
 }
