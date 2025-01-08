@@ -21,7 +21,7 @@ export class AuthUserController {
   async signUp(@Body() body: any) {
     this.createPeopleAndUserUseCase.observerCreateUser.subscribe(
       'events.user.created',
-      async data => await this.sendEmailNotificationUserCreatedListener.perform(data)
+      this.sendEmailNotificationUserCreatedListener
     )
 
     await this.createPeopleAndUserUseCase.perform({
@@ -42,7 +42,7 @@ export class AuthUserController {
   async signIn(@Body() body: any) {
     this.authUserSignInUseCase.observer.subscribe(
       'events.auth.user.sign-in',
-      async data => await this.sendEmailNotificationUserLoggedInListener.perform(data)
+      this.sendEmailNotificationUserLoggedInListener
     )
 
     const response = await this.authUserSignInUseCase.perform({ ...body, type: UserType.CLIENT })

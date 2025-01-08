@@ -1,22 +1,24 @@
 import { Injectable } from '@nestjs/common'
+import { BankAccountCreateEvent } from '@application/observer/events/bank-account/create.event'
 import { EmailNotificationCreateUseCase } from '@application/use-cases/email-notification/create.use-case'
-import { User } from '@domain/entities/user.entity'
+import { Listener } from '@domain/adapters/observer/listener'
 import { Templates } from '@domain/templates/templates'
-import { BankAccount } from '@domain/entities/bank-account.entity'
 import { PeopleRepository } from '@domain/repositories/people.repository'
 import { TemplateGeneratorService } from '@domain/adapters/generator/template/template.service'
 import { env } from '@shared/env'
 
 @Injectable()
-export class SendEmailNotificationBankAccountCreatedListener {
+export class SendEmailNotificationBankAccountCreatedListener extends Listener<BankAccountCreateEvent['events.bank-account.created']> {
 
   constructor(
     private readonly emailNotificationCreateUseCase: EmailNotificationCreateUseCase,
     private readonly templateGenerator: TemplateGeneratorService,
     private readonly peopleRepository: PeopleRepository,
-  ) { }
+  ) {
+    super()
+  }
 
-  async perform(data: { bankAccount: BankAccount, user: User }) {
+  async perform(data: BankAccountCreateEvent['events.bank-account.created']) {
     const people = await this.peopleRepository.findById(data.user.peopleId)
 
     const template = Templates.Templates['mail/bank-account-created']

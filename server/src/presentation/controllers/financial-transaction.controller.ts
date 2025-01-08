@@ -56,7 +56,7 @@ export class FinancialTransactionController {
   async conclude(@BankAccount() bankAccount: BankAccountSession, @Param('id') financialTransactionId: number) {
     this.financialTransactionConcludeUseCase.observer.subscribe(
       'events.financial-transaction.conclude',
-      async data => await this.updateBalanceBankAccountListener.perform(data)
+      this.updateBalanceBankAccountListener
     )
 
     await this.financialTransactionConcludeUseCase.perform({ financialTransactionId, bankAccountId: bankAccount.id })

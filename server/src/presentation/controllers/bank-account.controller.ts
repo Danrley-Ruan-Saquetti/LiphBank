@@ -4,7 +4,7 @@ import { UserSession } from '@presentation/types/user-session.type'
 import { AuthUserGuard } from '@presentation/guards/auth-user.guard'
 import { BankAccountQueryUseCase } from '@application/use-cases/bank-account/query.use-case'
 import { BankAccountCreateUseCase } from '@application/use-cases/bank-account/create.use-case'
-import { SendEmailNotificationBankAccountCreatedListener } from '../../application/observer/listeners/send-email-notification-bank-account-created.listener'
+import { SendEmailNotificationBankAccountCreatedListener } from '@application/observer/listeners/send-email-notification-bank-account-created.listener'
 
 @Controller('/bank-accounts')
 export class BankAccountController {
@@ -28,7 +28,7 @@ export class BankAccountController {
   async create(@Body() body: any, @User() user: UserSession) {
     this.bankAccountCreateUseCase.observer.subscribe(
       'events.bank-account.created',
-      async data => await this.sendEmailNotificationBankAccountCreatedListener.perform(data)
+      this.sendEmailNotificationBankAccountCreatedListener
     )
 
     await this.bankAccountCreateUseCase.perform({ ...body, peopleId: user.peopleId })
