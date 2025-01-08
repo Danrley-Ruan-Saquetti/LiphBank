@@ -49,5 +49,6 @@ export const FinancialTransactionRule = {
     situationsEnableToUpdate: {
       enum: [FinancialTransactionSituation.CANCELED] as const,
     }
-  }
+  },
+  closedSituations: [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.PAID_OUT, FinancialTransactionSituation.RECEIVED]
 }
