@@ -3,6 +3,7 @@ import { FinancialTransactionQueryUseCase } from '@application/use-cases/financi
 import { FinancialTransactionCancelUseCase } from '@application/use-cases/financial-transaction/cancel.use-case'
 import { FinancialTransactionUpdateUseCase } from '@application/use-cases/financial-transaction/update.use-case'
 import { FinancialTransactionCreateUseCase } from '@application/use-cases/financial-transaction/create.use-case'
+import { FinancialTransactionDeleteUseCase } from '@application/use-cases/financial-transaction/delete.use-case'
 import { FinancialTransactionConcludeUseCase } from '@application/use-cases/financial-transaction/conclude.use-case'
 import { FinancialTransactionUpdateDelayedUseCase } from '@application/use-cases/financial-transaction/update-delayed.use-case'
 import { InfrastructureObserverModule } from '@infrastructure/adapters/observer/observer.module'
@@ -16,6 +17,7 @@ const providers: Provider[] = [
   FinancialTransactionConcludeUseCase,
   FinancialTransactionUpdateUseCase,
   FinancialTransactionUpdateDelayedUseCase,
+  FinancialTransactionDeleteUseCase,
 ]
 
 @Module({
