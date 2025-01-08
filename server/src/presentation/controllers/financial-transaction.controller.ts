@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common'
 import { BankAccount } from '@presentation/decorators/bank-account.decorator'
 import { AuthUserGuard } from '@presentation/guards/auth-user.guard'
 import { BankAccountSession } from '@presentation/types/bank-account-session.type'
@@ -8,6 +8,7 @@ import { FinancialTransactionQueryUseCase } from '@application/use-cases/financi
 import { FinancialTransactionCancelUseCase } from '@application/use-cases/financial-transaction/cancel.use-case'
 import { FinancialTransactionCreateUseCase } from '@application/use-cases/financial-transaction/create.use-case'
 import { FinancialTransactionUpdateUseCase } from '@application/use-cases/financial-transaction/update.use-case'
+import { FinancialTransactionDeleteUseCase } from '@application/use-cases/financial-transaction/delete.use-case'
 import { FinancialTransactionConcludeUseCase } from '@application/use-cases/financial-transaction/conclude.use-case'
 
 @Controller('/bank-accounts/financial-transactions')
@@ -19,6 +20,7 @@ export class FinancialTransactionController {
     private readonly financialTransactionConcludeUseCase: FinancialTransactionConcludeUseCase,
     private readonly financialTransactionCancelUseCase: FinancialTransactionCancelUseCase,
     private readonly financialTransactionUpdateUseCase: FinancialTransactionUpdateUseCase,
+    private readonly financialTransactionDeleteUseCase: FinancialTransactionDeleteUseCase,
     private readonly updateBalanceBankAccountListener: UpdateBalanceBankAccountListener,
   ) { }
 
@@ -43,7 +45,7 @@ export class FinancialTransactionController {
 
   @UseGuards(AuthUserGuard)
   @UseGuards(AuthBankAccountGuard)
-  @Post('/:id/update')
+  @Put('/:id/update')
   async update(@Body() body: any, @BankAccount() bankAccount: BankAccountSession, @Param('id') financialTransactionId: number) {
     await this.financialTransactionUpdateUseCase.perform({ ...body, financialTransactionId, bankAccountId: bankAccount.id })
 
@@ -52,7 +54,7 @@ export class FinancialTransactionController {
 
   @UseGuards(AuthUserGuard)
   @UseGuards(AuthBankAccountGuard)
-  @Post('/:id/conclude')
+  @Put('/:id/conclude')
   async conclude(@BankAccount() bankAccount: BankAccountSession, @Param('id') financialTransactionId: number) {
     this.financialTransactionConcludeUseCase.observer.subscribe(
       'events.financial-transaction.conclude',
@@ -66,10 +68,19 @@ export class FinancialTransactionController {
 
   @UseGuards(AuthUserGuard)
   @UseGuards(AuthBankAccountGuard)
-  @Post('/:id/cancel')
+  @Put('/:id/cancel')
   async cancel(@BankAccount() bankAccount: BankAccountSession, @Param('id') financialTransactionId: number) {
     await this.financialTransactionCancelUseCase.perform({ bankAccountId: bankAccount.id, financialTransactionId })
 
     return { message: 'Financial Transaction successfully canceled' }
+  }
+
+  @UseGuards(AuthUserGuard)
+  @UseGuards(AuthBankAccountGuard)
+  @Delete('/:id/delete')
+  async delete(@BankAccount() bankAccount: BankAccountSession, @Param('id') financialTransactionId: number) {
+    await this.financialTransactionDeleteUseCase.perform({ bankAccountId: bankAccount.id, financialTransactionId })
+
+    return { message: 'Financial Transaction successfully deleted' }
   }
 }
