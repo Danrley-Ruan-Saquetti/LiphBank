@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { FinancialTransactionMessage } from '@application/messages/financial-transaction.message'
 import { FinancialTransactionRule } from '@domain/rules/financial-transaction.rule'
-import { FinancialTransactionSituation, FinancialTransactionTypeOccurrence } from '@domain/entities/financial-transaction.entity'
+import { FinancialTransactionTypeOccurrence } from '@domain/entities/financial-transaction.entity'
 
 export const financialTransactionCreateSchema = z.object({
   bankAccountId: z
@@ -66,7 +66,7 @@ export const financialTransactionCreateSchema = z.object({
     if (timesToRepeat) { typeOccurrence = timesToRepeat > 0 ? FinancialTransactionTypeOccurrence.PROGRAMMATIC : FinancialTransactionTypeOccurrence.SINGLE }
     else { timesToRepeat = typeOccurrence == FinancialTransactionTypeOccurrence.SINGLE ? 0 : timesToRepeat }
 
-    return { ...rest, typeOccurrence, timesToRepeat, expiresIn, situation: expiresIn && new Date(Date.now()) < expiresIn ? FinancialTransactionSituation.LATE : FinancialTransactionSituation.PENDING }
+    return { ...rest, typeOccurrence, timesToRepeat, expiresIn }
   })
   .refine(({ typeOccurrence, timesToRepeat }) => typeOccurrence != FinancialTransactionTypeOccurrence.PROGRAMMATIC || !!timesToRepeat, {
     message: FinancialTransactionMessage.timesToRepeat.mustBePositive,
