@@ -1,8 +1,6 @@
+import { IEventsType, SubscriberListener } from '@domain/adapters/observer/interfaces'
 import { Listener, IListener, ListenerActionPerformed } from '@domain/adapters/observer/listener'
 
-export type IEventsType = Record<string, any>
-
-export type SubscriberListener<T = any> = Listener<T> | IListener<T> | ListenerActionPerformed<T>
 
 export abstract class ObserverService<Events extends IEventsType = any> {
 
