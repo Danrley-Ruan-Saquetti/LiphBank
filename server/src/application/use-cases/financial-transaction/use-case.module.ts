@@ -1,4 +1,5 @@
 import { Module, Provider } from '@nestjs/common'
+import { FinancialTransactionFindUseCase } from '@application/use-cases/financial-transaction/find.use-case'
 import { FinancialTransactionQueryUseCase } from '@application/use-cases/financial-transaction/query.use-case'
 import { FinancialTransactionCancelUseCase } from '@application/use-cases/financial-transaction/cancel.use-case'
 import { FinancialTransactionUpdateUseCase } from '@application/use-cases/financial-transaction/update.use-case'
@@ -18,6 +19,7 @@ const providers: Provider[] = [
   FinancialTransactionUpdateUseCase,
   FinancialTransactionUpdateDelayedUseCase,
   FinancialTransactionDeleteUseCase,
+  FinancialTransactionFindUseCase,
 ]
 
 @Module({
