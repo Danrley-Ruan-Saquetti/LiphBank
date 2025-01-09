@@ -172,7 +172,7 @@
 												}
 											]
 										},
-										"method": "POST",
+										"method": "PUT",
 										"header": [
 											{
 												"key": "AuthorizationBankAccount",
@@ -196,7 +196,7 @@
 									"response": []
 								},
 								{
-									"name": "/completed",
+									"name": "/update",
 									"request": {
 										"auth": {
 											"type": "bearer",
@@ -208,7 +208,52 @@
 												}
 											]
 										},
-										"method": "POST",
+										"method": "PUT",
+										"header": [
+											{
+												"key": "AuthorizationBankAccount",
+												"value": "Bearer {{tokenBankAccount}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"expiresIn\": \"2024-12-14\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/bank-accounts/financial-transactions/1/update",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"bank-accounts",
+												"financial-transactions",
+												"1",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/conclude",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
 										"header": [
 											{
 												"key": "AuthorizationBankAccount",
@@ -226,6 +271,42 @@
 												"financial-transactions",
 												"1",
 												"conclude"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/delete",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "AuthorizationBankAccount",
+												"value": "Bearer {{tokenBankAccount}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/bank-accounts/financial-transactions/1/delete",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"bank-accounts",
+												"financial-transactions",
+												"1",
+												"delete"
 											]
 										}
 									},
@@ -299,19 +380,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{url}}/bank-accounts/financial-transactions?senderRecipient[in]=Ruan",
+									"raw": "{{url}}/bank-accounts/financial-transactions",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"bank-accounts",
 										"financial-transactions"
-									],
-									"query": [
-										{
-											"key": "senderRecipient[in]",
-											"value": "Ruan"
-										}
 									]
 								}
 							},
