@@ -90,19 +90,38 @@ src/
     npm i -g @nestjs/cli
     ```
 
-Antes de executar a aplicação, é necessário realizar a cópia do arquivo `.env.example` para `.env` (ou apenas renomeá-lo) e preencher cada variável conforme o que se pede.
+Passo 1: Copiar o arquivo `.env.example` para `.env` (ou apenas renomeá-lo) e preencher cada variável conforme o que se pede
 
-Nesta aplicação é utilizado dois serviços externos: Redis e PostgreSQL. Para usá-los nesta aplicação, é possível utiliza-los via Docker rodando o seguinte comando:
+Passo 2: Ter o serviço do **Redis** e **PostgreSQL** rodando. Para usá-los nesta aplicação, é possível utiliza-los via Docker rodando o comando:
 
 ```bash
 docker compose up -d
 ```
 
-Após rodar os serviços, pode-se executar a aplicação rodando o comando:
+Passo 3: Instalação das dependências do projeto:
+
+```bash
+npm install
+```
+
+Passo 4: Realizar as migrações do Prisma para fazer o setup inicial do banco de dados:
+
+```bash
+npm run prisma:deploy
+```
+
+Passo 5: Execução do projeto:
 
 ```bash
 npm run start:dev
 ```
+
+> Alternativamente, é possível executar o script de **setup** do projeto utilizando o comando abaixo:
+>
+> ```bash
+> npm run setup
+> ```
+> Este comando irá realizar todos os passos de scripts citados a cima, após isso, basta executar a aplicação seguindo o passo 5.
 
 <div align="right">
 
