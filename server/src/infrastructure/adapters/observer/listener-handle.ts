@@ -1,4 +1,5 @@
-import { Listener, ListenerActionPerformed } from '@domain/adapters/observer/listener'
+import { Listener } from '@domain/adapters/observer/listener'
+import { ListenerActionPerformed } from '@domain/adapters/observer/interfaces'
 
 export class ListenerHandle<T = any> extends Listener<T> {
 

@@ -1,6 +1,7 @@
 import { ListenerHandle } from '@infrastructure/adapters/observer/listener-handle'
 import { Listener } from '@domain/adapters/observer/listener'
-import { IEventsType, ObserverService, SubscriberListener } from '@domain/adapters/observer/observer.service'
+import { ObserverService } from '@domain/adapters/observer/observer.service'
+import { IEventsType, SubscriberListener } from '@domain/adapters/observer/interfaces'
 
 export class ObserverListenerImplementation<Events extends IEventsType = any> extends ObserverService<Events> {
 
