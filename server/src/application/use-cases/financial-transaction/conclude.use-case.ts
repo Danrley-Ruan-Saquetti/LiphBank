@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
-import { NotFoundException } from '@application/exceptions/not-found.exception'
-import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
+import { FinancialTransactionFindUseCase } from '@application/use-cases/financial-transaction/find.use-case'
 import { FinancialTransactionConcludeEvent } from '@application/observer/events/financial-transaction/conclude.event'
 import { FinancialTransactionConcludeDTO, financialTransactionConcludeSchema } from '@application/dto/financial-transaction/conclude.dto'
 import { FinancialTransactionSituation } from '@domain/entities/financial-transaction.entity'
@@ -11,7 +10,8 @@ import { FinancialTransactionRepository } from '@domain/repositories/financial-t
 export class FinancialTransactionConcludeUseCase extends UseCase<FinancialTransactionConcludeEvent> {
 
   constructor(
-    private readonly financialTransactionRepository: FinancialTransactionRepository
+    private readonly financialTransactionRepository: FinancialTransactionRepository,
+    private readonly financialTransactionFindUseCase: FinancialTransactionFindUseCase
   ) {
     super()
   }
@@ -19,7 +19,7 @@ export class FinancialTransactionConcludeUseCase extends UseCase<FinancialTransa
   async perform(args: FinancialTransactionConcludeDTO) {
     const { bankAccountId, financialTransactionId } = this.validator.validate(financialTransactionConcludeSchema, args)
 
-    const financialTransaction = await this.getFinancialTransaction(financialTransactionId, bankAccountId)
+    const { financialTransaction } = await this.financialTransactionFindUseCase.perform({ financialTransactionId, bankAccountId })
 
     financialTransaction.situation = FinancialTransactionSituation.CANCELED
 
@@ -28,19 +28,5 @@ export class FinancialTransactionConcludeUseCase extends UseCase<FinancialTransa
     await this.observer.notify('events.financial-transaction.conclude', { financialTransaction })
 
     return { financialTransaction: financialTransactionUpdated }
-  }
-
-  private async getFinancialTransaction(id: number, bankAccountId: number) {
-    const financialTransaction = await this.financialTransactionRepository.findById(id)
-
-    if (!financialTransaction) {
-      throw new NotFoundException('Financial Transaction', `${id}`)
-    }
-
-    if (financialTransaction.bankAccountId != bankAccountId) {
-      throw new UnauthorizedException('You do not have permission to access this financial transaction')
-    }
-
-    return financialTransaction
   }
 }

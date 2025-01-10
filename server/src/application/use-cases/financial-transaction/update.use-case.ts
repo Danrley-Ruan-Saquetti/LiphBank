@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
-import { NotFoundException } from '@application/exceptions/not-found.exception'
-import { UnauthorizedException } from '@application/exceptions/unauthorized.exception'
+import { FinancialTransactionFindUseCase } from '@application/use-cases/financial-transaction/find.use-case'
 import { FinancialTransactionUpdateDTO, financialTransactionUpdateSchema } from '@application/dto/financial-transaction/update.dto'
 import { FinancialTransactionRule } from '@domain/rules/financial-transaction.rule'
 import { FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
@@ -12,7 +11,8 @@ import { FinancialTransaction, FinancialTransactionFrequency, FinancialTransacti
 export class FinancialTransactionUpdateUseCase extends UseCase {
 
   constructor(
-    private readonly financialTransactionRepository: FinancialTransactionRepository
+    private readonly financialTransactionRepository: FinancialTransactionRepository,
+    private readonly financialTransactionFindUseCase: FinancialTransactionFindUseCase
   ) {
     super()
   }
@@ -20,27 +20,13 @@ export class FinancialTransactionUpdateUseCase extends UseCase {
   async perform(args: FinancialTransactionUpdateDTO) {
     const { bankAccountId, financialTransactionId, ...data } = this.validator.validate(financialTransactionUpdateSchema, args)
 
-    const financialTransaction = await this.getFinancialTransaction(financialTransactionId, bankAccountId)
+    const { financialTransaction } = await this.financialTransactionFindUseCase.perform({ financialTransactionId, bankAccountId })
 
     this.updateDataFinancialTransaction(financialTransaction, data)
 
     const financialTransactionUpdated = await this.financialTransactionRepository.update(financialTransaction.id, financialTransaction)
 
     return { financialTransaction: financialTransactionUpdated }
-  }
-
-  private async getFinancialTransaction(id: number, bankAccountId: number) {
-    const financialTransaction = await this.financialTransactionRepository.findById(id)
-
-    if (!financialTransaction) {
-      throw new NotFoundException('Financial Transaction', `${id}`)
-    }
-
-    if (financialTransaction.bankAccountId != bankAccountId) {
-      throw new UnauthorizedException('You do not have permission to access this financial transaction')
-    }
-
-    return financialTransaction
   }
 
   private updateDataFinancialTransaction(
