@@ -17,9 +17,9 @@ export class FinancialTransactionCancelUseCase extends UseCase<FinancialTransact
   }
 
   async perform(args: FinancialTransactionCancelDTO) {
-    const { bankAccountId, financialTransactionId } = this.validator.validate(financialTransactionCancelSchema, args)
+    const { bankAccountId, id } = this.validator.validate(financialTransactionCancelSchema, args)
 
-    const { financialTransaction } = await this.financialTransactionFindUseCase.perform({ financialTransactionId, bankAccountId })
+    const { financialTransaction } = await this.financialTransactionFindUseCase.perform({ id, bankAccountId })
 
     financialTransaction.situation = FinancialTransactionSituation.CANCELED
 

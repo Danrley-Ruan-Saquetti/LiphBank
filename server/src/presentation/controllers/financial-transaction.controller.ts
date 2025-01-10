@@ -46,8 +46,8 @@ export class FinancialTransactionController {
   @UseGuards(AuthUserGuard)
   @UseGuards(AuthBankAccountGuard)
   @Put('/:id/update')
-  async update(@Body() body: any, @BankAccount() bankAccount: BankAccountSession, @Param('id') financialTransactionId: number) {
-    await this.financialTransactionUpdateUseCase.perform({ ...body, financialTransactionId, bankAccountId: bankAccount.id })
+  async update(@Body() body: any, @BankAccount() bankAccount: BankAccountSession, @Param('id') id: number) {
+    await this.financialTransactionUpdateUseCase.perform({ ...body, id, bankAccountId: bankAccount.id })
 
     return { message: 'Financial Transaction successfully updated' }
   }
@@ -55,13 +55,13 @@ export class FinancialTransactionController {
   @UseGuards(AuthUserGuard)
   @UseGuards(AuthBankAccountGuard)
   @Put('/:id/conclude')
-  async conclude(@BankAccount() bankAccount: BankAccountSession, @Param('id') financialTransactionId: number) {
+  async conclude(@BankAccount() bankAccount: BankAccountSession, @Param('id') id: number) {
     this.financialTransactionConcludeUseCase.observer.subscribe(
       'events.financial-transaction.conclude',
       this.updateBalanceBankAccountListener
     )
 
-    await this.financialTransactionConcludeUseCase.perform({ financialTransactionId, bankAccountId: bankAccount.id })
+    await this.financialTransactionConcludeUseCase.perform({ id, bankAccountId: bankAccount.id })
 
     return { message: 'Financial Transaction successfully completed' }
   }
@@ -69,8 +69,8 @@ export class FinancialTransactionController {
   @UseGuards(AuthUserGuard)
   @UseGuards(AuthBankAccountGuard)
   @Put('/:id/cancel')
-  async cancel(@BankAccount() bankAccount: BankAccountSession, @Param('id') financialTransactionId: number) {
-    await this.financialTransactionCancelUseCase.perform({ bankAccountId: bankAccount.id, financialTransactionId })
+  async cancel(@BankAccount() bankAccount: BankAccountSession, @Param('id') id: number) {
+    await this.financialTransactionCancelUseCase.perform({ bankAccountId: bankAccount.id, id })
 
     return { message: 'Financial Transaction successfully canceled' }
   }
@@ -78,8 +78,8 @@ export class FinancialTransactionController {
   @UseGuards(AuthUserGuard)
   @UseGuards(AuthBankAccountGuard)
   @Delete('/:id/delete')
-  async delete(@BankAccount() bankAccount: BankAccountSession, @Param('id') financialTransactionId: number) {
-    await this.financialTransactionDeleteUseCase.perform({ bankAccountId: bankAccount.id, financialTransactionId })
+  async delete(@BankAccount() bankAccount: BankAccountSession, @Param('id') id: number) {
+    await this.financialTransactionDeleteUseCase.perform({ bankAccountId: bankAccount.id, id })
 
     return { message: 'Financial Transaction successfully deleted' }
   }

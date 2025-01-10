@@ -18,9 +18,9 @@ export class FinancialTransactionUpdateUseCase extends UseCase {
   }
 
   async perform(args: FinancialTransactionUpdateDTO) {
-    const { bankAccountId, financialTransactionId, ...data } = this.validator.validate(financialTransactionUpdateSchema, args)
+    const { bankAccountId, id, ...data } = this.validator.validate(financialTransactionUpdateSchema, args)
 
-    const { financialTransaction } = await this.financialTransactionFindUseCase.perform({ financialTransactionId, bankAccountId })
+    const { financialTransaction } = await this.financialTransactionFindUseCase.perform({ id, bankAccountId })
 
     this.updateDataFinancialTransaction(financialTransaction, data)
 

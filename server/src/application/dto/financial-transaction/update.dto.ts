@@ -7,7 +7,7 @@ export const financialTransactionUpdateSchema = z.object({
   bankAccountId: z
     .coerce
     .number(),
-  financialTransactionId: z
+  id: z
     .coerce
     .number(),
   title: z

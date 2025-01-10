@@ -16,9 +16,9 @@ export class FinancialTransactionDeleteUseCase extends UseCase<FinancialTransact
   }
 
   async perform(args: FinancialTransactionDeleteDTO) {
-    const { bankAccountId, financialTransactionId } = this.validator.validate(financialTransactionDeleteSchema, args)
+    const { bankAccountId, id } = this.validator.validate(financialTransactionDeleteSchema, args)
 
-    const { financialTransaction } = await this.financialTransactionFindUseCase.perform({ financialTransactionId, bankAccountId })
+    const { financialTransaction } = await this.financialTransactionFindUseCase.perform({ id, bankAccountId })
 
     await this.financialTransactionRepository.delete(financialTransaction.id)
 

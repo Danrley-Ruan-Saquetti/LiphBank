@@ -15,12 +15,12 @@ export class FinancialTransactionFindUseCase extends UseCase {
   }
 
   async perform(args: FinancialTransactionFindDTO) {
-    const { bankAccountId, financialTransactionId } = this.validator.validate(financialTransactionFindSchema, args)
+    const { bankAccountId, id } = this.validator.validate(financialTransactionFindSchema, args)
 
-    const financialTransaction = await this.financialTransactionRepository.findById(financialTransactionId)
+    const financialTransaction = await this.financialTransactionRepository.findById(id)
 
     if (!financialTransaction) {
-      throw new NotFoundException('Financial Transaction', `${financialTransactionId}`)
+      throw new NotFoundException('Financial Transaction', `${id}`)
     }
 
     if (financialTransaction.bankAccountId != bankAccountId) {
