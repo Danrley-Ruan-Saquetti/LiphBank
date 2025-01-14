@@ -3,6 +3,7 @@ import { BankAccount } from '@presentation/decorators/bank-account.decorator'
 import { AuthUserGuard } from '@presentation/guards/auth-user.guard'
 import { BankAccountSession } from '@presentation/types/bank-account-session.type'
 import { AuthBankAccountGuard } from '@presentation/guards/auth-bank-account.guard'
+import { FinancialTransactionFindUseCase } from '@application/use-cases/financial-transaction/find.use-case'
 import { UpdateBalanceBankAccountListener } from '@application/observer/listeners/update-balance-bank-account.listener'
 import { FinancialTransactionQueryUseCase } from '@application/use-cases/financial-transaction/query.use-case'
 import { FinancialTransactionCancelUseCase } from '@application/use-cases/financial-transaction/cancel.use-case'
@@ -17,6 +18,7 @@ export class FinancialTransactionController {
   constructor(
     private readonly financialTransactionCreateUseCase: FinancialTransactionCreateUseCase,
     private readonly financialTransactionQueryUseCase: FinancialTransactionQueryUseCase,
+    private readonly financialTransactionFindUseCase: FinancialTransactionFindUseCase,
     private readonly financialTransactionConcludeUseCase: FinancialTransactionConcludeUseCase,
     private readonly financialTransactionCancelUseCase: FinancialTransactionCancelUseCase,
     private readonly financialTransactionUpdateUseCase: FinancialTransactionUpdateUseCase,
@@ -31,6 +33,15 @@ export class FinancialTransactionController {
     const { financialTransactions } = await this.financialTransactionQueryUseCase.perform({ ...filters, bankAccountId: bankAccount.id })
 
     return { financialTransactions }
+  }
+
+  @UseGuards(AuthUserGuard)
+  @UseGuards(AuthBankAccountGuard)
+  @Get('/:id')
+  async find(@BankAccount() bankAccount: BankAccountSession, @Param('id') id: number) {
+    const { financialTransaction } = await this.financialTransactionFindUseCase.perform({ bankAccountId: bankAccount.id, id })
+
+    return { financialTransaction }
   }
 
   @UseGuards(AuthUserGuard)

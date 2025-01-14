@@ -311,6 +311,41 @@
 										}
 									},
 									"response": []
+								},
+								{
+									"name": "/",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "AuthorizationBankAccount",
+												"value": "Bearer {{tokenBankAccount}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/bank-accounts/financial-transactions/1",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"bank-accounts",
+												"financial-transactions",
+												"1"
+											]
+										}
+									},
+									"response": []
 								}
 							]
 						},
@@ -513,6 +548,48 @@
 							"path": [
 								"users",
 								"current"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/peoples",
+			"item": [
+				{
+					"name": "/update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Dan Ruan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/peoples/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"peoples",
+								"update"
 							]
 						}
 					},
