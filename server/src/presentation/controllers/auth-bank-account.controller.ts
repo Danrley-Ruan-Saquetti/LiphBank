@@ -1,8 +1,8 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common'
-import { AuthBankAccountSignInUseCase } from '@application/use-cases/auth/bank-account/sign-in.use-case'
 import { User } from '@presentation/decorators/user.decorator'
 import { UserSession } from '@presentation/types/user-session.type'
 import { AuthUserGuard } from '@presentation/guards/auth-user.guard'
+import { AuthBankAccountSignInUseCase } from '@application/use-cases/auth/bank-account/sign-in.use-case'
 import { SendEmailNotificationBankAccountLoggedInListener } from '@application/observer/listeners/send-email-notification-bank-account-logged-in.listener'
 
 @Controller('/auth/bank-account')

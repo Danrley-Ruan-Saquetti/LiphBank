@@ -4,6 +4,8 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 import { MainModule } from '@main.module'
 import { env } from '@shared/env'
 import { NestApplicationOptions } from '@nestjs/common'
+// import { CalculateFinancialTransactionFrequencyDate } from './domain/value-objects/calculate-financial-transaction-frequency-date.value-object'
+// import { FinancialTransactionFrequency } from './domain/entities/financial-transaction.entity'
 
 async function bootstrap() {
   const options: NestApplicationOptions = { logger: ['error', 'warn', 'fatal'] }
@@ -22,3 +24,7 @@ async function bootstrap() {
   console.log('Server started!')
 }
 bootstrap()
+
+// const calculate = new CalculateFinancialTransactionFrequencyDate(FinancialTransactionFrequency.DAILY)
+
+// calculate.calculateDates()

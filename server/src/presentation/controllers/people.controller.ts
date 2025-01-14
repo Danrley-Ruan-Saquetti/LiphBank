@@ -1,8 +1,8 @@
 import { Body, Controller, Put, UseGuards } from '@nestjs/common'
-import { PeopleUpdateUseCase } from '@application/use-cases/people/update.use-case'
 import { User } from '@presentation/decorators/user.decorator'
 import { UserSession } from '@presentation/types/user-session.type'
 import { AuthUserGuard } from '@presentation/guards/auth-user.guard'
+import { PeopleUpdateUseCase } from '@application/use-cases/people/update.use-case'
 
 @Controller('/peoples')
 export class PeopleController {

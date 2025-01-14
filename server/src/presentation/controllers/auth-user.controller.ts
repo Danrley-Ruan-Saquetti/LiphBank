@@ -1,9 +1,9 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
-import { UserType } from '@domain/entities/user.entity'
 import { AuthUserSignInUseCase } from '@application/use-cases/auth/user/sign-in.use-case'
 import { CreatePeopleAndUserUseCase } from '@application/use-cases/shared/create-people-user.use-case'
 import { SendEmailNotificationUserCreatedListener } from '@application/observer/listeners/send-email-notification-user-created.listener'
 import { SendEmailNotificationUserLoggedInListener } from '@application/observer/listeners/send-email-notification-user-logged-in.listener'
+import { UserType } from '@domain/entities/user.entity'
 
 @Controller('/auth/user')
 export class AuthUserController {

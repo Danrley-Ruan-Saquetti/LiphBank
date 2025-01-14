@@ -38,12 +38,12 @@ export const FinancialTransactionRule = {
     default: () => new Date(Date.now()),
   },
   frequencyInDays: {
-    DAILY: 1,
-    WEEKLY: 7,
-    MONTHLY: 30,
-    QUARTERLY: 90,
-    SEMIANNUALLY: 180,
-    ANNUALLY: 365,
+    [FinancialTransactionFrequency.DAILY]: 1,
+    [FinancialTransactionFrequency.WEEKLY]: 7,
+    [FinancialTransactionFrequency.MONTHLY]: 30,
+    [FinancialTransactionFrequency.QUARTERLY]: 90,
+    [FinancialTransactionFrequency.SEMIANNUALLY]: 180,
+    [FinancialTransactionFrequency.ANNUALLY]: 365,
   },
   update: {
     situationsEnableToUpdate: {
