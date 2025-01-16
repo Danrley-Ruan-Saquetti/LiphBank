@@ -19,8 +19,6 @@ export class FinancialTransactionCreateUseCase extends UseCase {
       bankAccountId,
       description,
       expiresIn,
-      isObservable,
-      isSendNotification,
       senderRecipient,
       timesToRepeat,
       title,
@@ -45,8 +43,6 @@ export class FinancialTransactionCreateUseCase extends UseCase {
       value,
       settings: {
         frequency,
-        isObservable,
-        isSendNotification,
         timesToRepeat,
         typeOccurrence,
         countRepeatedOccurrences: 0,

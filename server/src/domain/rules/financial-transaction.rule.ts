@@ -8,9 +8,6 @@ export const FinancialTransactionRule = {
   description: {
     default: '',
   },
-  isObservable: {
-    default: false,
-  },
   situation: {
     enum: [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.LATE, FinancialTransactionSituation.PAID_OUT, FinancialTransactionSituation.PENDING, FinancialTransactionSituation.RECEIVED] as const,
   },
@@ -20,9 +17,6 @@ export const FinancialTransactionRule = {
   typeOccurrence: {
     enum: [FinancialTransactionTypeOccurrence.SINGLE, FinancialTransactionTypeOccurrence.PROGRAMMATIC] as const,
     default: FinancialTransactionTypeOccurrence.SINGLE,
-  },
-  isSendNotification: {
-    default: false,
   },
   timesToRepeat: {
     default: 0,

@@ -123,7 +123,7 @@ model FinancialTransaction {
   senderRecipient    String                        @map("sender_recipient")
   expiresIn          DateTime?                     @map("expires_in") @db.Timestamptz(3)
   dateTimeCompetence DateTime                      @default(now()) @map("date_time_competence") @db.Timestamptz(3)
-  settings           Json                          @default("{\"isObservable\": false,\"isSendNotification\": false,\"timesToRepeat\": 0,\"countRepeatedOccurrences\": 0,\"typeOccurrence\": \"S\",\"frequency\": null}")
+  settings           Json                          @default("{\"timesToRepeat\": 0,\"countRepeatedOccurrences\": 0,\"typeOccurrence\": \"S\",\"frequency\": null}")
   createdAt          DateTime                      @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt          DateTime                      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
   bankAccount        BankAccount                   @relation(fields: [bankAccountId], references: [id], onDelete: Restrict)

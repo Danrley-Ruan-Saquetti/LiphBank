@@ -29,8 +29,6 @@ export enum FinancialTransactionSituation {
 }
 
 export type FinancialTransactionSettings = {
-  isObservable: boolean
-  isSendNotification: boolean
   timesToRepeat: number | null
   countRepeatedOccurrences: number
   typeOccurrence: FinancialTransactionTypeOccurrence
@@ -127,8 +125,6 @@ export class FinancialTransaction implements FinancialTransactionProps {
 
   static getDefaultSettings(): FinancialTransactionSettings {
     return {
-      isObservable: false,
-      isSendNotification: false,
       timesToRepeat: null,
       countRepeatedOccurrences: 0,
       typeOccurrence: FinancialTransactionTypeOccurrence.SINGLE,

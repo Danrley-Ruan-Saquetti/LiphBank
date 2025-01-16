@@ -24,12 +24,6 @@ export const financialTransactionCreateSchema = z.object({
       'invalid_type_error': FinancialTransactionMessage.value.mustBePositive,
     })
     .positive({ message: FinancialTransactionMessage.value.mustBePositive }),
-  isObservable: z
-    .boolean()
-    .default(FinancialTransactionRule.isObservable.default),
-  isSendNotification: z
-    .boolean()
-    .default(FinancialTransactionRule.isSendNotification.default),
   timesToRepeat: z
     .coerce
     .number()
