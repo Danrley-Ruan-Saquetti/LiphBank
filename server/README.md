@@ -9,7 +9,9 @@ Este é o projeto BackEnd do sistema LiphBank construído para fornecer uma API 
   - [Stack Utilizada](#stack-utilizada)
   - [Estrutura do Projeto](#estrutura-do-projeto)
   - [Instruções para Execução](#instruções-para-execução)
-  - [Funcionalidades da Aplicação](#funcionalidades-da-aplicação)
+  - [Requisitos e Funcionalidades da Aplicação](#requisitos-e-funcionalidades-da-aplicação)
+    - [Requisitos Funcionais](#requisitos-funcionais)
+    - [Regras de Negócio](#regras-de-negócio)
 
 <div align="right">
 
@@ -128,6 +130,36 @@ npm run start:dev
 [Back To Top ⬆️](#liphbank-api)
 </div>
 
-## Funcionalidades da Aplicação
+## Requisitos e Funcionalidades da Aplicação
 
-//TODO
+### Requisitos Funcionais
+
+- [X] O sistema deve manter usuários
+- [X] O sistema deve manter contas bancárias
+- [X] O sistema deve manter transações financeiras
+- [X] O sistema deve permitir a conclusão das transações financeiras
+- [X] O sistema deve permitir o cancelamento das transações financeiras
+- [ ] O sistema deve duplicar transações financeiras que estejam marcadas para repetir
+- [ ] O sistema deve manter o saldo da conta bancário
+- [X] O sistema deve enviar um email após a criação de uma nova conta de usuário
+- [X] O sistema deve enviar um email após a criação de uma nova conta bancária
+- [X] O sistema deve enviar um email após a criação de uma nova transação financeira
+- [X] O sistema deve enviar um email após a um novo acesso à conta do usuário
+- [X] O sistema deve enviar um email após a um novo acesso à conta bancária do usuário
+
+### Regras de Negócio
+- [X] O cadastro de usuário deve conter: nome, CPF/CNPJ, login, senha, gênero, data de nascimento, tipo de pessoa
+- [X] O nome do usuário deve conter entre 3 caracteres 2 45 caracteres
+- [X] A senha do usuário deve: ter entre 6 a 15 dígitos, possuir letras e números e conter letras maiúsculas e minúsculas
+- [X] Os tipos de pessoa são: Física e Jurídica
+- [X] O cadastro de conta bancária deve conter: nome
+- [X] O nome da conta bancária deve conter entre 3 caracteres 2 45 caracteres
+- [X] O cadastro de transação financeira deve conter: a conta bancária, título, descrição, valor, tipo, remetente/destinatário, data de expiração e data de competência
+- [X] Os tipos da transação financeira são: Renda e Despesa
+- [X] As situações da transação financeira são: Pendente, Pago, Recebido, Atrasado, Cancelado
+- [ ] A situação inicial de toda transação financeira é Pendente
+- [ ] O usuário pode concluir a transação financeira apenas se estiver nas situações: Pendente ou Atrasado
+- [ ] O usuário pode cancelar a transação financeira a qualquer momento
+- [ ] O saldo da conta bancária deve ser atualizado quando uma transação for concluída ou cancelada
+- [ ] Caso o tipo da transação seja Renda, ao concluir a transação deve atualizar a situação para Recebido e o valor da transação deve ser somado ao saldo da conta bancária
+- [ ] Caso o tipo da transação seja Despesa, ao concluir a transação deve atualizar a situação para Pago e o valor da transação deve ser subtraído do saldo da conta bancária
