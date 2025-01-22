@@ -1,5 +1,6 @@
+import { FinancialTransactionSituationStateFabric } from './../states/financial-transaction/situation/fabric'
 import { FinancialTransaction as FinancialTransactionPrisma } from '@prisma/client'
-import { JsonValue } from '@prisma/client/runtime/library'
+import { IFinancialTransactionSituationState } from '@domain/states/financial-transaction/situation/situation.state'
 
 export enum FinancialTransactionType {
   EXPENSE = 'E',
@@ -24,7 +25,7 @@ export enum FinancialTransactionSituation {
   PENDING = 'PE',
   PAID_OUT = 'PO',
   RECEIVED = 'RV',
-  LATE = 'LT',
+  LATED = 'LT',
   CANCELED = 'CN',
 }
 
@@ -41,7 +42,7 @@ export interface FinancialTransactionProps extends FinancialTransactionPrisma {
   settings: FinancialTransactionSettings
 }
 
-export class FinancialTransaction implements FinancialTransactionProps {
+export class FinancialTransaction implements FinancialTransactionProps, IFinancialTransactionSituationState {
 
   private _type: FinancialTransactionType
   private _situation: FinancialTransactionSituation
@@ -56,6 +57,8 @@ export class FinancialTransaction implements FinancialTransactionProps {
   private _settings: FinancialTransactionSettings
   private _createdAt: Date
   private _updatedAt: Date
+
+  private _situationState: IFinancialTransactionSituationState
 
   get type() { return this._type }
   get situation() { return this._situation }
@@ -72,7 +75,11 @@ export class FinancialTransaction implements FinancialTransactionProps {
   get updatedAt() { return this._updatedAt }
 
   set type(value) { this._type = value }
-  set situation(value) { this._situation = value }
+  set situation(value) {
+    this._situation = value
+
+    this._situationState = FinancialTransactionSituationStateFabric.getState(this)
+  }
   set id(value) { this._id = value }
   set bankAccountId(value) { this._bankAccountId = value }
   set title(value) { this._title = value }
@@ -99,6 +106,8 @@ export class FinancialTransaction implements FinancialTransactionProps {
     this.type = props.type!
     this.updatedAt = props.updatedAt!
     this.value = props.value!
+
+    this._situationState = FinancialTransactionSituationStateFabric.getState(this)
   }
 
   static load(props: Partial<FinancialTransactionProps>) {
@@ -130,5 +139,21 @@ export class FinancialTransaction implements FinancialTransactionProps {
       typeOccurrence: FinancialTransactionTypeOccurrence.SINGLE,
       frequency: null,
     }
+  }
+
+  pending(): void {
+    this._situationState.pending()
+  }
+
+  conclude(): void {
+    this._situationState.conclude()
+  }
+
+  late(): void {
+    this._situationState.late()
+  }
+
+  cancel(): void {
+    this._situationState.cancel()
   }
 }
