@@ -20,14 +20,14 @@ export class FinancialTransactionUpdateDelayedUseCase extends UseCase {
 
     await this.financialTransactionRepository.updateMany({
       where: { id: { in: financialTransactions.map(({ id }) => id) } },
-      data: { situation: FinancialTransactionSituation.LATE }
+      data: { situation: FinancialTransactionSituation.LATED }
     })
   }
 
   private async getFinancialTransactionsDelayed(limit?: number) {
     return await this.financialTransactionRepository.findMany({
       where: {
-        situation: { not: FinancialTransactionSituation.PENDING },
+        situation: { not: FinancialTransactionSituation.LATED },
         expiresIn: {
           not: null as any,
           lt: new Date(Date.now())

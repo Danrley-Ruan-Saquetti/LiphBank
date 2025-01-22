@@ -106,7 +106,7 @@ enum FinancialTransactionSituation {
   PE // PENDING
   PO // PAID_OUT
   RV // RECEIVED
-  LT // LATE
+  LT // LATED
   CN // CANCELED
 
   @@map("financial_transaction_situation")

@@ -21,7 +21,7 @@ export class FinancialTransactionConcludeUseCase extends UseCase<FinancialTransa
 
     const { financialTransaction } = await this.financialTransactionFindUseCase.perform({ id, bankAccountId })
 
-    financialTransaction.situation = FinancialTransactionSituation.CANCELED
+    financialTransaction.conclude()
 
     const financialTransactionUpdated = await this.financialTransactionRepository.update(financialTransaction.id, financialTransaction)
 

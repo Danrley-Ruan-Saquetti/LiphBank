@@ -8,7 +8,7 @@ export class DefineInitialSituationFinancialTransactionValueObject {
 
   getSituation(): FinancialTransactionSituation {
     if (this.financialTransaction.expiresIn && this.financialTransaction.expiresIn < new Date(Date.now())) {
-      return FinancialTransactionSituation.LATE
+      return FinancialTransactionSituation.LATED
     }
 
     return FinancialTransactionSituation.PENDING
