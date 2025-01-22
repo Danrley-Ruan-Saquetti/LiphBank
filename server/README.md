@@ -157,9 +157,9 @@ npm run start:dev
 - [X] O cadastro de transação financeira deve conter: a conta bancária, título, descrição, valor, tipo, remetente/destinatário, data de expiração e data de competência
 - [X] Os tipos da transação financeira são: Renda e Despesa
 - [X] As situações da transação financeira são: Pendente, Pago, Recebido, Atrasado, Cancelado
-- [ ] A situação inicial de toda transação financeira é Pendente
-- [ ] O usuário pode concluir a transação financeira apenas se estiver nas situações: Pendente ou Atrasado
-- [ ] O usuário pode cancelar a transação financeira a qualquer momento
+- [X] A situação inicial de toda transação financeira é Pendente. Caso a data de expiração seja posterior à data do cadastro, então a situação inicial será Atrasado
+- [X] O usuário pode concluir a transação financeira apenas se estiver nas situações: Pendente ou Atrasado
+- [X] O usuário pode cancelar a transação financeira a qualquer momento
 - [ ] O saldo da conta bancária deve ser atualizado quando uma transação for concluída ou cancelada
 - [ ] Caso o tipo da transação seja Renda, ao concluir a transação deve atualizar a situação para Recebido e o valor da transação deve ser somado ao saldo da conta bancária
 - [ ] Caso o tipo da transação seja Despesa, ao concluir a transação deve atualizar a situação para Pago e o valor da transação deve ser subtraído do saldo da conta bancária
