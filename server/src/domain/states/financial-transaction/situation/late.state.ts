@@ -8,6 +8,8 @@ export class FinancialTransactionLateState extends FinancialTransactionSituation
     if (this.financialTransaction.expiresIn && this.financialTransaction.expiresIn < new Date(Date.now())) {
       throw new InvalidStateException('It is not possible to make a Financial Transaction that is overdue as pending')
     }
+
+    this.financialTransaction.situation = FinancialTransactionSituation.PENDING
   }
 
   conclude() {
