@@ -26,6 +26,10 @@ export class UserFindUseCase extends UseCase {
 
     const people = await this.peopleRepository.findById(user.peopleId)
 
+    if (!people) {
+      throw new NotFoundException('People', `${user.peopleId}`)
+    }
+
     return { user, people }
   }
 }
