@@ -46,6 +46,7 @@ describe('Application - User - UseCase - Find', () => {
       code: 'USR-EXAMPLE',
       login: 'dan@test.com',
       type: UserType.CLIENT,
+      password: 'password-test'
     }))
 
     vi.spyOn(peopleRepository, 'findById').mockImplementation((id) => new People({

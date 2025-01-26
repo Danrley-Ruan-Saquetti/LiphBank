@@ -49,7 +49,11 @@ describe('Application - People - UseCase - Create', () => {
       type: PeopleType.NATURAL_PERSON,
     }
 
-    vi.spyOn(peopleRepository, 'findByCpfCnpj').mockImplementation(() => new People({ cpfCnpj: '10254710913' }))
+    vi.spyOn(peopleRepository, 'findByCpfCnpj').mockImplementation(() => new People({
+      cpfCnpj: '10254710913',
+      name: 'Danrley',
+      type: PeopleType.NATURAL_PERSON,
+    }))
 
     await expect(async () => {
       try {

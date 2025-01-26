@@ -47,10 +47,11 @@ describe('Application - Auth - UseCase - SignIn', () => {
     vi.spyOn(userRepositoryMock, 'findMany').mockImplementation(async () => [
       new User({
         id: 1,
+        peopleId: 1,
         login: arrange.login,
         type: arrange.type,
         code: 'USR-CODE_TEST',
-        password: await hash.hash('Dan!@#123')
+        password: await hash.hash('Dan!@#123'),
       })
     ])
 
@@ -80,10 +81,11 @@ describe('Application - Auth - UseCase - SignIn', () => {
 
     vi.spyOn(userRepositoryMock, 'findByLoginAndType').mockImplementation(async (login: string, type: UserType) => new User({
       id: 1,
+      peopleId: 1,
       login,
       type,
       code: 'USR-CODE_TEST',
-      password: await hash.hash('Dan!@#123')
+      password: await hash.hash('Dan!@#123'),
     }))
 
     await expect(authUserSignInUseCase.perform(arrange)).rejects.toThrow(SignInCredentialInvalidException)

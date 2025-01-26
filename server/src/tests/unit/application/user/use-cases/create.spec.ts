@@ -5,7 +5,7 @@ import { ConflictException } from '@application/exceptions/conflict.exception'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserCreateUseCase } from '@application/use-cases/user/create.use-case'
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
-import { People } from '@domain/entities/people.entity'
+import { People, PeopleType } from '@domain/entities/people.entity'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { User, UserType } from '@domain/entities/user.entity'
 import { PeopleRepository } from '@domain/repositories/people.repository'
@@ -58,7 +58,12 @@ describe('Application - User - UseCase - Create', () => {
       type: UserType.CLIENT,
     }
 
-    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => new People({ id: 1 }))
+    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => new People({
+      id: 1,
+      cpfCnpj: '10254710913',
+      name: 'Danrley',
+      type: PeopleType.NATURAL_PERSON,
+    }))
 
     const response = await userCreateUseCase.perform(arrange)
 
@@ -79,8 +84,20 @@ describe('Application - User - UseCase - Create', () => {
       type: UserType.CLIENT,
     }
 
-    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => new People({ id: 1 }))
-    vi.spyOn(userRepository, 'findByPeopleIdAndType').mockImplementation(() => new User({ id: 2, peopleId: 1, type: UserType.CLIENT }))
+    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => new People({
+      id: 1,
+      cpfCnpj: '10254710913',
+      name: 'Danrley',
+      type: PeopleType.NATURAL_PERSON,
+    }))
+    vi.spyOn(userRepository, 'findByPeopleIdAndType').mockImplementation(() => new User({
+      id: 2,
+      peopleId: 1,
+      type: UserType.CLIENT,
+      code: 'USR-EXAMPLE',
+      login: 'dan@test.com',
+      password: 'password-test'
+    }))
 
     await expect(async () => {
       try {
