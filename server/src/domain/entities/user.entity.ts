@@ -55,7 +55,7 @@ export class User {
     this.login = props.login
     this.password = props.password
     this.active = props.active ?? true
-    this.lastAccess = props.lastAccess!
+    this.lastAccess = props.lastAccess! || null
     this.createdAt = props.createdAt!
     this.updatedAt = props.updatedAt!
   }

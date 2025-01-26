@@ -34,7 +34,7 @@ export class ErrorLog implements ErrorLogProps {
     this.origin = props.origin
     this.type = props.type
     this.message = props.message
-    this.details = props.details!
+    this.details = props.details || null
     this.createdAt = props.createdAt!
   }
 

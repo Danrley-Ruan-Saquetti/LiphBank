@@ -54,7 +54,7 @@ export class Notification implements NotificationProps {
     this.type = props.type
     this.body = props.body
     this.subject = props.subject
-    this.sendAt = props.sendAt!
+    this.sendAt = props.sendAt || null
     this.situation = props.situation ?? NotificationSituation.IN_QUEUE
     this.createdAt = props.createdAt!
     this.updatedAt = props.updatedAt!

@@ -102,12 +102,12 @@ export class FinancialTransaction implements FinancialTransactionProps, IFinanci
     this.type = props.type
     this.value = props.value
     this.senderRecipient = props.senderRecipient
-    this.createdAt = props.createdAt!
-    this.dateTimeCompetence = props.dateTimeCompetence!
+    this.dateTimeCompetence = props.dateTimeCompetence! || null
     this.description = props.description || ''
-    this.expiresIn = props.expiresIn!
+    this.expiresIn = props.expiresIn || null
     this.settings = props.settings ?? FinancialTransaction.getDefaultSettings()
     this.situation = props.situation ?? FinancialTransactionSituation.PENDING
+    this.createdAt = props.createdAt!
     this.updatedAt = props.updatedAt!
 
     this._situationState = FinancialTransactionSituationStateFabric.getState(this)

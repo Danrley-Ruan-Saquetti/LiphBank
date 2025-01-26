@@ -52,8 +52,8 @@ export class People implements PeopleProps {
     this.name = props.name
     this.type = props.type
     this.cpfCnpj = props.cpfCnpj
-    this.gender = props.gender!
-    this.dateOfBirth = props.dateOfBirth!
+    this.gender = props.gender || null
+    this.dateOfBirth = props.dateOfBirth || null
     this.createdAt = props.createdAt!
     this.updatedAt = props.updatedAt!
   }
