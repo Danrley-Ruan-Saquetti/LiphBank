@@ -17,7 +17,7 @@ export class EmailNotificationCreateUseCase extends UseCase {
   async perform(args: EmailNotificationCreateDTO) {
     const { body, subject, sender, recipients } = this.validator.validate(emailNotificationCreateSchema, args)
 
-    const emailNotification = EmailNotification.load({
+    const emailNotification = new EmailNotification({
       body,
       subject,
       sender,

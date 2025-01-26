@@ -57,10 +57,6 @@ export class User {
     this.updatedAt = props.updatedAt!
   }
 
-  static load(props: Partial<UserProps>) {
-    return new User(props)
-  }
-
   toJSON(): UserPrisma {
     return {
       id: this.id,

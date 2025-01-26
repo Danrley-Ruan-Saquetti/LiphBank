@@ -21,10 +21,6 @@ export class EmailNotification extends Notification implements EmailNotification
     this.sender = props.sender!
   }
 
-  static load(props: Partial<EmailNotificationProps> & Partial<NotificationProps>) {
-    return new EmailNotification(props)
-  }
-
   toJSON(): EmailNotificationProps & NotificationProps {
     return {
       ...super.toJSON(),

@@ -31,7 +31,7 @@ export class FinancialTransactionCreateUseCase extends UseCase {
 
     const situation = new DefineInitialSituationFinancialTransactionValueObject({ expiresIn }).getSituation()
 
-    const financialTransaction = FinancialTransaction.load({
+    const financialTransaction = new FinancialTransaction({
       bankAccountId,
       description,
       expiresIn,

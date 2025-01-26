@@ -35,10 +35,6 @@ export class ErrorLog implements ErrorLogProps {
     this.createdAt = props.createdAt!
   }
 
-  static load(props: Partial<ErrorLogProps>) {
-    return new ErrorLog(props)
-  }
-
   toJSON(): ErrorLogProps {
     return {
       id: this.id,

@@ -25,7 +25,7 @@ export class ErrorLogMapper {
   }
 
   static databaseToEntity(databaseModel: ErrorLogModel) {
-    return ErrorLog.load({
+    return new ErrorLog({
       id: databaseModel.id,
       type: databaseModel.type,
       createdAt: databaseModel.createdAt,

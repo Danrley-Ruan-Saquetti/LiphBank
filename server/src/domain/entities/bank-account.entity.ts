@@ -42,10 +42,6 @@ export class BankAccount implements BankAccountProps {
     this.createdAt = props.createdAt!
   }
 
-  static load(props: Partial<BankAccountProps>) {
-    return new BankAccount(props)
-  }
-
   toJSON(): BankAccountProps {
     return {
       id: this.id,

@@ -110,10 +110,6 @@ export class FinancialTransaction implements FinancialTransactionProps, IFinanci
     this._situationState = FinancialTransactionSituationStateFabric.getState(this)
   }
 
-  static load(props: Partial<FinancialTransactionProps>) {
-    return new FinancialTransaction(props)
-  }
-
   toJSON(): FinancialTransactionProps {
     return {
       id: this.id,

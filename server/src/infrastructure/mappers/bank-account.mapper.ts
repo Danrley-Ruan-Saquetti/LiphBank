@@ -27,7 +27,7 @@ export class BankAccountMapper {
   }
 
   static databaseToEntity(databaseModel: BankAccountModel) {
-    return BankAccount.load({
+    return new BankAccount({
       id: databaseModel.id,
       name: databaseModel.name,
       active: databaseModel.active,

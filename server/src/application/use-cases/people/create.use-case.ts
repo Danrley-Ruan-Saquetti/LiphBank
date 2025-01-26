@@ -19,7 +19,7 @@ export class PeopleCreateUseCase extends UseCase {
 
     await this.validatePeopleWithSameCpfCnpj(cpfCnpj)
 
-    const people = People.load({
+    const people = new People({
       name,
       cpfCnpj,
       dateOfBirth,

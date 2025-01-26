@@ -33,7 +33,7 @@ export class FinancialTransactionMapper {
   }
 
   static databaseToEntity(databaseModel: FinancialTransactionModel) {
-    return FinancialTransaction.load({
+    return new FinancialTransaction({
       id: databaseModel.id,
       bankAccountId: databaseModel.bankAccountId,
       createdAt: databaseModel.createdAt,

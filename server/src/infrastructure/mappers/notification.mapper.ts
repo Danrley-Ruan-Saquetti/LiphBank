@@ -27,7 +27,7 @@ export class NotificationMapper {
   }
 
   static databaseToEntity(databaseModel: NotificationModel) {
-    return Notification.load({
+    return new Notification({
       id: databaseModel.id,
       type: databaseModel.type as NotificationType,
       body: databaseModel.body,

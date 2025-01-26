@@ -27,7 +27,7 @@ export class PeopleMapper {
   }
 
   static databaseToEntity(databaseModel: PeopleModel) {
-    return People.load({
+    return new People({
       id: databaseModel.id,
       name: databaseModel.name,
       type: databaseModel.type as PeopleType,

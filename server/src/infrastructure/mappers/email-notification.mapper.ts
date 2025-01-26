@@ -25,7 +25,7 @@ export class EmailNotificationMapper {
   }
 
   static databaseToEntity(databaseModel: EmailNotificationModel) {
-    return EmailNotification.load({
+    return new EmailNotification({
       id: databaseModel.id,
       recipient: databaseModel.recipient,
       sender: databaseModel.sender,

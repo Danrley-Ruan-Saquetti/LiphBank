@@ -45,7 +45,7 @@ describe('Application - Auth - UseCase - SignIn', () => {
     }
 
     vi.spyOn(userRepositoryMock, 'findMany').mockImplementation(async () => [
-      User.load({
+      new User({
         id: 1,
         login: arrange.login,
         type: arrange.type,
@@ -78,7 +78,7 @@ describe('Application - Auth - UseCase - SignIn', () => {
       type: UserType.CLIENT,
     }
 
-    vi.spyOn(userRepositoryMock, 'findByLoginAndType').mockImplementation(async (login: string, type: UserType) => User.load({
+    vi.spyOn(userRepositoryMock, 'findByLoginAndType').mockImplementation(async (login: string, type: UserType) => new User({
       id: 1,
       login,
       type,

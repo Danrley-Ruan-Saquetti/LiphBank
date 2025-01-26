@@ -57,10 +57,6 @@ export class Notification implements NotificationProps {
     this.updatedAt = props.updatedAt!
   }
 
-  static load(props: Partial<NotificationProps>) {
-    return new this(props)
-  }
-
   toJSON(): NotificationProps {
     return {
       id: this.id,

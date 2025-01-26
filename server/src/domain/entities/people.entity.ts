@@ -55,10 +55,6 @@ export class People implements PeopleProps {
     this.updatedAt = props.updatedAt!
   }
 
-  static load(props: Partial<PeopleProps>) {
-    return new People(props)
-  }
-
   toJSON(): PeopleProps {
     return {
       id: this.id,

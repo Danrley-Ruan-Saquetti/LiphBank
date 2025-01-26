@@ -29,7 +29,7 @@ export class UserMapper {
   }
 
   static databaseToEntity(databaseModel: UserModel) {
-    return User.load({
+    return new User({
       id: databaseModel.id,
       active: databaseModel.active,
       code: databaseModel.code,

@@ -65,7 +65,7 @@ describe('Application - Shared - UseCase - Create People and User', () => {
       }
     }
 
-    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => People.load({ id: 1 }))
+    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => new People({ id: 1 }))
     vi.spyOn(codeGenerator, 'generate').mockImplementation(() => 'USR-CODE_MOCK')
 
     const response = await createPeopleAndUserUseCase.perform(arrange)

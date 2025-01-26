@@ -82,7 +82,7 @@ export class UserCreateUseCase extends UseCase<UserCreateEvent> {
     const { code } = await this.userGenerateCodeUseCase.perform()
     const passwordHashed = await this.hash.hash(password)
 
-    return User.load({
+    return new User({
       login,
       type,
       code,

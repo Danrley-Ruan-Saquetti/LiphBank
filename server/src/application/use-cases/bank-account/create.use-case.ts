@@ -21,7 +21,7 @@ export class BankAccountCreateUseCase extends UseCase<BankAccountCreateEvent> {
 
     const { code } = await this.bankAccountGenerateCodeUseCase.perform()
 
-    const bankAccount = BankAccount.load({
+    const bankAccount = new BankAccount({
       name,
       peopleId,
       code,

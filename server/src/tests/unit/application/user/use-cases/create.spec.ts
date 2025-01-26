@@ -58,7 +58,7 @@ describe('Application - User - UseCase - Create', () => {
       type: UserType.CLIENT,
     }
 
-    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => People.load({ id: 1 }))
+    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => new People({ id: 1 }))
 
     const response = await userCreateUseCase.perform(arrange)
 
@@ -79,8 +79,8 @@ describe('Application - User - UseCase - Create', () => {
       type: UserType.CLIENT,
     }
 
-    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => People.load({ id: 1 }))
-    vi.spyOn(userRepository, 'findByPeopleIdAndType').mockImplementation(() => User.load({ id: 2, peopleId: 1, type: UserType.CLIENT }))
+    vi.spyOn(peopleRepository, 'findById').mockImplementation(() => new People({ id: 1 }))
+    vi.spyOn(userRepository, 'findByPeopleIdAndType').mockImplementation(() => new User({ id: 2, peopleId: 1, type: UserType.CLIENT }))
 
     await expect(async () => {
       try {
