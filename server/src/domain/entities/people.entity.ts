@@ -1,4 +1,5 @@
 import { People as PeoplePrisma } from '@prisma/client'
+import { ObjectRequiredProps } from '@shared/types'
 
 export enum PeopleType {
   NATURAL_PERSON = 'NP',
@@ -14,6 +15,8 @@ export interface PeopleProps extends PeoplePrisma {
   type: PeopleType
   gender: PeopleGender | null
 }
+
+export type PeopleConstructor = ObjectRequiredProps<PeopleProps, 'cpfCnpj' | 'name' | 'type'>
 
 export class People implements PeopleProps {
 
@@ -44,11 +47,11 @@ export class People implements PeopleProps {
   set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
 
-  constructor(props: Partial<PeopleProps> = {}) {
+  constructor(props: PeopleConstructor) {
     this.id = props.id!
-    this.name = props.name!
-    this.type = props.type!
-    this.cpfCnpj = props.cpfCnpj!
+    this.name = props.name
+    this.type = props.type
+    this.cpfCnpj = props.cpfCnpj
     this.gender = props.gender!
     this.dateOfBirth = props.dateOfBirth!
     this.createdAt = props.createdAt!

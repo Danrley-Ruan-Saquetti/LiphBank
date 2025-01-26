@@ -1,4 +1,5 @@
 import { User as UserPrisma } from '@prisma/client'
+import { ObjectRequiredProps } from '@shared/types'
 
 export enum UserType {
   CLIENT = 'C',
@@ -8,6 +9,8 @@ export enum UserType {
 export interface UserProps extends UserPrisma {
   type: UserType
 }
+
+export type UserConstructor = ObjectRequiredProps<UserProps, 'type' | 'login' | 'password' | 'peopleId' | 'code'>
 
 export class User {
 
@@ -44,14 +47,14 @@ export class User {
   set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
 
-  constructor(props: Partial<UserProps> = {}) {
+  constructor(props: UserConstructor) {
     this.id = props.id!
-    this.peopleId = props.peopleId!
-    this.type = props.type!
+    this.peopleId = props.peopleId
+    this.type = props.type
+    this.code = props.code
+    this.login = props.login
+    this.password = props.password
     this.active = props.active ?? true
-    this.code = props.code!
-    this.login = props.login!
-    this.password = props.password!
     this.lastAccess = props.lastAccess!
     this.createdAt = props.createdAt!
     this.updatedAt = props.updatedAt!

@@ -1,6 +1,7 @@
-import { FinancialTransactionSituationStateFabric } from './../states/financial-transaction/situation/fabric'
 import { FinancialTransaction as FinancialTransactionPrisma } from '@prisma/client'
 import { IFinancialTransactionSituationState } from '@domain/states/financial-transaction/situation/situation.state'
+import { FinancialTransactionSituationStateFabric } from '@domain/states/financial-transaction/situation/fabric'
+import { ObjectRequiredProps } from '@shared/types'
 
 export enum FinancialTransactionType {
   EXPENSE = 'E',
@@ -41,6 +42,8 @@ export interface FinancialTransactionProps extends FinancialTransactionPrisma {
   situation: FinancialTransactionSituation
   settings: FinancialTransactionSettings
 }
+
+export type FinancialTransactionConstructor = ObjectRequiredProps<FinancialTransactionProps, 'bankAccountId' | 'title' | 'type' | 'value'>
 
 export class FinancialTransaction implements FinancialTransactionProps, IFinancialTransactionSituationState {
 
@@ -92,9 +95,12 @@ export class FinancialTransaction implements FinancialTransactionProps, IFinanci
   set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
 
-  constructor(props: Partial<FinancialTransactionProps> = {}) {
+  constructor(props: FinancialTransactionConstructor) {
     this.id = props.id!
-    this.bankAccountId = props.bankAccountId!
+    this.bankAccountId = props.bankAccountId
+    this.title = props.title
+    this.type = props.type
+    this.value = props.value
     this.createdAt = props.createdAt!
     this.dateTimeCompetence = props.dateTimeCompetence!
     this.description = props.description!
@@ -102,10 +108,7 @@ export class FinancialTransaction implements FinancialTransactionProps, IFinanci
     this.senderRecipient = props.senderRecipient!
     this.settings = props.settings ?? FinancialTransaction.getDefaultSettings()
     this.situation = props.situation ?? FinancialTransactionSituation.PENDING
-    this.title = props.title!
-    this.type = props.type!
     this.updatedAt = props.updatedAt!
-    this.value = props.value!
 
     this._situationState = FinancialTransactionSituationStateFabric.getState(this)
   }

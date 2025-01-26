@@ -1,4 +1,5 @@
 import { Notification as NotificationPrisma } from '@prisma/client'
+import { ObjectRequiredProps } from '@shared/types'
 
 export enum NotificationSituation {
   IN_QUEUE = 'IQ',
@@ -16,6 +17,8 @@ export interface NotificationProps extends NotificationPrisma {
   type: NotificationType
   situation: NotificationSituation
 }
+
+export type NotificationConstructor = ObjectRequiredProps<NotificationProps, 'type' | 'subject' | 'body'>
 
 export class Notification implements NotificationProps {
 
@@ -46,13 +49,13 @@ export class Notification implements NotificationProps {
   set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
 
-  constructor(props: Partial<NotificationProps> = {}) {
+  constructor(props: NotificationConstructor) {
     this.id = props.id!
-    this.type = props.type!
-    this.body = props.body!
+    this.type = props.type
+    this.body = props.body
+    this.subject = props.subject
     this.sendAt = props.sendAt!
     this.situation = props.situation ?? NotificationSituation.IN_QUEUE
-    this.subject = props.subject!
     this.createdAt = props.createdAt!
     this.updatedAt = props.updatedAt!
   }

@@ -1,7 +1,10 @@
 import { ErrorLog as ErrorLogPrisma } from '@prisma/client'
 import { JsonValue } from '@prisma/client/runtime/library'
+import { ObjectRequiredProps } from '@shared/types'
 
 export type ErrorLogProps = ErrorLogPrisma
+
+export type ErrorLogConstructor = ObjectRequiredProps<ErrorLogProps, 'type' | 'origin' | 'message'>
 
 export class ErrorLog implements ErrorLogProps {
 
@@ -26,11 +29,11 @@ export class ErrorLog implements ErrorLogProps {
   set details(value) { this._details = value }
   set createdAt(value) { this._createdAt = value }
 
-  constructor(props: Partial<ErrorLogProps> = {}) {
+  constructor(props: ErrorLogConstructor) {
     this.id = props.id!
-    this.origin = props.origin!
-    this.type = props.type!
-    this.message = props.message!
+    this.origin = props.origin
+    this.type = props.type
+    this.message = props.message
     this.details = props.details!
     this.createdAt = props.createdAt!
   }

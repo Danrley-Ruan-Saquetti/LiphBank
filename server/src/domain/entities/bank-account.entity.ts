@@ -1,6 +1,9 @@
 import { BankAccount as BankAccountPrisma } from '@prisma/client'
+import { ObjectRequiredProps } from '@shared/types'
 
 export type BankAccountProps = BankAccountPrisma
+
+export type BankAccountConstructor = ObjectRequiredProps<BankAccountProps, 'peopleId' | 'name' | 'code'>
 
 export class BankAccount implements BankAccountProps {
 
@@ -31,13 +34,13 @@ export class BankAccount implements BankAccountProps {
   set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
 
-  constructor(props: Partial<BankAccountProps> = {}) {
+  constructor(props: BankAccountConstructor) {
     this.id = props.id!
-    this.name = props.name!
-    this.code = props.code!
+    this.name = props.name
+    this.code = props.code
+    this.peopleId = props.peopleId
     this.balance = props.balance ?? 0
     this.active = props.active ?? true
-    this.peopleId = props.peopleId!
     this.updatedAt = props.updatedAt!
     this.createdAt = props.createdAt!
   }
