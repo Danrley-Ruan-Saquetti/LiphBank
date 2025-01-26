@@ -139,6 +139,7 @@ npm run start:dev
 - [X] O sistema deve manter transações financeiras
 - [X] O sistema deve permitir a conclusão das transações financeiras
 - [X] O sistema deve permitir o cancelamento das transações financeiras
+- [X] O sistema deve atualizar a situação das transações financeiras para Atrasado
 - [ ] O sistema deve duplicar transações financeiras que estejam marcadas para repetir
 - [ ] O sistema deve manter o saldo da conta bancário
 - [X] O sistema deve enviar um email após a criação de uma nova conta de usuário
@@ -148,6 +149,7 @@ npm run start:dev
 - [X] O sistema deve enviar um email após a um novo acesso à conta bancária do usuário
 
 ### Regras de Negócio
+
 - [X] O cadastro de usuário deve conter: nome, CPF/CNPJ, login, senha, gênero, data de nascimento, tipo de pessoa
 - [X] O nome do usuário deve conter entre 3 caracteres 2 45 caracteres
 - [X] A senha do usuário deve: ter entre 6 a 15 dígitos, possuir letras e números e conter letras maiúsculas e minúsculas
@@ -157,6 +159,7 @@ npm run start:dev
 - [X] O cadastro de transação financeira deve conter: a conta bancária, título, descrição, valor, tipo, remetente/destinatário, data de expiração e data de competência
 - [X] Os tipos da transação financeira são: Renda e Despesa
 - [X] As situações da transação financeira são: Pendente, Pago, Recebido, Atrasado, Cancelado
+- [ ] Só é possível cadastrar transações financeiras em contas bancárias ativas
 - [X] A situação inicial de toda transação financeira é Pendente. Caso a data de expiração seja posterior à data do cadastro, então a situação inicial será Atrasado
 - [X] O usuário pode concluir a transação financeira apenas se estiver nas situações: Pendente ou Atrasado
 - [X] O usuário pode cancelar a transação financeira a qualquer momento
