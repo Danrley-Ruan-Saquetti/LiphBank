@@ -86,4 +86,38 @@ describe('Application - FinancialTransaction - UseCase - Create', () => {
       }
     }).rejects.toThrow(NotFoundException)
   })
+
+  test('It must be possible to register a financial transaction with the status of Lated', async () => {
+    const date = new Date(Date.now())
+    date.setMinutes(date.getMinutes() - 1)
+
+    const arrange = {
+      bankAccountId: 1,
+      title: 'Teste',
+      value: 10,
+      type: FinancialTransactionType.INCOME,
+      senderRecipient: 'John Doe',
+      expiresIn: date
+    }
+
+    vi.spyOn(bankAccountRepositoryMock, 'findById').mockImplementation(id => new BankAccount({
+      id,
+      peopleId: 1,
+      code: 'BNK-EXAMPLE',
+      name: 'Example',
+      active: true,
+      balance: 100,
+    }))
+
+    const response = await financialTransactionCreateUseCase.perform(arrange)
+
+    expect(response.financialTransaction).toBeInstanceOf(FinancialTransaction)
+    expect(response.financialTransaction.id).toEqual(1)
+    expect(response.financialTransaction.bankAccountId).toEqual(1)
+    expect(response.financialTransaction.title).toEqual('Teste')
+    expect(response.financialTransaction.value).toEqual(10)
+    expect(response.financialTransaction.senderRecipient).toEqual('John Doe')
+    expect(response.financialTransaction.description).toEqual('')
+    expect(response.financialTransaction.situation).toEqual(FinancialTransactionSituation.LATED)
+  })
 })
