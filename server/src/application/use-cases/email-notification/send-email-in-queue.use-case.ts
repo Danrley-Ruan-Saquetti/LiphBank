@@ -1,11 +1,11 @@
-import { Injectable } from "@nestjs/common";
-import { UseCase } from "@application/use-cases/use-case";
-import { EmailNotificationSendEmailEvent } from "@application/observer/events/email-notification/send-email.event";
-import { EmailNotificationSendEmailInQueueDTO, emailNotificationSendEmailInQueueSchema } from "@application/dto/email-notification/send-email-in-queue.dto";
-import { MailService } from "@domain/adapters/mail/mail.service";
-import { EmailNotification } from "@domain/entities/email-notification.entity";
-import { NotificationSituation } from "@domain/entities/notification.entity";
-import { EmailNotificationRepository } from "@domain/repositories/email-notification.repository";
+import { Injectable } from '@nestjs/common'
+import { UseCase } from '@application/use-cases/use-case'
+import { EmailNotificationSendEmailEvent } from '@application/observer/events/email-notification/send-email.event'
+import { EmailNotificationSendEmailInQueueDTO, emailNotificationSendEmailInQueueSchema } from '@application/dto/email-notification/send-email-in-queue.dto'
+import { MailService } from '@domain/adapters/mail/mail.service'
+import { EmailNotification } from '@domain/entities/email-notification.entity'
+import { NotificationSituation } from '@domain/entities/notification.entity'
+import { EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
 
 @Injectable()
 export class EmailNotificationSendEmailInQueueUseCase extends UseCase<EmailNotificationSendEmailEvent> {

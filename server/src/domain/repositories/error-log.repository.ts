@@ -2,7 +2,9 @@ import { QuerySchema } from '@domain/adapters/database/operations'
 import { FilterSchema } from '@domain/adapters/database/filters'
 import { ErrorLog, ErrorLogProps } from '@domain/entities/error-log.entity'
 
-type ErrorLogFiltersArgs = ErrorLogProps
+export interface ErrorLogFiltersArgs extends Omit<ErrorLogProps, 'details'> {
+  details: 'json'
+}
 
 export type ErrorLogFilter = FilterSchema<ErrorLogFiltersArgs>
 export type ErrorLogQueryArgs = QuerySchema<ErrorLogFiltersArgs>

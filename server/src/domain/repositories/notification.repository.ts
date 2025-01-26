@@ -2,7 +2,11 @@ import { QuerySchema } from '@domain/adapters/database/operations'
 import { FilterSchema } from '@domain/adapters/database/filters'
 import { Notification, NotificationProps } from '@domain/entities/notification.entity'
 
-type NotificationFilterArgs = NotificationProps
+export interface NotificationFilterArgs extends Omit<NotificationProps, 'type' | 'situation'> {
+  settings: 'json'
+  situation: 'enum'
+  type: 'enum'
+}
 
 export type NotificationFilter = FilterSchema<NotificationFilterArgs>
 export type NotificationQueryArgs = QuerySchema<NotificationFilterArgs>

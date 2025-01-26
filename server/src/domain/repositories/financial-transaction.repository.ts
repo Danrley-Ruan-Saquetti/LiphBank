@@ -1,12 +1,13 @@
-import { BankAccountProps } from '@domain/entities/bank-account.entity'
-import { QuerySchema, UpdateSchema } from '@domain/adapters/database/operations'
 import { FilterSchema } from '@domain/adapters/database/filters'
+import { BankAccountFilterArgs } from '@domain/repositories/bank-account.repository'
+import { QuerySchema, UpdateSchema } from '@domain/adapters/database/operations'
 import { FinancialTransaction, FinancialTransactionProps } from '@domain/entities/financial-transaction.entity'
 
-interface FinancialTransactionFilterArgs extends Omit<FinancialTransactionProps, 'type' | 'situation'> {
+export interface FinancialTransactionFilterArgs extends Omit<FinancialTransactionProps, 'settings' | 'type' | 'situation'> {
+  settings: 'json'
   type: 'enum'
   situation: 'enum'
-  bankAccount: BankAccountProps
+  bankAccount: BankAccountFilterArgs
 }
 
 export type FinancialTransactionFilter = FilterSchema<FinancialTransactionFilterArgs>

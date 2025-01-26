@@ -1,10 +1,10 @@
-import { PeopleProps } from '@domain/entities/people.entity'
 import { QuerySchema } from '@domain/adapters/database/operations'
 import { FilterSchema } from '@domain/adapters/database/filters'
+import { PeopleFiltersArgs } from '@domain/repositories/people.repository'
 import { BankAccount, BankAccountProps } from '@domain/entities/bank-account.entity'
 
-interface BankAccountFilterArgs extends BankAccountProps {
-  people: PeopleProps
+export interface BankAccountFilterArgs extends BankAccountProps {
+  people: PeopleFiltersArgs
 }
 
 export type BankAccountFilter = FilterSchema<BankAccountFilterArgs>
