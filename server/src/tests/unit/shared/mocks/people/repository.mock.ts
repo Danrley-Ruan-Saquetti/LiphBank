@@ -15,7 +15,7 @@ export class PeopleRepositoryMock extends PeopleRepository {
     return people
   })
 
-  update = vi.fn().mockImplementation((people: People) => {
+  update = vi.fn().mockImplementation((_, people: People) => {
     people.updatedAt = new Date(Date.now())
 
     return people

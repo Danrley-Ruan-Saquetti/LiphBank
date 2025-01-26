@@ -3,7 +3,6 @@ import { UseCase } from '@application/use-cases/use-case'
 import { FinancialTransactionFindUseCase } from '@application/use-cases/financial-transaction/find.use-case'
 import { FinancialTransactionCancelEvent } from '@application/observer/events/financial-transaction/cancel.event'
 import { FinancialTransactionCancelDTO, financialTransactionCancelSchema } from '@application/dto/financial-transaction/cancel.dto'
-import { FinancialTransactionSituation } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
 
 @Injectable()

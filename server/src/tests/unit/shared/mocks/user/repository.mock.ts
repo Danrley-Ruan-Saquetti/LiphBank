@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { User, UserType } from '@domain/entities/user.entity'
+import { User } from '@domain/entities/user.entity'
 import { UserRepository } from '@domain/repositories/user.repository'
 
 export class UserRepositoryMock extends UserRepository {
@@ -15,7 +15,7 @@ export class UserRepositoryMock extends UserRepository {
     return user
   })
 
-  update = vi.fn().mockImplementation((user: User) => {
+  update = vi.fn().mockImplementation((_, user: User) => {
     user.updatedAt = new Date(Date.now())
 
     return user

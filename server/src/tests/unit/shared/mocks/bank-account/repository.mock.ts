@@ -15,7 +15,7 @@ export class BankAccountRepositoryMock extends BankAccountRepository {
     return bankAccount
   })
 
-  update = vi.fn().mockImplementation((bankAccount: BankAccount) => {
+  update = vi.fn().mockImplementation((_, bankAccount: BankAccount) => {
     bankAccount.updatedAt = new Date(Date.now())
 
     return bankAccount

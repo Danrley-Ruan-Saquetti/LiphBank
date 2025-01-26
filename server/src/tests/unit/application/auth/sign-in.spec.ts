@@ -1,4 +1,4 @@
-import { vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { JwtModule } from '@nestjs/jwt'
 import { InfrastructureJWTModule } from '@infrastructure/adapters/jwt/jwt.module'
 import { InfrastructureHashModule } from '@infrastructure/adapters/crypto/crypto.module'
@@ -44,13 +44,15 @@ describe('Application - Auth - UseCase - SignIn', () => {
       type: UserType.CLIENT,
     }
 
-    vi.spyOn(userRepositoryMock, 'findByLoginAndType').mockImplementation(async (login: string, type: UserType) => User.load({
-      id: 1,
-      login,
-      type,
-      code: 'USR-CODE_TEST',
-      password: await hash.hash('Dan!@#123')
-    }))
+    vi.spyOn(userRepositoryMock, 'findMany').mockImplementation(async () => [
+      User.load({
+        id: 1,
+        login: arrange.login,
+        type: arrange.type,
+        code: 'USR-CODE_TEST',
+        password: await hash.hash('Dan!@#123')
+      })
+    ])
 
     const response = await authUserSignInUseCase.perform(arrange)
 
