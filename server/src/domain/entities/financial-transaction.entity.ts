@@ -43,7 +43,7 @@ export interface FinancialTransactionProps extends FinancialTransactionPrisma {
   settings: FinancialTransactionSettings
 }
 
-export type FinancialTransactionConstructor = ObjectRequiredProps<FinancialTransactionProps, 'bankAccountId' | 'title' | 'type' | 'value'>
+export type FinancialTransactionConstructor = ObjectRequiredProps<FinancialTransactionProps, 'bankAccountId' | 'title' | 'type' | 'value' | 'senderRecipient'>
 
 export class FinancialTransaction implements FinancialTransactionProps, IFinancialTransactionSituationState {
 
@@ -101,11 +101,11 @@ export class FinancialTransaction implements FinancialTransactionProps, IFinanci
     this.title = props.title
     this.type = props.type
     this.value = props.value
+    this.senderRecipient = props.senderRecipient
     this.createdAt = props.createdAt!
     this.dateTimeCompetence = props.dateTimeCompetence!
-    this.description = props.description!
+    this.description = props.description || ''
     this.expiresIn = props.expiresIn!
-    this.senderRecipient = props.senderRecipient!
     this.settings = props.settings ?? FinancialTransaction.getDefaultSettings()
     this.situation = props.situation ?? FinancialTransactionSituation.PENDING
     this.updatedAt = props.updatedAt!
