@@ -40,6 +40,8 @@ describe('Application - People - UseCase - Create', () => {
     expect(response.people.type).toEqual(PeopleType.NATURAL_PERSON)
     expect(response.people.name).toEqual('Dan Ruan')
     expect(response.people.cpfCnpj).toEqual('10254710913')
+    expect(response.people.dateOfBirth).toEqual(null)
+    expect(response.people.gender).toEqual(null)
   })
 
   test('Should dispatch an exception when CPF/CNPJ already exists', async () => {

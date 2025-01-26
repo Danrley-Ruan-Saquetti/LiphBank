@@ -19,7 +19,7 @@ export const FinancialTransactionRule = {
     default: FinancialTransactionTypeOccurrence.SINGLE,
   },
   timesToRepeat: {
-    default: 0,
+    default: null,
   },
   frequency: {
     enum: [FinancialTransactionFrequency.ANNUALLY, FinancialTransactionFrequency.DAILY, FinancialTransactionFrequency.MONTHLY, FinancialTransactionFrequency.QUARTERLY, FinancialTransactionFrequency.SEMIANNUALLY, FinancialTransactionFrequency.WEEKLY] as const,

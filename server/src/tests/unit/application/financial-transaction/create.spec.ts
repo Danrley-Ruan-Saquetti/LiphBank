@@ -4,7 +4,7 @@ import { FinancialTransactionCreateUseCase } from '@application/use-cases/financ
 import { BankAccount } from '@domain/entities/bank-account.entity'
 import { BankAccountRepository } from '@domain/repositories/bank-account.repository'
 import { FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
-import { FinancialTransaction, FinancialTransactionSituation, FinancialTransactionType } from '@domain/entities/financial-transaction.entity'
+import { FinancialTransaction, FinancialTransactionSituation, FinancialTransactionType, FinancialTransactionTypeOccurrence } from '@domain/entities/financial-transaction.entity'
 import { createApplicationMock } from '@tests/unit/shared/mocks/module.mock'
 import { BankAccountRepositoryMock } from '@tests/unit/shared/mocks/bank-account/repository.mock'
 import { FinancialTransactionRepositoryMock } from '@tests/unit/shared/mocks/financial-transaction/repository.mock'
@@ -59,10 +59,13 @@ describe('Application - FinancialTransaction - UseCase - Create', () => {
     expect(response.financialTransaction.id).toEqual(1)
     expect(response.financialTransaction.bankAccountId).toEqual(1)
     expect(response.financialTransaction.title).toEqual('Teste')
+    expect(response.financialTransaction.type).toEqual(FinancialTransactionType.INCOME)
     expect(response.financialTransaction.value).toEqual(10)
     expect(response.financialTransaction.senderRecipient).toEqual('John Doe')
     expect(response.financialTransaction.description).toEqual('')
     expect(response.financialTransaction.situation).toEqual(FinancialTransactionSituation.PENDING)
+    expect(response.financialTransaction.settings).toEqual(FinancialTransaction.getDefaultSettings())
+    expect(response.financialTransaction.expiresIn).toEqual(null)
   })
 
   test('Should not record financial transaction when bank account is not found', async () => {
@@ -114,10 +117,13 @@ describe('Application - FinancialTransaction - UseCase - Create', () => {
     expect(response.financialTransaction).toBeInstanceOf(FinancialTransaction)
     expect(response.financialTransaction.id).toEqual(1)
     expect(response.financialTransaction.bankAccountId).toEqual(1)
+    expect(response.financialTransaction.type).toEqual(FinancialTransactionType.INCOME)
     expect(response.financialTransaction.title).toEqual('Teste')
     expect(response.financialTransaction.value).toEqual(10)
     expect(response.financialTransaction.senderRecipient).toEqual('John Doe')
     expect(response.financialTransaction.description).toEqual('')
     expect(response.financialTransaction.situation).toEqual(FinancialTransactionSituation.LATED)
+    expect(response.financialTransaction.settings).toEqual(FinancialTransaction.getDefaultSettings())
+    expect(response.financialTransaction.expiresIn).toEqual(date)
   })
 })

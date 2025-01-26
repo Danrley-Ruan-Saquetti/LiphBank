@@ -5,6 +5,7 @@ import { UserCreateUseCase } from '@application/use-cases/user/create.use-case'
 import { PeopleCreateUseCase } from '@application/use-cases/people/create.use-case'
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
 import { CreatePeopleAndUserUseCase } from '@application/use-cases/shared/create-people-user.use-case'
+import { HashService } from '@domain/adapters/crypto/hash.service'
 import { User, UserType } from '@domain/entities/user.entity'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { PeopleRepository } from '@domain/repositories/people.repository'
@@ -19,6 +20,7 @@ describe('Application - Shared - UseCase - Create People and User', () => {
   let peopleRepository: PeopleRepositoryMock
   let userRepository: UserRepositoryMock
   let codeGenerator: CodeGeneratorServiceImplementation
+  let hash: HashService
 
   beforeEach(async () => {
     userRepository = new UserRepositoryMock()
@@ -50,6 +52,7 @@ describe('Application - Shared - UseCase - Create People and User', () => {
     })
 
     createPeopleAndUserUseCase = module.get(CreatePeopleAndUserUseCase)
+    hash = module.get(HashService)
   })
 
   test('Should be a create people with People and User', async () => {
@@ -77,9 +80,15 @@ describe('Application - Shared - UseCase - Create People and User', () => {
 
     expect(response.user).toBeInstanceOf(User)
     expect(response.user.id).toEqual(1)
+    expect(response.user.peopleId).toEqual(1)
     expect(response.user.code).toEqual('USR-CODE_MOCK')
+    expect(response.user.login).toEqual('dan@gmail.com')
+    expect(response.user.type).toEqual(UserType.CLIENT)
+    expect(await hash.compare('Dan!@#123', response.user.password)).toEqual(true)
     expect(response.people).toBeInstanceOf(People)
     expect(response.people.id).toEqual(1)
     expect(response.people.cpfCnpj).toEqual('10254710913')
+    expect(response.people.dateOfBirth).toEqual(null)
+    expect(response.people.gender).toEqual(null)
   })
 })

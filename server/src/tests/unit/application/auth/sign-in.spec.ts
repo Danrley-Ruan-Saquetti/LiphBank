@@ -58,6 +58,7 @@ describe('Application - Auth - UseCase - SignIn', () => {
     const response = await authUserSignInUseCase.perform(arrange)
 
     expect(response.payload.sub).toEqual(1)
+    expect(response.payload.peopleId).toEqual(1)
     expect(response.payload.code).toEqual('USR-CODE_TEST')
     expect(typeof response.token).toEqual('string')
   })

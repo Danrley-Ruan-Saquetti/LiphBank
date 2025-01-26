@@ -58,7 +58,7 @@ export const financialTransactionCreateSchema = z.object({
 })
   .transform(({ typeOccurrence, timesToRepeat, expiresIn, ...rest }) => {
     if (timesToRepeat) { typeOccurrence = timesToRepeat > 0 ? FinancialTransactionTypeOccurrence.PROGRAMMATIC : FinancialTransactionTypeOccurrence.SINGLE }
-    else { timesToRepeat = typeOccurrence == FinancialTransactionTypeOccurrence.SINGLE ? 0 : timesToRepeat }
+    else { timesToRepeat = typeOccurrence == FinancialTransactionTypeOccurrence.SINGLE ? null : timesToRepeat }
 
     return { ...rest, typeOccurrence, timesToRepeat, expiresIn }
   })

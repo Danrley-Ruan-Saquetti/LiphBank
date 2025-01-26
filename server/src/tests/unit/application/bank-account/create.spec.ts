@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { CodeGeneratorServiceImplementation } from '@infrastructure/adapters/generator/code/code.service'
 import { BankAccountCreateUseCase } from '@application/use-cases/bank-account/create.use-case'
 import { BankAccountGenerateCodeUseCase } from '@application/use-cases/bank-account/generate-code.use-case'
@@ -44,8 +44,15 @@ describe('Application - BankAccount - UseCase - Create', () => {
       name: 'Bank Account Test',
     }
 
+    vi.spyOn(codeGenerator, 'generate').mockReturnValue('BNK-EXAMPLE')
+
     const response = await bankAccountCreateUseCase.perform(arrange)
 
     expect(response.bankAccount).toBeInstanceOf(BankAccount)
+    expect(response.bankAccount.id).toEqual(1)
+    expect(response.bankAccount.name).toEqual('Bank Account Test')
+    expect(response.bankAccount.active).toEqual(true)
+    expect(response.bankAccount.balance).toEqual(0)
+    expect(response.bankAccount.code).toEqual('BNK-EXAMPLE')
   })
 })

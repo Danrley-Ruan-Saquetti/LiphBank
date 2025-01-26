@@ -5,10 +5,11 @@ import { ConflictException } from '@application/exceptions/conflict.exception'
 import { NotFoundException } from '@application/exceptions/not-found.exception'
 import { UserCreateUseCase } from '@application/use-cases/user/create.use-case'
 import { UserGenerateCodeUseCase } from '@application/use-cases/user/generate-code.use-case'
-import { People, PeopleType } from '@domain/entities/people.entity'
+import { HashService } from '@domain/adapters/crypto/hash.service'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { User, UserType } from '@domain/entities/user.entity'
 import { PeopleRepository } from '@domain/repositories/people.repository'
+import { People, PeopleType } from '@domain/entities/people.entity'
 import { CodeGeneratorService } from '@domain/adapters/generator/code/code.service'
 import { UserRepositoryMock } from '@tests/unit/shared/mocks/user/repository.mock'
 import { PeopleRepositoryMock } from '@tests/unit/shared/mocks/people/repository.mock'
@@ -19,6 +20,7 @@ describe('Application - User - UseCase - Create', () => {
   let peopleRepository: PeopleRepositoryMock
   let userRepository: UserRepositoryMock
   let codeGenerator: CodeGeneratorServiceImplementation
+  let hash: HashService
 
   beforeEach(async () => {
     userRepository = new UserRepositoryMock()
@@ -48,6 +50,7 @@ describe('Application - User - UseCase - Create', () => {
     })
 
     userCreateUseCase = module.get(UserCreateUseCase)
+    hash = module.get(HashService)
   })
 
   test('Should be create a user', async () => {
@@ -65,15 +68,24 @@ describe('Application - User - UseCase - Create', () => {
       type: PeopleType.NATURAL_PERSON,
     }))
 
+    vi.spyOn(codeGenerator, 'generate').mockResolvedValue('USR-CODE_MOCK')
+
     const response = await userCreateUseCase.perform(arrange)
 
     expect(response.user).toBeInstanceOf(User)
     expect(response.people).toBeInstanceOf(People)
     expect(response.user.id).toEqual(1)
     expect(response.user.peopleId).toEqual(1)
+    expect(response.user.code).toEqual('USR-CODE_MOCK')
     expect(response.user.login).toEqual('dan@gmail.com')
     expect(response.user.type).toEqual(UserType.CLIENT)
+    expect(await hash.compare('Dan!@#133', response.user.password)).toEqual(true)
     expect(response.people.id).toEqual(1)
+    expect(response.people.type).toEqual(PeopleType.NATURAL_PERSON)
+    expect(response.people.name).toEqual('Danrley')
+    expect(response.people.cpfCnpj).toEqual('10254710913')
+    expect(response.people.dateOfBirth).toEqual(null)
+    expect(response.people.gender).toEqual(null)
   })
 
   test('Should dispatch an exception when Login and Type already exists', async () => {
