@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common'
 import { BankAccountUpdateBalanceUseCase } from '@application/use-cases/bank-account/update-balance.use-case'
 import { Listener } from '@domain/adapters/observer/listener'
 import { FinancialTransactionType } from '@domain/entities/financial-transaction.entity'
-import { FinancialTransactionCancelEvent } from '../events/financial-transaction/cancel.event'
+import { FinancialTransactionUpdateSituationEvent } from '@application/observer/events/financial-transaction/update-situation.event'
 
 @Injectable()
-export class UpdateBalanceBankAccountListener extends Listener<FinancialTransactionCancelEvent['events.financial-transaction.cancel']> {
+export class UpdateBalanceBankAccountListener extends Listener<FinancialTransactionUpdateSituationEvent['events.financial-transaction.update-situation']> {
 
   constructor(
     private readonly bankAccountUpdateBalance: BankAccountUpdateBalanceUseCase
@@ -13,7 +13,7 @@ export class UpdateBalanceBankAccountListener extends Listener<FinancialTransact
     super()
   }
 
-  async perform(data: FinancialTransactionCancelEvent['events.financial-transaction.cancel']) {
+  async perform(data: FinancialTransactionUpdateSituationEvent['events.financial-transaction.update-situation']) {
     const type = data.financialTransaction.type == FinancialTransactionType.INCOME ? 'IN' : 'OUT'
 
     await this.bankAccountUpdateBalance.perform({
