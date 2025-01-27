@@ -142,6 +142,7 @@ npm run start:dev
 - [X] O sistema deve atualizar a situação das transações financeiras para Atrasado
 - [ ] O sistema deve duplicar transações financeiras que estejam marcadas para repetir
 - [ ] O sistema deve manter o saldo da conta bancário
+- [ ] O sistema deve permitir a inativação da conta bancária
 - [X] O sistema deve enviar um email após a criação de uma nova conta de usuário
 - [X] O sistema deve enviar um email após a criação de uma nova conta bancária
 - [X] O sistema deve enviar um email após a criação de uma nova transação financeira
@@ -166,3 +167,4 @@ npm run start:dev
 - [ ] O saldo da conta bancária deve ser atualizado quando uma transação for concluída ou cancelada
 - [ ] Caso o tipo da transação seja Renda, ao concluir a transação deve atualizar a situação para Recebido e o valor da transação deve ser somado ao saldo da conta bancária
 - [ ] Caso o tipo da transação seja Despesa, ao concluir a transação deve atualizar a situação para Pago e o valor da transação deve ser subtraído do saldo da conta bancária
+- [ ] Quando a conta bancária estiver inativa, não deve ser possível dar manutenção nas transações financeiras
