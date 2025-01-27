@@ -48,6 +48,7 @@ src/
 │   ├── observer/ # Organiza os eventos (events) e os ouvintes (listeners) destes eventos
 │   │   ├── events/ # Definição dos eventos
 │   │   └── listeners/ # Listeners dos eventos
+│   ├── services/ # Classes que encapsulam lógica específica e reutilizável para suporte aos casos de uso
 │   ├── types/ # Definição das tipagens reutilizáveis dentro da camada de aplicação
 │   └── use-case/ # Implementação dos casos de uso
 ├── domain/ # Define as abstrações e entidades da aplicação
