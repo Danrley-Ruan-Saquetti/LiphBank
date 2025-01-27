@@ -16,11 +16,7 @@ export class PeopleUpdateUseCase extends UseCase {
   async perform(args: PeopleUpdateDTO) {
     const { id, dateOfBirth, gender, name } = this.validator.validate(peopleUpdateSchema, args)
 
-    const people = await this.peopleRepository.findById(id)
-
-    if (!people) {
-      throw new NotFoundException('People', `${id}`)
-    }
+    const people = await this.findPeople(id)
 
     if (typeof dateOfBirth != 'undefined') people.dateOfBirth = dateOfBirth
     if (typeof gender != 'undefined') people.gender = gender
@@ -29,5 +25,15 @@ export class PeopleUpdateUseCase extends UseCase {
     const peopleUpdate = await this.peopleRepository.update(people.id, people)
 
     return { people: peopleUpdate }
+  }
+
+  private async findPeople(id: number) {
+    const people = await this.peopleRepository.findById(id)
+
+    if (!people) {
+      throw new NotFoundException('People', `${id}`)
+    }
+
+    return people
   }
 }

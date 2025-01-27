@@ -17,6 +17,12 @@ export class FinancialTransactionFindUseCase extends UseCase {
   async perform(args: FinancialTransactionFindDTO) {
     const { bankAccountId, id } = this.validator.validate(financialTransactionFindSchema, args)
 
+    const financialTransaction = await this.findFinancialTransaction(id, bankAccountId)
+
+    return { financialTransaction }
+  }
+
+  private async findFinancialTransaction(id: number, bankAccountId: number) {
     const financialTransaction = await this.financialTransactionRepository.findById(id)
 
     if (!financialTransaction) {
@@ -27,6 +33,6 @@ export class FinancialTransactionFindUseCase extends UseCase {
       throw new UnauthorizedException('You do not have permission to access this financial transaction')
     }
 
-    return { financialTransaction }
+    return financialTransaction
   }
 }

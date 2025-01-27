@@ -18,18 +18,29 @@ export class UserFindUseCase extends UseCase {
   async perform(args: UserFindDTO) {
     const { id } = this.validator.validate(userFindSchema, args)
 
+    const user = await this.findUser(id)
+    const people = await this.findPeople(user.peopleId)
+
+    return { user, people }
+  }
+
+  private async findUser(id: number) {
     const user = await this.userRepository.findById(id)
 
     if (!user) {
       throw new NotFoundException('User', `${id}`)
     }
 
-    const people = await this.peopleRepository.findById(user.peopleId)
+    return user
+  }
+
+  private async findPeople(id: number) {
+    const people = await this.peopleRepository.findById(id)
 
     if (!people) {
-      throw new NotFoundException('People', `${user.peopleId}`)
+      throw new NotFoundException('People', `${id}`)
     }
 
-    return { user, people }
+    return people
   }
 }
