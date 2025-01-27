@@ -33,15 +33,7 @@ export class FinancialTransactionCreateUseCase extends UseCase {
       frequency
     } = this.validator.validate(financialTransactionCreateSchema, args)
 
-    const bankAccount = await this.bankAccountRepository.findById(bankAccountId)
-
-    if (!bankAccount) {
-      throw new NotFoundException('Bank Account', `${bankAccountId}`)
-    }
-
-    if (!bankAccount.active) {
-      throw new BankAccountInactiveException('Financial Transaction cannot be recorded as the bank account is inactive')
-    }
+    const bankAccount = await this.findBankAccount(bankAccountId)
 
     const situation = new DefineInitialSituationFinancialTransactionValueObject({ expiresIn }).getSituation()
 
@@ -66,5 +58,19 @@ export class FinancialTransactionCreateUseCase extends UseCase {
     const financialTransactionCreated = await this.financialTransactionRepository.create(financialTransaction)
 
     return { financialTransaction: financialTransactionCreated }
+  }
+
+  private async findBankAccount(bankAccountId: number) {
+    const bankAccount = await this.bankAccountRepository.findById(bankAccountId)
+
+    if (!bankAccount) {
+      throw new NotFoundException('Bank Account', `${bankAccountId}`)
+    }
+
+    if (!bankAccount.active) {
+      throw new BankAccountInactiveException('Financial Transaction cannot be recorded as the bank account is inactive')
+    }
+
+    return bankAccount
   }
 }

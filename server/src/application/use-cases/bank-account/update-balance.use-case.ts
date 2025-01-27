@@ -27,7 +27,7 @@ export class BankAccountUpdateBalanceUseCase extends UseCase<BankAccountUpdateBa
     return { bankAccount: bankAccountUpdated }
   }
 
-  async getBankAccount(id: number) {
+  private async getBankAccount(id: number) {
     const bankAccount = await this.bankAccountRepository.findById(id)
 
     if (!bankAccount) {
