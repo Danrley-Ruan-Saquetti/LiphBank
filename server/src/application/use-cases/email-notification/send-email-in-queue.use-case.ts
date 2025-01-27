@@ -23,20 +23,7 @@ export class EmailNotificationSendEmailInQueueUseCase extends UseCase<EmailNotif
     const notificationInQueue = await this.getEmailNotificationsInQueue(limit)
 
     for (let i = 0; i < notificationInQueue.length; i++) {
-      const emailNotification = notificationInQueue[i]
-
-      try {
-        await this.sendEmail(emailNotification)
-        await this.updateStateSuccessSendNotification(emailNotification)
-
-        await this.observer.notify('events.email-notification.send.success', { emailNotification: emailNotification })
-      } catch (error: any) {
-        await this.updateStateErrorSendNotification(emailNotification)
-
-        await this.observer.notify('events.email-notification.send.error', { emailNotification: emailNotification, error })
-      } finally {
-        await this.emailNotificationRepository.update(emailNotification.id, emailNotification)
-      }
+      await this.resolveSendEmailNotification(notificationInQueue[i])
     }
   }
 
@@ -46,6 +33,21 @@ export class EmailNotificationSendEmailInQueueUseCase extends UseCase<EmailNotif
       orderBy: { id: 'asc' },
       take: limit
     })
+  }
+
+  private async resolveSendEmailNotification(emailNotification: EmailNotification) {
+    try {
+      await this.sendEmail(emailNotification)
+      await this.updateStateSuccessSendNotification(emailNotification)
+
+      await this.observer.notify('events.email-notification.send.success', { emailNotification: emailNotification })
+    } catch (error: any) {
+      await this.updateStateErrorSendNotification(emailNotification)
+
+      await this.observer.notify('events.email-notification.send.error', { emailNotification: emailNotification, error })
+    } finally {
+      await this.emailNotificationRepository.update(emailNotification.id, emailNotification)
+    }
   }
 
   private async sendEmail({ sender, recipient, body, subject }: EmailNotification) {
