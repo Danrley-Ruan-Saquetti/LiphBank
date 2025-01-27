@@ -4,7 +4,7 @@ import { CodeGenerationFailedException } from '@application/exceptions/code-gene
 import { GenerateCodeDTO, generateCodeSchema } from '@application/dto/common/generate-code.dto'
 import { CodeGeneratorService } from '@domain/adapters/generator/code/code.service'
 
-export class GenerateCodeUseCase extends UseCase {
+export abstract class GenerateCodeUseCase extends UseCase {
 
   @Inject(CodeGeneratorService)
   protected codeGenerator: CodeGeneratorService
@@ -31,9 +31,6 @@ export class GenerateCodeUseCase extends UseCase {
     throw new CodeGenerationFailedException('user')
   }
 
-  protected async validateCode(code: string) {
-    return true
-  }
-
-  protected async attemptsExceeded(): Promise<void> { }
+  protected abstract validateCode(code: string): Promise<boolean>
+  protected abstract attemptsExceeded(): Promise<void>
 }
