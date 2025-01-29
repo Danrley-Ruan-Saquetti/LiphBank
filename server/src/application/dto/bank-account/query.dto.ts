@@ -11,7 +11,6 @@ export const bankAccountQuerySchema = querySchema().extend({
   name: stringQuerySchema(),
   code: stringQuerySchema(),
   active: booleanQuerySchema(),
-  balance: numberQuerySchema(),
 })
 
 export type BankAccountQueryDTO = z.input<typeof bankAccountQuerySchema>
