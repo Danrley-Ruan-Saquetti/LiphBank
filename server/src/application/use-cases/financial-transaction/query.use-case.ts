@@ -13,15 +13,15 @@ export class FinancialTransactionQueryUseCase extends UseCase {
   }
 
   async perform(args: FinancialTransactionQueryDTO) {
-    const { bankAccountId, pageIndex, pageSize, ...filters } = this.validator.validate(financialTransactionQuerySchema, args)
+    const { bankAccountId, page, size, ...filters } = this.validator.validate(financialTransactionQuerySchema, args)
 
     const financialTransactions = await this.financialTransactionRepository.findMany({
       where: {
         ...filters,
         bankAccountId,
       },
-      take: pageSize,
-      skip: pageSize * pageIndex
+      take: size,
+      skip: size * page
     })
 
     return { financialTransactions }
