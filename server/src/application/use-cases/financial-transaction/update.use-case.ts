@@ -42,12 +42,14 @@ export class FinancialTransactionUpdateUseCase extends UseCase {
       frequency?: FinancialTransactionFrequency | null
       expiresIn?: Date | null
       dateTimeCompetence?: Date
+      value?: number
     }
   ) {
     if (data.dateTimeCompetence) financialTransaction.dateTimeCompetence = data.dateTimeCompetence
     if (data.description) financialTransaction.description = data.description
     if (data.senderRecipient) financialTransaction.senderRecipient = data.senderRecipient
     if (data.title) financialTransaction.title = data.title
+    if (data.value) financialTransaction.value = data.value
     if (data.frequency) financialTransaction.settings.frequency = data.frequency
     if (data.timesToRepeat) financialTransaction.settings.timesToRepeat = data.timesToRepeat
     if (data.typeOccurrence) financialTransaction.settings.typeOccurrence = data.typeOccurrence

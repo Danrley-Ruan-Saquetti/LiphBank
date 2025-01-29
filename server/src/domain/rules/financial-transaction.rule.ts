@@ -39,10 +39,5 @@ export const FinancialTransactionRule = {
     [FinancialTransactionFrequency.SEMIANNUALLY]: 180,
     [FinancialTransactionFrequency.ANNUALLY]: 365,
   },
-  update: {
-    situationsEnableToUpdate: {
-      enum: [FinancialTransactionSituation.CANCELED] as const,
-    }
-  },
   closedSituations: [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.PAID_OUT, FinancialTransactionSituation.RECEIVED]
 }

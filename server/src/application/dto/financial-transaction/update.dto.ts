@@ -21,6 +21,14 @@ export const financialTransactionUpdateSchema = z.object({
     .trim()
     .optional()
     .nullish(),
+  value: z
+    .coerce
+    .number({
+      'required_error': FinancialTransactionMessage.value.required,
+      'invalid_type_error': FinancialTransactionMessage.value.mustBePositive,
+    })
+    .positive({ message: FinancialTransactionMessage.value.mustBePositive })
+    .optional(),
   isObservable: z
     .coerce
     .boolean()
@@ -59,7 +67,6 @@ export const financialTransactionUpdateSchema = z.object({
     .optional(),
 })
   .transform(({ typeOccurrence, timesToRepeat, ...rest }) => {
-
     if (typeOccurrence == FinancialTransactionTypeOccurrence.SINGLE) {
       timesToRepeat = 0
     }
