@@ -24,8 +24,7 @@ export enum FinancialTransactionTypeOccurrence {
 
 export enum FinancialTransactionSituation {
   PENDING = 'PE',
-  PAID_OUT = 'PO',
-  RECEIVED = 'RV',
+  COMPLETED = 'CL',
   LATED = 'LT',
   CANCELED = 'CN',
 }

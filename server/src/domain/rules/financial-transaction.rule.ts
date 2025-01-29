@@ -9,7 +9,7 @@ export const FinancialTransactionRule = {
     default: '',
   },
   situation: {
-    enum: [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.LATED, FinancialTransactionSituation.PAID_OUT, FinancialTransactionSituation.PENDING, FinancialTransactionSituation.RECEIVED] as const,
+    enum: [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.LATED, FinancialTransactionSituation.COMPLETED, FinancialTransactionSituation.PENDING] as const,
   },
   type: {
     enum: [FinancialTransactionType.EXPENSE, FinancialTransactionType.INCOME] as const,
@@ -39,5 +39,5 @@ export const FinancialTransactionRule = {
     [FinancialTransactionFrequency.SEMIANNUALLY]: 180,
     [FinancialTransactionFrequency.ANNUALLY]: 365,
   },
-  closedSituations: [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.PAID_OUT, FinancialTransactionSituation.RECEIVED]
+  closedSituations: [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.COMPLETED]
 }

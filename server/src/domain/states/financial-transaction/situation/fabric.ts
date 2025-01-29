@@ -11,8 +11,7 @@ export class FinancialTransactionSituationStateFabric {
     switch (financialTransaction.situation) {
       case FinancialTransactionSituation.CANCELED: return new FinancialTransactionCancelState(financialTransaction)
       case FinancialTransactionSituation.LATED: return new FinancialTransactionLateState(financialTransaction)
-      case FinancialTransactionSituation.RECEIVED: return new FinancialTransactionConcludeState(financialTransaction)
-      case FinancialTransactionSituation.PAID_OUT: return new FinancialTransactionConcludeState(financialTransaction)
+      case FinancialTransactionSituation.COMPLETED: return new FinancialTransactionConcludeState(financialTransaction)
       case FinancialTransactionSituation.PENDING:
       default: return new FinancialTransactionPendingState(financialTransaction)
     }

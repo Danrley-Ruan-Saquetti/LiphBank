@@ -104,8 +104,7 @@ enum FinancialTransactionTypeOccurrence {
 
 enum FinancialTransactionSituation {
   PE // PENDING
-  PO // PAID_OUT
-  RV // RECEIVED
+  CL // COMPLETED
   LT // LATED
   CN // CANCELED
 

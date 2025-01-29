@@ -1,6 +1,6 @@
 import { InvalidStateException } from '@domain/exceptions/invalid-state.exception'
+import { FinancialTransactionSituation } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionSituationState } from '@domain/states/financial-transaction/situation/situation.state'
-import { FinancialTransactionSituation, FinancialTransactionType } from '@domain/entities/financial-transaction.entity'
 
 export class FinancialTransactionLateState extends FinancialTransactionSituationState {
 
@@ -13,16 +13,7 @@ export class FinancialTransactionLateState extends FinancialTransactionSituation
   }
 
   conclude() {
-    let situation: FinancialTransactionSituation
-
-    if (this.financialTransaction.type == FinancialTransactionType.EXPENSE) {
-      situation = FinancialTransactionSituation.PAID_OUT
-    }
-    else {
-      situation = FinancialTransactionSituation.RECEIVED
-    }
-
-    this.financialTransaction.situation = situation
+    this.financialTransaction.situation = FinancialTransactionSituation.COMPLETED
   }
 
   late() { }

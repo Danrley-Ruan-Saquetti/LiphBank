@@ -1,4 +1,4 @@
-import { FinancialTransactionSituation, FinancialTransactionType } from '@domain/entities/financial-transaction.entity'
+import { FinancialTransactionSituation } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionSituationState } from '@domain/states/financial-transaction/situation/situation.state'
 
 export class FinancialTransactionPendingState extends FinancialTransactionSituationState {
@@ -6,16 +6,7 @@ export class FinancialTransactionPendingState extends FinancialTransactionSituat
   pending() { }
 
   conclude() {
-    let situation: FinancialTransactionSituation
-
-    if (this.financialTransaction.type == FinancialTransactionType.EXPENSE) {
-      situation = FinancialTransactionSituation.PAID_OUT
-    }
-    else {
-      situation = FinancialTransactionSituation.RECEIVED
-    }
-
-    this.financialTransaction.situation = situation
+    this.financialTransaction.situation = FinancialTransactionSituation.COMPLETED
   }
 
   late() {
