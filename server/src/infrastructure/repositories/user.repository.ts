@@ -40,7 +40,9 @@ export class UserRepositoryImplementation extends UserRepository {
           type: userModel.type,
           active: userModel.active,
           lastAccess: userModel.lastAccess,
-          peopleId: userModel.peopleId,
+          people: {
+            connect: { id: userModel.peopleId }
+          }
         }
       })
 

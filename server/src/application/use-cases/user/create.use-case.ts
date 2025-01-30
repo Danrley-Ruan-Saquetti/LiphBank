@@ -56,7 +56,7 @@ export class UserCreateUseCase extends UseCase<UserCreateEvent> {
     }
 
     if (!people) {
-      throw new NotFoundException('People', `${peopleId}`)
+      throw new NotFoundException('People', `${peopleId || cpfCnpj}`)
     }
 
     return people
