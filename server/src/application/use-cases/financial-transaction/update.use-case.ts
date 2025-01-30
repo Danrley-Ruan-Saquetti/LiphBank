@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { FinancialTransactionFindUseCase } from '@application/use-cases/financial-transaction/find.use-case'
+import { OperationClosedFinancialTransactionNotAllowedException } from '@application/exceptions/operation-closed-financial-transaction-not-allowed.exception'
 import { FinancialTransactionUpdateDTO, financialTransactionUpdateSchema } from '@application/dto/financial-transaction/update.dto'
-import { FinancialTransactionRule } from '@domain/rules/financial-transaction.rule'
 import { FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
 import { DefineInitialSituationFinancialTransactionValueObject } from '@domain/value-objects/define-initial-situation-financial-transaction.value-object'
 import { FinancialTransaction, FinancialTransactionFrequency, FinancialTransactionTypeOccurrence } from '@domain/entities/financial-transaction.entity'
@@ -22,6 +22,13 @@ export class FinancialTransactionUpdateUseCase extends UseCase {
 
     const { financialTransaction } = await this.financialTransactionFindUseCase.perform({ id, bankAccountId })
 
+    if (financialTransaction.isCompleted()) {
+      throw new OperationClosedFinancialTransactionNotAllowedException(
+        'It is not possible to update the financial transaction as it has been closed',
+        { situation: financialTransaction.situation }
+      )
+    }
+
     this.updateDataFinancialTransaction(financialTransaction, data)
 
     const financialTransactionUpdated = await this.financialTransactionRepository.update(financialTransaction.id, financialTransaction)
@@ -35,8 +42,6 @@ export class FinancialTransactionUpdateUseCase extends UseCase {
       title?: string
       senderRecipient?: string
       description?: string | null
-      isObservable?: boolean
-      isSendNotification?: boolean
       timesToRepeat?: number | null
       typeOccurrence?: FinancialTransactionTypeOccurrence
       frequency?: FinancialTransactionFrequency | null
@@ -55,10 +60,7 @@ export class FinancialTransactionUpdateUseCase extends UseCase {
     if (data.typeOccurrence) financialTransaction.settings.typeOccurrence = data.typeOccurrence
     if (data.expiresIn) {
       financialTransaction.expiresIn = data.expiresIn
-
-      if (!FinancialTransactionRule.closedSituations.includes(financialTransaction.situation)) {
-        financialTransaction.situation = new DefineInitialSituationFinancialTransactionValueObject({ expiresIn: data.expiresIn }).getSituation()
-      }
+      financialTransaction.situation = new DefineInitialSituationFinancialTransactionValueObject({ expiresIn: data.expiresIn }).getSituation()
     }
   }
 }

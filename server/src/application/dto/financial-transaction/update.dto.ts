@@ -29,14 +29,6 @@ export const financialTransactionUpdateSchema = z.object({
     })
     .positive({ message: FinancialTransactionMessage.value.mustBePositive })
     .optional(),
-  isObservable: z
-    .coerce
-    .boolean()
-    .optional(),
-  isSendNotification: z
-    .coerce
-    .boolean()
-    .optional(),
   timesToRepeat: z
     .coerce
     .number()
