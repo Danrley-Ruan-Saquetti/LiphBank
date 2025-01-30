@@ -39,5 +39,4 @@ export const FinancialTransactionRule = {
     [FinancialTransactionFrequency.SEMIANNUALLY]: 180,
     [FinancialTransactionFrequency.ANNUALLY]: 365,
   },
-  closedSituations: [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.COMPLETED]
 }
