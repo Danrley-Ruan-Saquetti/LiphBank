@@ -112,6 +112,27 @@ export class FinancialTransaction implements FinancialTransactionProps, IFinanci
     this._situationState = FinancialTransactionSituationStateFabric.getState(this)
   }
 
+  static getDefaultSettings(): FinancialTransactionSettings {
+    return {
+      timesToRepeat: null,
+      countRepeatedOccurrences: 0,
+      typeOccurrence: FinancialTransactionTypeOccurrence.SINGLE,
+      frequency: null,
+    }
+  }
+
+  isClosed() {
+    return [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.COMPLETED].includes(this.situation)
+  }
+
+  isCompleted() {
+    return this.situation == FinancialTransactionSituation.COMPLETED
+  }
+
+  isCanceled() {
+    return this.situation == FinancialTransactionSituation.CANCELED
+  }
+
   toJSON(): FinancialTransactionProps {
     return {
       id: this.id,
@@ -127,15 +148,6 @@ export class FinancialTransaction implements FinancialTransactionProps, IFinanci
       type: this.type,
       updatedAt: this.updatedAt,
       value: this.value,
-    }
-  }
-
-  static getDefaultSettings(): FinancialTransactionSettings {
-    return {
-      timesToRepeat: null,
-      countRepeatedOccurrences: 0,
-      typeOccurrence: FinancialTransactionTypeOccurrence.SINGLE,
-      frequency: null,
     }
   }
 
