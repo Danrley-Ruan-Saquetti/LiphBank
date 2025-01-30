@@ -1,12 +1,12 @@
 import { Injectable, Scope } from '@nestjs/common'
 import pLimit from 'p-limit'
-import { ConcurrencyParallelismHandler, ConcurrencyService, ConcurrencyParallelismOptions } from '@domain/adapters/concurrency/concurrency.serivce'
+import { ConcurrencyParallelismHandler, ConcurrencyService, ConcurrencyParallelismOptions } from '@domain/adapters/concurrency/concurrency.service'
 
 @Injectable({ scope: Scope.REQUEST })
-export class ConcurrencyServiceImplemntation extends ConcurrencyService {
+export class ConcurrencyServiceImplementation extends ConcurrencyService {
 
-  async parallelism<T extends any = void>(handlers: ConcurrencyParallelismHandler<T>[], { concurrencies = 1 }: ConcurrencyParallelismOptions = {}) {
-    const limit = pLimit(concurrencies)
+  async parallelism<T = void>(handlers: ConcurrencyParallelismHandler<T>[], { concurrences = 1 }: ConcurrencyParallelismOptions = {}) {
+    const limit = pLimit(concurrences)
 
     const limiteHandlers = handlers.map((handler) => limit(handler))
 

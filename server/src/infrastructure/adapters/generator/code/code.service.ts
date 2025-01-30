@@ -1,7 +1,7 @@
+import { Injectable, Scope } from '@nestjs/common'
 import { CodeGeneratorService, CodeGeneratorOptions } from '@domain/adapters/generator/code/code.service'
-import { Injectable } from '@nestjs/common'
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class CodeGeneratorServiceImplementation extends CodeGeneratorService {
 
   private options: CodeGeneratorOptions = {

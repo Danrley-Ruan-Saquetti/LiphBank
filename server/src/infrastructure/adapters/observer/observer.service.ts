@@ -1,8 +1,10 @@
+import { Injectable, Scope } from '@nestjs/common'
 import { ListenerHandle } from '@infrastructure/adapters/observer/listener-handle'
 import { Listener } from '@domain/adapters/observer/listener'
 import { ObserverService } from '@domain/adapters/observer/observer.service'
 import { IEventsType, SubscriberListener } from '@domain/adapters/observer/interfaces'
 
+@Injectable({ scope: Scope.REQUEST })
 export class ObserverListenerImplementation<Events extends IEventsType = any> extends ObserverService<Events> {
 
   private readonly Listeners = new Map<keyof Events, Listener[]>()
