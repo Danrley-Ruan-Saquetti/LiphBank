@@ -22,6 +22,6 @@ export class UserGenerateCodeUseCase extends GenerateCodeUseCase {
   }
 
   protected async attemptsExceeded() {
-    throw new CodeGenerationFailedException('Method not implemented.')
+    throw new CodeGenerationFailedException('user')
   }
 }

@@ -28,7 +28,7 @@ export abstract class GenerateCodeUseCase extends UseCase {
       }
     }
 
-    throw new CodeGenerationFailedException('user')
+    await this.attemptsExceeded()
   }
 
   protected abstract validateCode(code: string): Promise<boolean>
