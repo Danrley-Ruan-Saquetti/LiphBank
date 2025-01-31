@@ -1,4 +1,5 @@
 import { InvalidStateException } from '@domain/exceptions/invalid-state.exception'
+import { FinancialTransactionSituation } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionSituationState } from '@domain/states/financial-transaction/situation/situation.state'
 
 export class FinancialTransactionConcludeState extends FinancialTransactionSituationState {
@@ -14,6 +15,6 @@ export class FinancialTransactionConcludeState extends FinancialTransactionSitua
   }
 
   cancel() {
-    throw new InvalidStateException('It is not possible to cancel a Financial Transaction that is already completed')
+    this.financialTransaction.situation = FinancialTransactionSituation.CANCELED
   }
 }
