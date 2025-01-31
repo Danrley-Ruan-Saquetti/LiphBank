@@ -22,54 +22,54 @@ export type NotificationConstructor = ObjectRequiredProps<NotificationProps, 'ty
 
 export class Notification implements NotificationProps {
 
-  private _type: NotificationType
-  private _situation: NotificationSituation
   private _id: number
+  private _type: NotificationType
   private _subject: string
   private _body: string
+  private _situation: NotificationSituation
   private _sendAt: Date | null
-  private _createdAt: Date
   private _updatedAt: Date
+  private _createdAt: Date
 
-  get type() { return this._type }
-  get situation() { return this._situation }
   get id() { return this._id }
+  get type() { return this._type }
   get subject() { return this._subject }
   get body() { return this._body }
+  get situation() { return this._situation }
   get sendAt() { return this._sendAt }
-  get createdAt() { return this._createdAt }
   get updatedAt() { return this._updatedAt }
+  get createdAt() { return this._createdAt }
 
-  set type(value) { this._type = value }
-  set situation(value) { this._situation = value }
   set id(value) { this._id = value }
+  set type(value) { this._type = value }
   set subject(value) { this._subject = value }
   set body(value) { this._body = value }
+  set situation(value) { this._situation = value }
   set sendAt(value) { this._sendAt = value }
-  set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
+  set createdAt(value) { this._createdAt = value }
 
   constructor(props: NotificationConstructor) {
     this.id = props.id!
     this.type = props.type
-    this.body = props.body
     this.subject = props.subject
-    this.sendAt = props.sendAt || null
+    this.body = props.body
     this.situation = props.situation ?? NotificationSituation.IN_QUEUE
-    this.createdAt = props.createdAt!
+    this.sendAt = props.sendAt || null
     this.updatedAt = props.updatedAt!
+    this.createdAt = props.createdAt!
   }
 
   toJSON(): NotificationProps {
     return {
       id: this.id,
       type: this.type,
-      body: this.body,
-      sendAt: this.sendAt,
-      situation: this.situation,
       subject: this.subject,
-      createdAt: this.createdAt,
+      body: this.body,
+      situation: this.situation,
+      sendAt: this.sendAt,
       updatedAt: this.updatedAt,
+      createdAt: this.createdAt,
     }
   }
 }

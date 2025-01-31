@@ -51,13 +51,13 @@ export class User {
     this.id = props.id!
     this.peopleId = props.peopleId
     this.type = props.type
-    this.code = props.code
     this.login = props.login
     this.password = props.password
+    this.code = props.code
     this.active = props.active ?? true
     this.lastAccess = props.lastAccess!
-    this.createdAt = props.createdAt!
     this.updatedAt = props.updatedAt!
+    this.createdAt = props.createdAt!
   }
 
   toJSON(): UserPrisma {
@@ -65,13 +65,13 @@ export class User {
       id: this.id,
       peopleId: this.peopleId,
       type: this.type,
-      active: this.active,
-      code: this.code,
       login: this.login,
       password: this.password,
+      code: this.code,
+      active: this.active,
       lastAccess: this.lastAccess,
-      createdAt: this.createdAt,
       updatedAt: this.updatedAt,
+      createdAt: this.createdAt,
     }
   }
 }

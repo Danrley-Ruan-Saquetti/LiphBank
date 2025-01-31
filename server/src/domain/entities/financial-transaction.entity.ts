@@ -46,66 +46,66 @@ export type FinancialTransactionConstructor = ObjectRequiredProps<FinancialTrans
 
 export class FinancialTransaction implements FinancialTransactionProps, IFinancialTransactionSituationState {
 
-  private _type: FinancialTransactionType
-  private _situation: FinancialTransactionSituation
   private _id: number
   private _bankAccountId: number
+  private _type: FinancialTransactionType
   private _title: string
-  private _description: string
   private _value: number
-  private _senderRecipient: string
+  private _description: string
+  private _situation: FinancialTransactionSituation
   private _expiresIn: Date | null
+  private _senderRecipient: string
   private _dateTimeCompetence: Date
-  private _settings: FinancialTransactionSettings
-  private _createdAt: Date
   private _updatedAt: Date
+  private _createdAt: Date
+  private _settings: FinancialTransactionSettings
 
   private _situationState: IFinancialTransactionSituationState
 
-  get type() { return this._type }
-  get situation() { return this._situation }
   get id() { return this._id }
   get bankAccountId() { return this._bankAccountId }
+  get type() { return this._type }
   get title() { return this._title }
-  get description() { return this._description }
   get value() { return this._value }
-  get senderRecipient() { return this._senderRecipient }
+  get description() { return this._description }
+  get situation() { return this._situation }
   get expiresIn() { return this._expiresIn }
+  get senderRecipient() { return this._senderRecipient }
   get dateTimeCompetence() { return this._dateTimeCompetence }
-  get settings() { return this._settings }
-  get createdAt() { return this._createdAt }
   get updatedAt() { return this._updatedAt }
+  get createdAt() { return this._createdAt }
+  get settings() { return this._settings }
 
+  set id(value) { this._id = value }
   set type(value) { this._type = value }
+  set bankAccountId(value) { this._bankAccountId = value }
+  set title(value) { this._title = value }
+  set value(value) { this._value = value }
+  set description(value) { this._description = value }
   set situation(value) {
     this._situation = value
 
     this._situationState = FinancialTransactionSituationStateFabric.getState(this)
   }
-  set id(value) { this._id = value }
-  set bankAccountId(value) { this._bankAccountId = value }
-  set title(value) { this._title = value }
-  set description(value) { this._description = value }
-  set value(value) { this._value = value }
-  set senderRecipient(value) { this._senderRecipient = value }
   set expiresIn(value) { this._expiresIn = value }
+  set senderRecipient(value) { this._senderRecipient = value }
   set dateTimeCompetence(value) { this._dateTimeCompetence = value }
-  set settings(value) { this._settings = value }
-  set createdAt(value) { this._createdAt = value }
   set updatedAt(value) { this._updatedAt = value }
+  set createdAt(value) { this._createdAt = value }
+  set settings(value) { this._settings = value }
 
   constructor(props: FinancialTransactionConstructor) {
     this.id = props.id!
     this.bankAccountId = props.bankAccountId
-    this.title = props.title
     this.type = props.type
+    this.title = props.title
     this.value = props.value
+    this.description = props.description || ''
+    this.situation = props.situation ?? FinancialTransactionSituation.PENDING
+    this.expiresIn = props.expiresIn || null
     this.senderRecipient = props.senderRecipient
     this.dateTimeCompetence = props.dateTimeCompetence! || null
-    this.description = props.description || ''
-    this.expiresIn = props.expiresIn || null
     this.settings = props.settings ?? FinancialTransaction.getDefaultSettings()
-    this.situation = props.situation ?? FinancialTransactionSituation.PENDING
     this.createdAt = props.createdAt!
     this.updatedAt = props.updatedAt!
 
@@ -137,17 +137,17 @@ export class FinancialTransaction implements FinancialTransactionProps, IFinanci
     return {
       id: this.id,
       bankAccountId: this.bankAccountId,
-      createdAt: this.createdAt,
-      dateTimeCompetence: this.dateTimeCompetence,
+      type: this.type,
+      title: this.title,
+      value: this.value,
       description: this.description,
+      situation: this.situation,
       expiresIn: this.expiresIn,
       senderRecipient: this.senderRecipient,
+      dateTimeCompetence: this.dateTimeCompetence,
       settings: this.settings,
-      situation: this.situation,
-      title: this.title,
-      type: this.type,
+      createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-      value: this.value,
     }
   }
 
