@@ -25,6 +25,7 @@ export class CatchAllExceptionFilter implements ExceptionFilter {
       router: ctx.getRequest().url,
       statusCode: httpStatus,
       params: ctx.getRequest().params,
+      query: ctx.getRequest().query,
       body: ctx.getRequest().body,
     })
 
@@ -61,7 +62,7 @@ export class CatchAllExceptionFilter implements ExceptionFilter {
     return HttpStatus.INTERNAL_SERVER_ERROR
   }
 
-  async saveErrorLog(exception: any, context: { method: string, router: string, statusCode: number, params?: Record<string, any>, body?: Record<string, any> }) {
+  async saveErrorLog(exception: any, context: { method: string, router: string, statusCode: number, params?: Record<string, any>, query?: Record<string, any>, body?: Record<string, any> }) {
     await this.errorLogService.save({
       type: 'HTTP',
       origin: `http.${context.method.toLowerCase()}.${context.router}`,
