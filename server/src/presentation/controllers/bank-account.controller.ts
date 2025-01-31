@@ -4,6 +4,7 @@ import { UserSession } from '@presentation/types/user-session.type'
 import { AuthUserGuard } from '@presentation/guards/auth-user.guard'
 import { BankAccountSession } from '@presentation/types/bank-account-session.type'
 import { AuthBankAccountGuard } from '@presentation/guards/auth-bank-account.guard'
+import { BankAccountFindUseCase } from '@application/use-cases/bank-account/find.use-case'
 import { BankAccountQueryUseCase } from '@application/use-cases/bank-account/query.use-case'
 import { BankAccountUpdateUseCase } from '@application/use-cases/bank-account/update.use-case'
 import { BankAccountCreateUseCase } from '@application/use-cases/bank-account/create.use-case'
@@ -17,6 +18,7 @@ export class BankAccountController {
     private readonly bankAccountCreateUseCase: BankAccountCreateUseCase,
     private readonly bankAccountUpdateUseCase: BankAccountUpdateUseCase,
     private readonly bankAccountQueryUseCase: BankAccountQueryUseCase,
+    private readonly bankAccountFindUseCase: BankAccountFindUseCase,
     private readonly sendEmailNotificationBankAccountCreatedListener: SendEmailNotificationBankAccountCreatedListener,
   ) { }
 
@@ -26,6 +28,15 @@ export class BankAccountController {
     const { bankAccounts } = await this.bankAccountQueryUseCase.perform({ ...query, peopleId: user.peopleId })
 
     return { bankAccounts }
+  }
+
+  @UseGuards(AuthUserGuard)
+  @UseGuards(AuthBankAccountGuard)
+  @Get('/current')
+  async find(@BankAccount() bankAccountSession: BankAccountSession) {
+    const { bankAccount } = await this.bankAccountFindUseCase.perform({ id: bankAccountSession.id })
+
+    return { bankAccount }
   }
 
   @UseGuards(AuthUserGuard)

@@ -2,6 +2,7 @@ import { Module, Provider } from '@nestjs/common'
 import { BankAccountQueryUseCase } from '@application/use-cases/bank-account/query.use-case'
 import { BankAccountCreateUseCase } from '@application/use-cases/bank-account/create.use-case'
 import { BankAccountUpdateUseCase } from '@application/use-cases/bank-account/update.use-case'
+import { BankAccountFindUseCase } from '@application/use-cases/bank-account/find.use-case'
 import { BankAccountGenerateCodeUseCase } from '@application/use-cases/bank-account/generate-code.use-case'
 import { BankAccountUpdateBalanceUseCase } from '@application/use-cases/bank-account/update-balance.use-case'
 import { InfrastructureObserverModule } from '@infrastructure/adapters/observer/observer.module'
@@ -15,6 +16,7 @@ const providers: Provider[] = [
   BankAccountQueryUseCase,
   BankAccountUpdateBalanceUseCase,
   BankAccountUpdateUseCase,
+  BankAccountFindUseCase,
 ]
 
 @Module({
