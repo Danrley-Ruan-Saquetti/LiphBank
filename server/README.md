@@ -135,44 +135,47 @@ npm run start:dev
 
 ### Requisitos Funcionais
 
-- [ ] O sistema deve manter usuários
-- [ ] O sistema deve manter contas bancárias
-- [ ] O sistema deve manter transações financeiras
-- [ ] O sistema deve permitir a conclusão das transações financeiras
-- [ ] O sistema deve permitir o cancelamento das transações financeiras
+- [X] O sistema deve manter usuários
+- [X] O sistema deve manter contas bancárias
+- [X] O sistema deve manter transações financeiras
+- [X] O sistema deve permitir a conclusão das transações financeiras
+- [X] O sistema deve permitir o cancelamento das transações financeiras
 - [ ] O sistema deve permitir a reabertura das transações financeiras
 - [ ] O sistema deve atualizar a situação das transações financeiras para Atrasado
 - [ ] O sistema deve duplicar transações financeiras que estejam marcadas para repetir
-- [ ] O sistema deve manter o saldo da conta bancário
-- [ ] O sistema deve permitir a inativação da conta bancária
+- [X] O sistema deve manter o saldo da conta bancário
+- [X] O sistema deve permitir a inativação da conta bancária
+- [ ] O sistema deve permitir a reabertura da conta bancária
 - [ ] O sistema deve enviar um email após a criação de uma nova conta de usuário
 - [ ] O sistema deve enviar um email após a criação de uma nova conta bancária
 - [ ] O sistema deve enviar um email após a criação de uma nova transação financeira
 - [ ] O sistema deve enviar um email após a um novo acesso à conta do usuário
 - [ ] O sistema deve enviar um email após a um novo acesso à conta bancária do usuário
+- [ ] O sistema deve enviar um email após a inativação da conta bancária
+- [ ] O sistema deve enviar um email após a reabertura da conta bancária
 
 ### Regras de Negócio
 
-- [ ] O cadastro de Usuário deve conter: nome, CPF/CNPJ, login, senha, gênero, data de nascimento, tipo de pessoa
-- [ ] O nome do Usuário deve conter entre 3 caracteres 2 45 caracteres
-- [ ] A senha do Usuário deve: ter entre 6 a 15 dígitos, possuir letras e números e conter letras maiúsculas e minúsculas
-- [ ] Os tipos de Pessoa são: Física e Jurídica
-- [ ] O cadastro de Conta Bancária deve conter: nome
-- [ ] O nome da Conta Bancária deve conter entre 3 caracteres 2 45 caracteres
-- [ ] O cadastro de Transação Financeira deve conter: a Conta Bancária, título, descrição, valor, tipo, remetente/destinatário, data de expiração e data de competência
-- [ ] Os tipos da Transação Financeira são: Renda e Despesa
-- [ ] As situações da Transação Financeira são: Pendente, Concluído, Atrasado e Cancelado
-- [ ] As situações da Transação Financeira consideradas como Fechada são: Concluído e Cancelado
-- [ ] Só é possível atualizar as seguintes informações da Transação Financeira: título, descrição, valor, remetente/destinatário, data de expiração e data de competência
-- [ ] Só é possível cadastrar Transações Financeiras em Contas Bancárias ativas
-- [ ] A situação inicial de toda Transação Financeira é Pendente. Caso a data de expiração seja posterior à data do cadastro, então a situação inicial será Atrasado
-- [ ] O Usuário pode atualizar a Transação Financeira apenas se a situação não estiver Fechada
-- [ ] O Usuário pode concluir a Transação Financeira apenas se a situação não estiver Fechada
-- [ ] O Usuário pode cancelar a Transação Financeira a qualquer momento
+- [X] O cadastro de Usuário deve conter: nome, CPF/CNPJ, login, senha, gênero, data de nascimento, tipo de pessoa
+- [X] O nome do Usuário deve conter entre 3 caracteres 2 45 caracteres
+- [X] A senha do Usuário deve: ter entre 6 a 15 dígitos, possuir letras e números e conter letras maiúsculas e minúsculas
+- [X] Os tipos de Pessoa são: Física e Jurídica
+- [X] O cadastro de Conta Bancária deve conter: nome
+- [X] O nome da Conta Bancária deve conter entre 3 caracteres 2 45 caracteres
+- [X] O cadastro de Transação Financeira deve conter: a Conta Bancária, título, descrição, valor, tipo, remetente/destinatário, data de expiração e data de competência
+- [X] Os tipos da Transação Financeira são: Renda e Despesa
+- [X] As situações da Transação Financeira são: Pendente, Concluído, Atrasado e Cancelado
+- [X] As situações da Transação Financeira consideradas como Fechada são: Concluído e Cancelado
+- [X] Só é possível atualizar as seguintes informações da Transação Financeira: título, descrição, valor, remetente/destinatário, data de expiração e data de competência
+- [X] Só é possível cadastrar Transações Financeiras em Contas Bancárias ativas
+- [X] A situação inicial de toda Transação Financeira é Pendente. Caso a data de expiração seja posterior à data do cadastro, então a situação inicial será Atrasado
+- [X] O Usuário pode atualizar a Transação Financeira apenas se a situação não estiver Fechada
+- [X] O Usuário pode concluir a Transação Financeira apenas se a situação não estiver Fechada
+- [X] O Usuário pode cancelar a Transação Financeira a qualquer momento
 - [ ] Para reabrir uma Transação Financeira a sua situação deve estar Fechada
-- [ ] O saldo da Conta Bancária deve ser atualizado quando uma transação for Concluída ou Cancelada
-- [ ] Caso o tipo da transação seja Renda, após concluir a transação o valor deve ser somado ao saldo da Conta Bancária
-- [ ] Caso o tipo da transação seja Despesa, após concluir a transação o valor deve ser subtraído do saldo da Conta Bancária
+- [X] O saldo da Conta Bancária deve ser atualizado quando uma transação for Concluída ou Cancelada
+- [X] Caso o tipo da transação seja Renda, após concluir a transação o valor deve ser somado ao saldo da Conta Bancária
+- [X] Caso o tipo da transação seja Despesa, após concluir a transação o valor deve ser subtraído do saldo da Conta Bancária
 - [ ] Caso uma transação que esteja Concluída e que o tipo da transação seja Renda passe a ser Cancelada, o valor deve ser subtraído do saldo da Conta Bancária
 - [ ] Caso uma transação que esteja Concluída e que o tipo da transação seja Despesa passe a ser Cancelada, o valor deve ser somado ao saldo da Conta Bancária
 - [ ] Quando a Conta Bancária estiver inativa, não deve ser possível dar manutenção nas Transações Financeiras
