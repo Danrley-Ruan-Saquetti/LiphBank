@@ -18,6 +18,8 @@ export abstract class GenerateCodeUseCase extends UseCase {
   }
 
   private async generateCode(attempts: number) {
+    this.prepareGenerator()
+
     for (let i = 0; i < attempts; i++) {
       const code = this.codeGenerator.generate()
 
@@ -33,6 +35,7 @@ export abstract class GenerateCodeUseCase extends UseCase {
     throw new CodeGenerationFailedException()
   }
 
+  protected abstract prepareGenerator(): void
   protected abstract validateCode(code: string): Promise<boolean>
   protected abstract attemptsExceeded(): Promise<void>
 }

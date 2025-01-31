@@ -12,7 +12,7 @@ export class UserGenerateCodeUseCase extends GenerateCodeUseCase {
     super()
   }
 
-  onModuleInit() {
+  protected prepareGenerator() {
     this.codeGenerator.setLength(11)
     this.codeGenerator.setPrefix('USR-')
   }
