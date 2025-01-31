@@ -11,7 +11,7 @@ export const financialTransactionQuerySchema = querySchema().extend({
     .int(),
   id: numberQuerySchema(),
   type: enumQuerySchema(FinancialTransactionRule.type.enum),
-  situation: stringQuerySchema(),
+  situation: enumQuerySchema(FinancialTransactionRule.situation.enum),
   title: stringQuerySchema(),
   value: numberQuerySchema(),
   senderRecipient: stringQuerySchema(),
