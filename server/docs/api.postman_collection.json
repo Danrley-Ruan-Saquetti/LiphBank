@@ -125,7 +125,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"code\": \"BAK-9MVSW0V45BH\"\r\n}",
+									"raw": "{\r\n    \"code\": \"BAK-1NXX3D668IW\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -181,14 +181,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{url}}/bank-accounts/financial-transactions/1/cancel",
+											"raw": "{{url}}/bank-accounts/financial-transactions/2/cancel",
 											"host": [
 												"{{url}}"
 											],
 											"path": [
 												"bank-accounts",
 												"financial-transactions",
-												"1",
+												"2",
 												"cancel"
 											]
 										}
@@ -218,7 +218,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"expiresIn\": \"2024-12-14\"\r\n}",
+											"raw": "{\r\n    \"value\": 1500.50\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -226,14 +226,14 @@
 											}
 										},
 										"url": {
-											"raw": "{{url}}/bank-accounts/financial-transactions/1/update",
+											"raw": "{{url}}/bank-accounts/financial-transactions/4/update",
 											"host": [
 												"{{url}}"
 											],
 											"path": [
 												"bank-accounts",
 												"financial-transactions",
-												"1",
+												"4",
 												"update"
 											]
 										}
@@ -262,14 +262,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{url}}/bank-accounts/financial-transactions/1/conclude",
+											"raw": "{{url}}/bank-accounts/financial-transactions/6/conclude",
 											"host": [
 												"{{url}}"
 											],
 											"path": [
 												"bank-accounts",
 												"financial-transactions",
-												"1",
+												"6",
 												"conclude"
 											]
 										}
@@ -298,50 +298,15 @@
 											}
 										],
 										"url": {
-											"raw": "{{url}}/bank-accounts/financial-transactions/1/delete",
+											"raw": "{{url}}/bank-accounts/financial-transactions/5/delete",
 											"host": [
 												"{{url}}"
 											],
 											"path": [
 												"bank-accounts",
 												"financial-transactions",
-												"1",
+												"5",
 												"delete"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "/",
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{token}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "GET",
-										"header": [
-											{
-												"key": "AuthorizationBankAccount",
-												"value": "Bearer {{tokenBankAccount}}",
-												"type": "text"
-											}
-										],
-										"url": {
-											"raw": "{{url}}/bank-accounts/financial-transactions/1",
-											"host": [
-												"{{url}}"
-											],
-											"path": [
-												"bank-accounts",
-												"financial-transactions",
-												"1"
 											]
 										}
 									},
@@ -372,7 +337,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"title\": \"Trasação de Teste\",\r\n    \"value\": 10,\r\n    \"type\": \"I\",\r\n    \"senderRecipient\": \"Dan Ruan\"\r\n}",
+									"raw": "{\r\n    \"title\": \"Trasação de Teste\",\r\n    \"value\": 100,\r\n    \"type\": \"E\",\r\n    \"senderRecipient\": \"Dan Ruan\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -415,13 +380,58 @@
 									}
 								],
 								"url": {
-									"raw": "{{url}}/bank-accounts/financial-transactions",
+									"raw": "{{url}}/bank-accounts/financial-transactions?situation[notIn]=CL&situation[notIn]=CN",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"bank-accounts",
 										"financial-transactions"
+									],
+									"query": [
+										{
+											"key": "situation[notIn]",
+											"value": "CL"
+										},
+										{
+											"key": "situation[notIn]",
+											"value": "CN"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/:id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "AuthorizationBankAccount",
+										"value": "Bearer {{tokenBankAccount}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/bank-accounts/financial-transactions/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"bank-accounts",
+										"financial-transactions",
+										"2"
 									]
 								}
 							},
@@ -446,7 +456,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"BA - Profissional\"\r\n}",
+							"raw": "{\r\n    \"name\": \"BA - Teste\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -480,7 +490,13 @@
 							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "AuthorizationBankAccount",
+								"value": "Bearer {{tokenBankAccount}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/bank-accounts",
 							"host": [
@@ -488,6 +504,126 @@
 							],
 							"path": [
 								"bank-accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/inactivate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "AuthorizationBankAccount",
+								"value": "Bearer {{tokenBankAccount}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"BA - Profissional\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bank-accounts/inactivate",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bank-accounts",
+								"inactivate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "AuthorizationBankAccount",
+								"value": "Bearer {{tokenBankAccount}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"BA - Pessoal\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bank-accounts/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bank-accounts",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/current",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "AuthorizationBankAccount",
+								"value": "Bearer {{tokenBankAccount}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/bank-accounts/current",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bank-accounts",
+								"current"
 							]
 						}
 					},
@@ -575,7 +711,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Dan Ruan\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Dan Ruan\",\r\n    \"dateOfBirth\": \"2004-05-28\",\r\n    \"gender\": \"M\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
