@@ -8,6 +8,7 @@ import { BankAccountFindUseCase } from '@application/use-cases/bank-account/find
 import { BankAccountQueryUseCase } from '@application/use-cases/bank-account/query.use-case'
 import { BankAccountUpdateUseCase } from '@application/use-cases/bank-account/update.use-case'
 import { BankAccountCreateUseCase } from '@application/use-cases/bank-account/create.use-case'
+import { BankAccountInactivateUseCase } from '@application/use-cases/bank-account/inactivate.use-case'
 import { SendEmailNotificationBankAccountCreatedListener } from '@application/observer/listeners/send-email-notification-bank-account-created.listener'
 import { BankAccount } from '@presentation/decorators/bank-account.decorator'
 
@@ -19,6 +20,7 @@ export class BankAccountController {
     private readonly bankAccountUpdateUseCase: BankAccountUpdateUseCase,
     private readonly bankAccountQueryUseCase: BankAccountQueryUseCase,
     private readonly bankAccountFindUseCase: BankAccountFindUseCase,
+    private readonly bankAccountInactivateUseCase: BankAccountInactivateUseCase,
     private readonly sendEmailNotificationBankAccountCreatedListener: SendEmailNotificationBankAccountCreatedListener,
   ) { }
 
@@ -48,6 +50,15 @@ export class BankAccountController {
     )
 
     await this.bankAccountCreateUseCase.perform({ ...body, peopleId: user.peopleId })
+
+    return { message: 'Bank Account successfully created' }
+  }
+
+  @UseGuards(AuthUserGuard)
+  @UseGuards(AuthBankAccountGuard)
+  @Post('/inactivate')
+  async inactivate(@BankAccount() bankAccountSession: BankAccountSession) {
+    await this.bankAccountInactivateUseCase.perform({ id: bankAccountSession.id })
 
     return { message: 'Bank Account successfully created' }
   }
