@@ -20,6 +20,7 @@ export class BankAccount implements BankAccountProps {
   get peopleId() { return this._peopleId }
   get code() { return this._code }
   get balance() { return this._balance }
+  get balanceInCents() { return this._balance * 100 }
   get name() { return this._name }
   get active() { return this._active }
   get createdAt() { return this._createdAt }

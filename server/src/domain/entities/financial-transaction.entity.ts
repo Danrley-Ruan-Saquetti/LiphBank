@@ -67,6 +67,7 @@ export class FinancialTransaction implements FinancialTransactionProps, IFinanci
   get type() { return this._type }
   get title() { return this._title }
   get value() { return this._value }
+  get valueInCents() { return this._value * 100 }
   get description() { return this._description }
   get situation() { return this._situation }
   get expiresIn() { return this._expiresIn }
