@@ -26,7 +26,7 @@ export class FinancialTransactionMapper {
       title: entity.title,
       type: entity.type,
       updatedAt: entity.updatedAt,
-      value: entity.value,
+      value: entity.valueInCents,
     }
 
     return financialTransactionDatabase
@@ -46,7 +46,7 @@ export class FinancialTransactionMapper {
       title: databaseModel.title,
       type: databaseModel.type as FinancialTransactionType,
       updatedAt: databaseModel.updatedAt,
-      value: databaseModel.value,
+      value: databaseModel.value / 100,
     })
   }
 }
