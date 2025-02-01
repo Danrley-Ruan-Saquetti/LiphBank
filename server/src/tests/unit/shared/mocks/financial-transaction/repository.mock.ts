@@ -30,4 +30,6 @@ export class FinancialTransactionRepositoryMock extends FinancialTransactionRepo
   findMany = vi.fn().mockImplementation(() => [])
 
   findByCpfCnpj = vi.fn().mockImplementation(() => null)
+
+  count = vi.fn().mockImplementation(() => 0)
 }

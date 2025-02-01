@@ -28,4 +28,6 @@ export class BankAccountRepositoryMock extends BankAccountRepository {
   findMany = vi.fn().mockImplementation(() => [])
 
   findByCode = vi.fn().mockImplementation(() => null)
+
+  count = vi.fn().mockImplementation(() => 0)
 }
