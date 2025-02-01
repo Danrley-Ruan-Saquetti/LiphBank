@@ -33,6 +33,10 @@ export class AuthBankAccountAuthorizationUseCase extends UseCase {
     try {
       const payload = this.jwtService.decode<BankAccountJWTPayload>(token)
 
+      if (!payload) {
+        throw new UnauthorizedException('Unauthorized', [{ message: 'Invalid authorization token', path: ['token', '_invalid'] }])
+      }
+
       return { payload }
     } catch {
       throw new UnauthorizedException('Unauthorized', [{ message: 'Invalid authorization token', path: ['token', '_invalid'] }])

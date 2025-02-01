@@ -13,7 +13,7 @@ export class AuthBankAccountGuard implements CanActivate {
     const request = context.switchToHttp().getRequest()
     const token = request.headers['authorizationbankaccount'] || ''
 
-    const { payload } = await this.authBankAccountAuthorizationUseCase.perform({ token })
+    const { payload } = this.authBankAccountAuthorizationUseCase.perform({ token })
 
     request.bankAccount = {
       id: payload.sub,
