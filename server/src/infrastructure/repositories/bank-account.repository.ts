@@ -105,4 +105,16 @@ export class BankAccountRepositoryImplementation extends BankAccountRepository {
       this.database.resolveError(error)
     }
   }
+
+  async count(args: Pick<BankAccountQueryArgs, 'where'> = {}) {
+    try {
+      const count = await this.database.bankAccount.count({
+        where: this.database.pipeWhere(args.where, BankAccountRepositoryImplementation.QUERY_SCHEMA_FILTER),
+      })
+
+      return count
+    } catch (error: any) {
+      this.database.resolveError(error)
+    }
+  }
 }

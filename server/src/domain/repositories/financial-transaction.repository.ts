@@ -22,4 +22,5 @@ export abstract class FinancialTransactionRepository {
   abstract delete(id: number): Promise<void>
   abstract findById(id: number): Promise<FinancialTransaction | null>
   abstract findMany(args?: FinancialTransactionQueryArgs): Promise<FinancialTransaction[]>
+  abstract count(args?: Pick<FinancialTransactionQueryArgs, 'where'>): Promise<number>
 }

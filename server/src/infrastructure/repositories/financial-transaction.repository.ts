@@ -111,6 +111,16 @@ export class FinancialTransactionRepositoryImplementation extends FinancialTrans
     }
   }
 
+  async findById(id: number) {
+    try {
+      const financialTransactionDatabase = await this.database.financialTransaction.findUnique({ where: { id } })
+
+      return financialTransactionDatabase ? FinancialTransactionMapper.databaseToEntity(financialTransactionDatabase) : null
+    } catch (error: any) {
+      this.database.resolveError(error)
+    }
+  }
+
   async findMany(args: FinancialTransactionQueryArgs = {}) {
     try {
       const financialTransactionsDatabase = await this.database.financialTransaction.findMany({
@@ -124,11 +134,13 @@ export class FinancialTransactionRepositoryImplementation extends FinancialTrans
     }
   }
 
-  async findById(id: number) {
+  async count(args: Pick<FinancialTransactionQueryArgs, 'where'> = {}) {
     try {
-      const financialTransactionDatabase = await this.database.financialTransaction.findUnique({ where: { id } })
+      const count = await this.database.financialTransaction.count({
+        where: this.database.pipeWhere(args.where, FinancialTransactionRepositoryImplementation.QUERY_SCHEMA_FILTER),
+      })
 
-      return financialTransactionDatabase ? FinancialTransactionMapper.databaseToEntity(financialTransactionDatabase) : null
+      return count
     } catch (error: any) {
       this.database.resolveError(error)
     }

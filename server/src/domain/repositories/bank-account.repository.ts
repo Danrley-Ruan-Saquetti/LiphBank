@@ -18,4 +18,5 @@ export abstract class BankAccountRepository {
   abstract findById(id: number): Promise<BankAccount | null>
   abstract findByCode(code: string): Promise<BankAccount | null>
   abstract findMany(args?: BankAccountQueryArgs): Promise<BankAccount[]>
+  abstract count(args?: Pick<BankAccountQueryArgs, 'where'>): Promise<number>
 }
