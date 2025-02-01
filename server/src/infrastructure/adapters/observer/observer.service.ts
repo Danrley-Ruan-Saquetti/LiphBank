@@ -53,6 +53,10 @@ export class ObserverListenerImplementation<Events extends IEventsType = any> ex
     return this.Listeners.get(event) ?? []
   }
 
+  clearAllListeners() {
+    this.Listeners.clear()
+  }
+
   private createListener(baseListener: SubscriberListener): Listener {
     if (baseListener instanceof Listener) {
       return baseListener
