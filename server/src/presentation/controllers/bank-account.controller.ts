@@ -29,7 +29,16 @@ export class BankAccountController {
   async query(@Query() query: any, @User() user: UserSession) {
     const { bankAccounts } = await this.bankAccountQueryUseCase.perform({ ...query, peopleId: user.peopleId })
 
-    return { bankAccounts }
+    return {
+      bankAccounts: bankAccounts.map(bankAccount => ({
+        id: bankAccount.id,
+        name: bankAccount.name,
+        code: bankAccount.code,
+        active: bankAccount.active,
+        createdAt: bankAccount.createdAt,
+        updatedAt: bankAccount.updatedAt,
+      }))
+    }
   }
 
   @UseGuards(AuthUserGuard)
