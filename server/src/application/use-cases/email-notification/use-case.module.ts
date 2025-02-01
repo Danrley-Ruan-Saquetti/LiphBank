@@ -5,6 +5,7 @@ import { InfrastructureMailModule } from '@infrastructure/adapters/mail/mail.mod
 import { InfrastructureObserverModule } from '@infrastructure/adapters/observer/observer.module'
 import { InfrastructureValidatorModule } from '@infrastructure/adapters/validator/validator.module'
 import { InfrastructureRepositoryModule } from '@infrastructure/repositories/repository.module'
+import { InfrastructureConcurrencyModule } from '@infrastructure/adapters/concurrency/concurrency.module'
 
 const providers: Provider[] = [
   EmailNotificationCreateUseCase,
@@ -16,7 +17,8 @@ const providers: Provider[] = [
     InfrastructureValidatorModule,
     InfrastructureRepositoryModule,
     InfrastructureObserverModule,
-    InfrastructureMailModule
+    InfrastructureMailModule,
+    InfrastructureConcurrencyModule,
   ],
   providers: [...providers],
   exports: [...providers]

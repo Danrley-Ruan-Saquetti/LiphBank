@@ -1,11 +1,11 @@
 import { Module, Provider } from '@nestjs/common'
-import { ConcurrencyServiceImplementation } from '@infrastructure/adapters/concurrency/concurrency.service'
-import { ConcurrencyService } from '@domain/adapters/concurrency/concurrency.service'
+import { ParallelismServiceImplementation } from '@infrastructure/adapters/concurrency/parallelism.service'
+import { ParallelismService } from '@domain/adapters/concurrency/parallelism.service'
 
 const providers: Provider[] = [
   {
-    provide: ConcurrencyService,
-    useClass: ConcurrencyServiceImplementation
+    provide: ParallelismService,
+    useClass: ParallelismServiceImplementation
   }
 ]
 

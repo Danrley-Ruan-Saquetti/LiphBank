@@ -6,6 +6,7 @@ import { MailService } from '@domain/adapters/mail/mail.service'
 import { EmailNotification } from '@domain/entities/email-notification.entity'
 import { NotificationSituation } from '@domain/entities/notification.entity'
 import { EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
+import { ParallelismService } from '../../../domain/adapters/concurrency/parallelism.service'
 
 @Injectable()
 export class EmailNotificationSendEmailInQueueUseCase extends UseCase<EmailNotificationSendEmailEvent> {
@@ -13,6 +14,7 @@ export class EmailNotificationSendEmailInQueueUseCase extends UseCase<EmailNotif
   constructor(
     private readonly emailNotificationRepository: EmailNotificationRepository,
     private readonly mailService: MailService,
+    private readonly parallelismService: ParallelismService
   ) {
     super()
   }
@@ -22,9 +24,13 @@ export class EmailNotificationSendEmailInQueueUseCase extends UseCase<EmailNotif
 
     const notificationInQueue = await this.getEmailNotificationsInQueue(limit)
 
-    for (let i = 0; i < notificationInQueue.length; i++) {
-      await this.resolveSendEmailNotification(notificationInQueue[i])
-    }
+    this.parallelismService.setLimit(Math.min(notificationInQueue.length, 8))
+
+    notificationInQueue.map(notification =>
+      this.parallelismService.registerHandler(() => this.resolveSendEmailNotification(notification))
+    )
+
+    await this.parallelismService.run()
   }
 
   private async getEmailNotificationsInQueue(limit?: number) {
