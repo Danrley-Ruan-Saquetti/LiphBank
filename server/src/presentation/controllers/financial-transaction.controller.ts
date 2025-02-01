@@ -30,9 +30,9 @@ export class FinancialTransactionController {
   @UseGuards(AuthBankAccountGuard)
   @Get('')
   async query(@Query() filters: any, @BankAccount() bankAccount: BankAccountSession) {
-    const { financialTransactions } = await this.financialTransactionQueryUseCase.perform({ ...filters, bankAccountId: bankAccount.id })
+    const { financialTransactions, metadata } = await this.financialTransactionQueryUseCase.perform({ ...filters, bankAccountId: bankAccount.id })
 
-    return { financialTransactions }
+    return { financialTransactions, metadata }
   }
 
   @UseGuards(AuthUserGuard)
