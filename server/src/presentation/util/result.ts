@@ -1,15 +1,10 @@
 export class Result<T> {
 
-  get ok() { return this._ok }
-  get status() { return this._status }
-  get value() { return this._value }
-  get error() { return this._error }
-
   private constructor(
-    private readonly _ok: boolean = true,
-    private readonly _status: number = 200,
-    private readonly _value: T | null = null,
-    private readonly _error: unknown | null = null,
+    public readonly ok: boolean = true,
+    public readonly status: number = 200,
+    public readonly value: T | null = null,
+    public readonly error: unknown | null = null,
   ) { }
 
   static success<T>(value: T, status = 200) {
