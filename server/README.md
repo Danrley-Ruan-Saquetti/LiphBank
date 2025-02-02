@@ -177,6 +177,6 @@ npm run start:dev
 - [X] O saldo da Conta Bancária deve ser atualizado quando uma transação for Concluída ou Cancelada
 - [X] Caso o tipo da transação seja Renda, após concluir a transação o valor deve ser somado ao saldo da Conta Bancária
 - [X] Caso o tipo da transação seja Despesa, após concluir a transação o valor deve ser subtraído do saldo da Conta Bancária
-- [ ] Caso uma transação que esteja Concluída e que o tipo da transação seja Renda passe a ser Cancelada, o valor deve ser subtraído do saldo da Conta Bancária
-- [ ] Caso uma transação que esteja Concluída e que o tipo da transação seja Despesa passe a ser Cancelada, o valor deve ser somado ao saldo da Conta Bancária
+- [X] Caso uma transação que esteja Concluída e que o tipo da transação seja Renda passe a ser Cancelada, o valor deve ser subtraído do saldo da Conta Bancária
+- [X] Caso uma transação que esteja Concluída e que o tipo da transação seja Despesa passe a ser Cancelada, o valor deve ser somado ao saldo da Conta Bancária
 - [ ] Quando a Conta Bancária estiver inativa, não deve ser possível dar manutenção nas Transações Financeiras
