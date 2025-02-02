@@ -1,17 +1,6 @@
 import { Notification as NotificationPrisma } from '@prisma/client'
 import { ObjectRequiredProps } from '@shared/types'
-
-export enum NotificationSituation {
-  IN_QUEUE = 'IQ',
-  ERROR = 'ER',
-  SENT = 'SN',
-}
-
-export enum NotificationType {
-  PUSH = 'P',
-  INTERNAL = 'I',
-  EMAIL = 'E',
-}
+import { NotificationSituation, NotificationType } from '@domain/enums/notification.enum'
 
 export interface NotificationProps extends NotificationPrisma {
   type: NotificationType

@@ -1,15 +1,6 @@
 import { People as PeoplePrisma } from '@prisma/client'
 import { ObjectRequiredProps } from '@shared/types'
-
-export enum PeopleType {
-  NATURAL_PERSON = 'NP',
-  LEGAL_ENTITY = 'LE',
-}
-
-export enum PeopleGender {
-  MASCULINE = 'M',
-  FEMININE = 'F',
-}
+import { PeopleGender, PeopleType } from '@domain/enums/people.enum'
 
 export interface PeopleProps extends PeoplePrisma {
   type: PeopleType

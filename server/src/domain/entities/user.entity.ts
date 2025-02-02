@@ -1,10 +1,6 @@
 import { User as UserPrisma } from '@prisma/client'
+import { UserType } from '@domain/enums/user.enum'
 import { ObjectRequiredProps } from '@shared/types'
-
-export enum UserType {
-  CLIENT = 'C',
-  ADMIN = 'A',
-}
 
 export interface UserProps extends UserPrisma {
   type: UserType

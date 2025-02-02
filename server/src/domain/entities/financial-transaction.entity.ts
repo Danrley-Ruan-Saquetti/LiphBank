@@ -1,33 +1,9 @@
 import { FinancialTransaction as FinancialTransactionPrisma } from '@prisma/client'
+import { isTransactionClosed } from '@domain/helpers/financial-transaction.helper'
+import { FinancialTransactionFrequency, FinancialTransactionSituation, FinancialTransactionType, FinancialTransactionTypeOccurrence } from '@domain/enums/financial-transaction.enum'
 import { IFinancialTransactionSituationState } from '@domain/states/financial-transaction/situation/situation.state'
 import { FinancialTransactionSituationStateFabric } from '@domain/states/financial-transaction/situation/fabric'
 import { ObjectRequiredProps } from '@shared/types'
-
-export enum FinancialTransactionType {
-  EXPENSE = 'E',
-  INCOME = 'I',
-}
-
-export enum FinancialTransactionFrequency {
-  DAILY = 'D',
-  WEEKLY = 'W',
-  MONTHLY = 'M',
-  QUARTERLY = 'Q',
-  SEMIANNUALLY = 'S',
-  ANNUALLY = 'A',
-}
-
-export enum FinancialTransactionTypeOccurrence {
-  SINGLE = 'S',
-  PROGRAMMATIC = 'P',
-}
-
-export enum FinancialTransactionSituation {
-  PENDING = 'PE',
-  COMPLETED = 'CL',
-  LATED = 'LT',
-  CANCELED = 'CN',
-}
 
 export type FinancialTransactionSettings = {
   timesToRepeat: number | null
@@ -123,7 +99,7 @@ export class FinancialTransaction implements FinancialTransactionProps, IFinanci
   }
 
   isClosed() {
-    return [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.COMPLETED].includes(this.situation)
+    return isTransactionClosed(this.situation)
   }
 
   isCompleted() {

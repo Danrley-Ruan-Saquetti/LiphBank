@@ -54,6 +54,7 @@ src/
 ├── domain/ # Define as abstrações e entidades da aplicação
 │   ├── adapters/ # Abstrações de serviços que se comunicam com bibliotecas externos ou lógica específica
 │   ├── entities/ # Representação das entidades da aplicação
+│   ├── enums/ # Enumerações das entidades da aplicação
 │   ├── repositories/ # Abstrações das classes de camada intermediária entre a aplicação e o banco de dados
 │   ├── rules/ # Regras relacionadas às entidades que fornecem parâmetros como valores padrão e configurações específicas
 │   └── templates/ # Textos de template customizado e parametrizável com base em variáveis dinâmicas
