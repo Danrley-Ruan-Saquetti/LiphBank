@@ -1,5 +1,5 @@
 import { InvalidStateException } from '@domain/exceptions/invalid-state.exception'
-import { FinancialTransactionSituation } from '@domain/entities/financial-transaction.entity'
+import { FinancialTransactionSituation } from '@domain/enums/financial-transaction.enum'
 import { FinancialTransactionSituationState } from '@domain/states/financial-transaction/situation/situation.state'
 
 export class FinancialTransactionConcludeState extends FinancialTransactionSituationState {

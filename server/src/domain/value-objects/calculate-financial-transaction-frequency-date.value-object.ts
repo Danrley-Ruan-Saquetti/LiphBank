@@ -1,5 +1,5 @@
-import { FinancialTransactionFrequency } from '@domain/entities/financial-transaction.entity'
-import { FinancialTransactionRule } from '../rules/financial-transaction.rule'
+import { FinancialTransactionRule } from '@domain/rules/financial-transaction.rule'
+import { FinancialTransactionFrequency } from '@domain/enums/financial-transaction.enum'
 
 export class CalculateFinancialTransactionFrequencyDate {
 

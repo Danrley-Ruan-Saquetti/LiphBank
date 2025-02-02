@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { UserMapper } from '@infrastructure/mappers/user.mapper'
+import { UserType } from '@domain/enums/user.enum'
 import { PeopleProps } from '@domain/entities/people.entity'
-import { User, UserType, UserProps } from '@domain/entities/user.entity'
+import { User, UserProps } from '@domain/entities/user.entity'
 import { UserQueryArgs, UserRepository } from '@domain/repositories/user.repository'
 import { DatabaseService, SchemaFilterQuery } from '@domain/adapters/database/database.service'
 

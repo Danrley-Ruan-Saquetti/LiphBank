@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { AuthMessage } from '@application/messages/auth.message'
-import { UserType } from '@domain/entities/user.entity'
+import { UserType } from '@domain/enums/user.enum'
 
 export const authUserSignInSchema = z.object({
   login: z

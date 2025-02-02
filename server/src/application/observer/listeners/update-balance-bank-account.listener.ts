@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { BankAccountUpdateBalanceUseCase } from '@application/use-cases/bank-account/update-balance.use-case'
-import { Listener } from '@domain/adapters/observer/listener'
-import { FinancialTransactionType } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionUpdateSituationEvent } from '@application/observer/events/financial-transaction/update-situation.event'
+import { Listener } from '@domain/adapters/observer/listener'
+import { FinancialTransactionSituation, FinancialTransactionType } from '@domain/enums/financial-transaction.enum'
 
 @Injectable()
 export class UpdateBalanceBankAccountListener extends Listener<FinancialTransactionUpdateSituationEvent['events.financial-transaction.update-situation']> {

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { PeopleMessage } from '@application/messages/people.message'
 import { PeopleRule } from '@domain/rules/people.rule'
-import { PeopleGender } from '@domain/entities/people.entity'
+import { PeopleGender } from '@domain/enums/people.enum'
 
 export const peopleUpdateSchema = z.object({
   id: z

@@ -16,7 +16,7 @@ export class ErrorLogMapper {
       id: entity.id,
       type: entity.type,
       createdAt: entity.createdAt,
-      details: entity.details,
+      details: entity.details as any,
       message: entity.message,
       origin: entity.origin,
     }

@@ -1,5 +1,6 @@
 import { UserModel } from '@infrastructure/models/user.model'
-import { User, UserType } from '@domain/entities/user.entity'
+import { User } from '@domain/entities/user.entity'
+import { UserType } from '@domain/enums/user.enum'
 
 export class UserMapper {
 

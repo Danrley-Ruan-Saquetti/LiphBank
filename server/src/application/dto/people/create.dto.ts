@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { PeopleMessage } from '@application/messages/people.message'
 import { PeopleRule } from '@domain/rules/people.rule'
-import { PeopleGender, PeopleType } from '@domain/entities/people.entity'
+import { PeopleGender, PeopleType } from '@domain/enums/people.enum'
 import { extractDigits } from '@shared/utils/string'
 import { validateCNPJ, validateCPF } from '@shared/validators/cpf-cnpj'
 

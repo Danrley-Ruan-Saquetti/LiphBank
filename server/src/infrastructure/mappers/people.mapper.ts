@@ -1,5 +1,6 @@
 import { PeopleModel } from '@infrastructure/models/people.model'
-import { People, PeopleGender, PeopleType } from '@domain/entities/people.entity'
+import { People } from '@domain/entities/people.entity'
+import { PeopleGender, PeopleType } from '@domain/enums/people.enum'
 
 export class PeopleMapper {
 

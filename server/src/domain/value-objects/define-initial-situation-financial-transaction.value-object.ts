@@ -1,4 +1,4 @@
-import { FinancialTransactionProps, FinancialTransactionSituation } from '@domain/entities/financial-transaction.entity'
+import { FinancialTransactionSituation } from '@domain/enums/financial-transaction.enum'
 
 export class DefineInitialSituationFinancialTransactionValueObject {
 

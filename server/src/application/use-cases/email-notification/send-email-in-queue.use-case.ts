@@ -4,9 +4,9 @@ import { EmailNotificationSendEmailEvent } from '@application/observer/events/em
 import { EmailNotificationSendEmailInQueueDTO, emailNotificationSendEmailInQueueSchema } from '@application/dto/email-notification/send-email-in-queue.dto'
 import { MailService } from '@domain/adapters/mail/mail.service'
 import { EmailNotification } from '@domain/entities/email-notification.entity'
-import { NotificationSituation } from '@domain/entities/notification.entity'
+import { ParallelismService } from '@domain/adapters/concurrency/parallelism.service'
+import { NotificationSituation } from '@domain/enums/notification.enum'
 import { EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
-import { ParallelismService } from '../../../domain/adapters/concurrency/parallelism.service'
 
 @Injectable()
 export class EmailNotificationSendEmailInQueueUseCase extends UseCase<EmailNotificationSendEmailEvent> {

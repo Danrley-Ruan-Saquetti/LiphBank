@@ -1,3 +1,5 @@
-import { ErrorLog as ErrorLogPrisma } from '@prisma/client'
+import { ErrorLog as ErrorLogPrisma, Prisma } from '@prisma/client'
 
-export type ErrorLogModel = ErrorLogPrisma
+export interface ErrorLogModel extends Omit<ErrorLogPrisma, 'details'> {
+  details: Prisma.JsonValue
+}

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { EmailNotificationCreateDTO, emailNotificationCreateSchema } from '@application/dto/email-notification/create.dto'
-import { NotificationType } from '@domain/entities/notification.entity'
+import { NotificationType } from '@domain/enums/notification.enum'
 import { EmailNotification } from '@domain/entities/email-notification.entity'
 import { EmailNotificationRepository } from '@domain/repositories/email-notification.repository'
 

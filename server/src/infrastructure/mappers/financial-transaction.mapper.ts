@@ -1,5 +1,6 @@
 import { FinancialTransactionModel } from '@infrastructure/models/financial-transaction.model'
-import { FinancialTransaction, FinancialTransactionSettings, FinancialTransactionSituation, FinancialTransactionType } from '@domain/entities/financial-transaction.entity'
+import { FinancialTransaction, FinancialTransactionSettings } from '@domain/entities/financial-transaction.entity'
+import { FinancialTransactionSituation, FinancialTransactionType } from '@domain/enums/financial-transaction.enum'
 import { Prisma } from '@prisma/client'
 
 export class FinancialTransactionMapper {

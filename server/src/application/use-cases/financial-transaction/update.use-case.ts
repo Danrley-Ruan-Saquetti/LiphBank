@@ -3,9 +3,10 @@ import { UseCase } from '@application/use-cases/use-case'
 import { FinancialTransactionFindUseCase } from '@application/use-cases/financial-transaction/find.use-case'
 import { OperationClosedFinancialTransactionNotAllowedException } from '@application/exceptions/operation-closed-financial-transaction-not-allowed.exception'
 import { FinancialTransactionUpdateDTO, financialTransactionUpdateSchema } from '@application/dto/financial-transaction/update.dto'
+import { FinancialTransaction } from '@domain/entities/financial-transaction.entity'
 import { FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
 import { DefineInitialSituationFinancialTransactionValueObject } from '@domain/value-objects/define-initial-situation-financial-transaction.value-object'
-import { FinancialTransaction, FinancialTransactionFrequency, FinancialTransactionTypeOccurrence } from '@domain/entities/financial-transaction.entity'
+import { FinancialTransactionFrequency, FinancialTransactionTypeOccurrence } from '@domain/enums/financial-transaction.enum'
 
 @Injectable()
 export class FinancialTransactionUpdateUseCase extends UseCase {

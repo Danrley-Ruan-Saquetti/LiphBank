@@ -1,4 +1,9 @@
-import { FinancialTransactionFrequency, FinancialTransactionSituation, FinancialTransactionType, FinancialTransactionTypeOccurrence } from '@domain/entities/financial-transaction.entity'
+import {
+  FinancialTransactionSituation,
+  FinancialTransactionFrequency,
+  FinancialTransactionType,
+  FinancialTransactionTypeOccurrence
+} from '@domain/enums/financial-transaction.enum'
 
 export const FinancialTransactionRule = {
   title: {
@@ -39,4 +44,5 @@ export const FinancialTransactionRule = {
     [FinancialTransactionFrequency.SEMIANNUALLY]: 180,
     [FinancialTransactionFrequency.ANNUALLY]: 365,
   },
+  closedSituations: [FinancialTransactionSituation.CANCELED, FinancialTransactionSituation.COMPLETED]
 }

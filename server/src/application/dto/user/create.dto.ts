@@ -2,7 +2,7 @@ import { optional, z } from 'zod'
 import { UserMessage } from '@application/messages/user.message'
 import { PeopleMessage } from '@application/messages/people.message'
 import { UserRule } from '@domain/rules/user.rule'
-import { UserType } from '@domain/entities/user.entity'
+import { UserType } from '@domain/enums/user.enum'
 import { extractDigits } from '@shared/utils/string'
 
 export const userCreateSchema = z.object({

@@ -3,7 +3,7 @@ import { AuthUserSignInUseCase } from '@application/use-cases/auth/user/sign-in.
 import { CreatePeopleAndUserUseCase } from '@application/use-cases/shared/create-people-user.use-case'
 import { SendEmailNotificationUserCreatedListener } from '@application/observer/listeners/send-email-notification-user-created.listener'
 import { SendEmailNotificationUserLoggedInListener } from '@application/observer/listeners/send-email-notification-user-logged-in.listener'
-import { UserType } from '@domain/entities/user.entity'
+import { UserType } from '@domain/enums/user.enum'
 
 @Controller('/auth/user')
 export class AuthUserController {

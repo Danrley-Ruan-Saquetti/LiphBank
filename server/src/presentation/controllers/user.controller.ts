@@ -4,7 +4,7 @@ import { UserSession } from '@presentation/types/user-session.type'
 import { AuthUserGuard } from '@presentation/guards/auth-user.guard'
 import { UserFindUseCase } from '@application/use-cases/user/find.use-case'
 import { UserCreateUseCase } from '@application/use-cases/user/create.use-case'
-import { UserType } from '@domain/entities/user.entity'
+import { UserType } from '@domain/enums/user.enum'
 
 @Controller('/users')
 export class UserController {

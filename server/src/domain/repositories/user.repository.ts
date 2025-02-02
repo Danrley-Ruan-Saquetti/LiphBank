@@ -1,7 +1,8 @@
+import { UserType } from '@domain/enums/user.enum'
 import { QuerySchema } from '@domain/adapters/database/operations'
 import { FilterSchema } from '@domain/adapters/database/filters'
+import { User, UserProps } from '@domain/entities/user.entity'
 import { PeopleFiltersArgs } from '@domain/repositories/people.repository'
-import { User, UserProps, UserType } from '@domain/entities/user.entity'
 
 export interface UserFilterArgs extends Omit<UserProps, 'settings'> {
   settings: 'json'

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { FinancialTransactionMessage } from '@application/messages/financial-transaction.message'
 import { FinancialTransactionRule } from '@domain/rules/financial-transaction.rule'
-import { FinancialTransactionTypeOccurrence } from '@domain/entities/financial-transaction.entity'
+import { FinancialTransactionTypeOccurrence } from '@domain/enums/financial-transaction.enum'
 
 export const financialTransactionCreateSchema = z.object({
   bankAccountId: z

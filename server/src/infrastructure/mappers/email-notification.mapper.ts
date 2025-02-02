@@ -1,7 +1,7 @@
 import { NotificationMapper } from '@infrastructure/mappers/notification.mapper'
 import { EmailNotificationModel } from '@infrastructure/models/email-notification.model'
 import { EmailNotification } from '@domain/entities/email-notification.entity'
-import { NotificationSituation, NotificationType } from '@domain/entities/notification.entity'
+import { NotificationSituation, NotificationType } from '@domain/enums/notification.enum'
 
 export class EmailNotificationMapper {
 

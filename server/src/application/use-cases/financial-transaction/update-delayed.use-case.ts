@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { UseCase } from '@application/use-cases/use-case'
 import { FinancialTransactionUpdateDelayedDTO, financialTransactionUpdateDelayedSchema } from '@application/dto/financial-transaction/update-delayed.dto'
-import { FinancialTransactionSituation } from '@domain/entities/financial-transaction.entity'
+import { FinancialTransactionSituation } from '@domain/enums/financial-transaction.enum'
 import { FinancialTransactionRepository } from '@domain/repositories/financial-transaction.repository'
 
 @Injectable()
