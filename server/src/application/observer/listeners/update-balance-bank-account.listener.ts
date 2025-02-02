@@ -14,12 +14,32 @@ export class UpdateBalanceBankAccountListener extends Listener<FinancialTransact
   }
 
   async perform(data: FinancialTransactionUpdateSituationEvent['events.financial-transaction.update-situation']) {
-    const type = data.financialTransaction.type == FinancialTransactionType.INCOME ? 'IN' : 'OUT'
+    const type = this.getTypeUpdate(data)
+
+    if (!type) {
+      return
+    }
 
     await this.bankAccountUpdateBalance.perform({
       type,
       value: data.financialTransaction.value,
       bankAccountId: data.financialTransaction.bankAccountId,
     })
+  }
+
+  private getTypeUpdate({ financialTransaction, newSituation, oldSituation }: FinancialTransactionUpdateSituationEvent['events.financial-transaction.update-situation']) {
+    if (oldSituation == newSituation) {
+      return null
+    }
+
+    if (newSituation == FinancialTransactionSituation.COMPLETED) {
+      return financialTransaction.type == FinancialTransactionType.INCOME ? 'IN' : 'OUT'
+    }
+
+    if (oldSituation == FinancialTransactionSituation.COMPLETED && newSituation == FinancialTransactionSituation.CANCELED) {
+      return financialTransaction.type == FinancialTransactionType.INCOME ? 'OUT' : 'IN'
+    }
+
+    return null
   }
 }

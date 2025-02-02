@@ -81,6 +81,11 @@ export class FinancialTransactionController {
   @UseGuards(AuthBankAccountGuard)
   @Put('/:id/cancel')
   async cancel(@BankAccount() bankAccount: BankAccountSession, @Param('id') id: number) {
+    this.financialTransactionCancelUseCase.observer.subscribe(
+      'events.financial-transaction.update-situation',
+      this.updateBalanceBankAccountListener
+    )
+
     await this.financialTransactionCancelUseCase.perform({ bankAccountId: bankAccount.id, id })
 
     return { message: 'Financial Transaction successfully canceled' }
